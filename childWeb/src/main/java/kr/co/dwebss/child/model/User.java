@@ -13,8 +13,8 @@ public class User {
     /**
      * 사용자권한코드
      */
-    @Column(name = "CODE")
-    private Integer code;
+    @Column(name = "USER_ROLE_CD")
+    private Integer userRoleCd;
 
     /**
      * 사용자이름
@@ -47,6 +47,63 @@ public class User {
     private Integer centerId;
 
     /**
+     * 어린이집이름
+     */
+    @Transient
+    private String centerNm;
+
+    /**
+     * 어린이집전화번호
+     */
+    @Transient
+    private String centerPhone;
+
+    
+    /**
+     * 어린이집 주소
+     */
+    @Transient
+    private String centerAddr;
+    
+    
+    @Transient
+    private String userPasswordChk;
+    
+
+	public String getCenterAddr() {
+		return centerAddr;
+	}
+
+	public void setCenterAddr(String centerAddr) {
+		this.centerAddr = centerAddr;
+	}
+
+	public String getUserPasswordChk() {
+		return userPasswordChk;
+	}
+
+	public void setUserPasswordChk(String userPasswordChk) {
+		this.userPasswordChk = userPasswordChk;
+	}
+
+	public String getCenterNm() {
+		return centerNm;
+	}
+
+	public void setCenterNm(String centerNm) {
+		this.centerNm = centerNm;
+	}
+
+
+	public String getCenterPhone() {
+		return centerPhone;
+	}
+
+	public void setCenterPhone(String centerPhone) {
+		this.centerPhone = centerPhone;
+	}
+
+	/**
      * getter사용자ID
      *
      * @return USER_ID - 사용자ID
@@ -64,25 +121,15 @@ public class User {
         this.userId = userId;
     }
 
-    /**
-     * getter사용자권한코드
-     *
-     * @return CODE - 사용자권한코드
-     */
-    public Integer getCode() {
-        return code;
-    }
+    public Integer getUserRoleCd() {
+		return userRoleCd;
+	}
 
-    /**
-     * setter사용자권한코드
-     *
-     * @param code 사용자권한코드
-     */
-    public void setCode(Integer code) {
-        this.code = code;
-    }
+	public void setUserRoleCd(Integer userRoleCd) {
+		this.userRoleCd = userRoleCd;
+	}
 
-    /**
+	/**
      * getter사용자이름
      *
      * @return USER_NM - 사용자이름

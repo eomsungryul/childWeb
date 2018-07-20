@@ -46,14 +46,14 @@
           	<div class="float-right mt-3 mb-3">
 				<div class="form-inline">
 				<!-- 검색 start  -->
-                   	<form:form modelAttribute="searchVO" action="${ contextPath }/admin/code/list" name="searchFrm">
+                   	<form:form modelAttribute="searchVO" action="${ contextPath }/admin/center/list" name="searchFrm">
 		            <div>
 		            	<select class="form-control" id="searchCondition" name="searchCondition" >
-					        <option value="codeCategory" selected="selected">카테고리</option>
-					        <option value="codeValue">코드명</option>
+					        <option value="centerNm" selected="selected">어린이집명</option>
+<!-- 					        <option value="codeValue">코드명</option> -->
 					    </select>
 						<input type="hidden" id="pageIndex" name="pageIndex" value="${pni.pageIndex}" />
-		                <input type="text" class="form-control search" id="searchKeyword" name="searchKeyword" placeholder="검색어"  value="${pni.searchKeyword}" onkeydown="$event.keyCode===13&&fnSearch()"/>
+		                <input type="text" class="form-control search" id="searchKeyword" name="searchKeyword" placeholder="검색어"  value="${pni.searchKeyword}" onkeydown="event.keyCode===13&&fnSearch()"/>
 		                <button type="button" onclick="fnSearch()" class="btn btn-secondary" >검색</button>
 		            </div>
 		            </form:form>
@@ -63,21 +63,21 @@
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th>코드</th>
-                  <th>코드카테고리</th>
-                  <th>코드명</th>
-                  <th>코드설명</th>
+                  <th>어린이집명</th>
+                  <th>어린이집주소</th>
+                  <th>전화번호</th>
+                  <th>승인여부</th>
                 </tr>
               </thead>
               <tbody>
               	<c:if test="${fn:length(resultList)!=0}">
                  	<c:forEach var="result" items="${ resultList }" varStatus="status">
-		                <tr onclick="fnRegist(${result.CODE },'U')">
+		                <tr onclick="fnRegist(${result.centerId },'U')">
 		                  <td>${ pni.totalRecordCount - (((pni.pageIndex - 1) * pni.recordCountPerPage) + (status.index)) }</td>
-		                  <td>${result.CODE }</td>
-		                  <td>${result.CODE_CATEGORY }</td>
-		                  <td>${result.CODE_VALUE }</td>
-		                  <td>${result.CODE_DESC }</td>
+		                  <td>${result.centerNm }</td>
+		                  <td>${result.centerAddr }</td>
+		                  <td>${result.centerPhone }</td>
+		                  <td>${result.confrimYn }</td>
 		                </tr>
                  	</c:forEach>
               	</c:if>
@@ -102,8 +102,8 @@
       </div>
     </div>
     
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
     <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
     
 	<script type="text/javascript">
@@ -134,7 +134,7 @@
 	 */
 	function fnSearch(){
 		document.searchFrm.pageIndex.value = 1;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/admin/center/list";
 		document.searchFrm.submit();
 	}
 	
@@ -144,7 +144,7 @@
 	 */
 	function fnLinkPage(pageNo){
 		document.searchFrm.pageIndex.value = pageNo;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/admin/center/list";
 		document.searchFrm.submit();
 	}
 	
@@ -153,17 +153,17 @@
 	 */
 	function fnRegist(code ,flag){
 		if(flag=="U"){
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag+"&code="+code;
+			document.searchFrm.action = contextPath + "/admin/center/regist?flag="+flag+"&centerId="+code;
 		}else{
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag;
+			document.searchFrm.action = contextPath + "/admin/center/regist?flag="+flag;
 		}
 		document.searchFrm.submit();
 	}
 	/**
 	 *  게시판 상세 페이지 
 	 */
-	function fnDetail(codeSeq){
-		document.searchFrm.action = contextPath + "/admin/code/detail?codeSeq="+codeSeq;
+	function fnDetail(centerId){
+		document.searchFrm.action = contextPath + "/admin/center/detail?centerId="+centerId;
 		document.searchFrm.submit();
 	}
 	

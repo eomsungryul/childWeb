@@ -33,8 +33,8 @@ public class ClassDailyEvent {
     /**
      * 사용자(대리체크자)ID
      */
-    @Column(name = "USER_ID")
-    private Integer userId;
+    @Column(name = "SECOND_CHECKER_USER_ID")
+    private Integer secondCheckerUserId;
 
     /**
      * 이벤트코드
@@ -114,25 +114,15 @@ public class ClassDailyEvent {
         this.classId = classId;
     }
 
-    /**
-     * getter사용자(대리체크자)ID
-     *
-     * @return USER_ID - 사용자(대리체크자)ID
-     */
-    public Integer getUserId() {
-        return userId;
-    }
+    public Integer getSecondCheckerUserId() {
+		return secondCheckerUserId;
+	}
 
-    /**
-     * setter사용자(대리체크자)ID
-     *
-     * @param userId 사용자(대리체크자)ID
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setSecondCheckerUserId(Integer secondCheckerUserId) {
+		this.secondCheckerUserId = secondCheckerUserId;
+	}
 
-    /**
+	/**
      * getter이벤트코드
      *
      * @return EVENT_CD - 이벤트코드

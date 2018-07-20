@@ -51,18 +51,18 @@
        		<input type="hidden" name="searchKeyword" id="searchKeyword" value="${ searchVO.searchKeyword}" />
        		<input type="hidden" name="pageIndex" id="pageIndex" value="${ searchVO.pageIndex }"/>  
       		<c:if test="${flag=='U'}">
-	       		<input type="hidden" name="code" id="code" value="${ result.code }"/>
+	       		<input type="hidden" name="code" id="code" value="${ result.classId }"/>
       		</c:if>
 				  <div class="form-group row">
-				    <label for="codeCategory" class="col-sm-2 col-form-label">코드카테고리</label>
+				    <label for="codeCategory" class="col-sm-2 col-form-label">클래스 이름</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="code_category" name="code_category" placeholder="" value="${result.code_category }" required="" maxlength="128">
+				      <input type="text" class="form-control" id="classNm" name="classNm" placeholder="" value="${result.classNm }" required="" maxlength="50">
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="codeValue" class="col-sm-2 col-form-label">코드값</label>
+				    <label for="codeValue" class="col-sm-2 col-form-label">담당 선생님</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="code_value" name="code_value" placeholder="" value="${result.code_value }" required="" maxlength="128">
+				      <input type="text" class="form-control" id="code_value" name="code_value" placeholder="" value="${result.centerId }" required="" maxlength="128">
 				    </div>
 				  </div>
 				  <div class="form-group row">

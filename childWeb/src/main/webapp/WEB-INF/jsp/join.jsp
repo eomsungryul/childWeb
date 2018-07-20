@@ -36,16 +36,16 @@
 	            <div class="row">
 	              <div class="col-md-6 mb-3">
 	                <label for="firstName">사용자 ID</label>
-	                <input type="text" class="form-control" id="user_login_id" name="user_login_id" value="" required="" maxlength="40">
+	                <input type="text" class="form-control" id="userLoginId" name="userLoginId" value="" required="" maxlength="40">
 	                <div class="invalid-feedback">
 	                  Valid first name is required.
 	                </div>
 	              </div>
 	              <div class="col-md-6 mb-3">
-	                <label for="lastName">핸드폰</label>
-	                <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="예시 : 0100000000" value="" required="" data-parsley-type="number">
+	                <label for="firstName">사용자 이름</label>
+	                <input type="text" class="form-control" id="userNm" name="userNm" value="" required="" maxlength="50">
 	                <div class="invalid-feedback">
-	                  Valid last name is required.
+	                  Valid first name is required.
 	                </div>
 	              </div>
 	            </div>
@@ -56,7 +56,7 @@
 <!-- 	                <input type="password" class="form-control" id="user_password" name="user_password" placeholder="" value="" required=""  -->
 <!-- 	                data-parsley-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g" -->
 <!-- 	                > -->
-	                <input type="password" class="form-control" id="user_password" name="user_password" placeholder="" value="" required="" 
+	                <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="" value="" required="" 
 	                data-parsley-pattern="/^(?=.*?[a-z])(?=.*?[0-9]).{5,}$/g"
 	                >
 	                <div class="invalid-feedback">
@@ -65,20 +65,40 @@
 	              </div>
 	              <div class="col-md-6 mb-3">
 	                <label for="lastName">비밀번호 확인</label>
-	                <input type="password" class="form-control" id="user_password_chk" name="user_password_chk" data-parsley-equalto="#user_password"	 placeholder="" value="" required="">
+	                <input type="password" class="form-control" id="userPasswordChk" name="userPasswordChk" data-parsley-equalto="#userPassword"	 placeholder="" value="" required="">
 	                <div class="invalid-feedback">
 	                  Valid last name is required.
 	                </div>
 	              </div>
 	            </div>
-	
-	            <div class="mb-3">
-	              <label for="email">Email <span class="text-muted">(Optional)</span></label>
-	              <input type="text" class="form-control" id="email" placeholder="you@example.com" data-parsley-type="email">
-	              <div class="invalid-feedback">
-	                Please enter a valid email address for shipping updates.
+	            
+	            <div class="row">
+	              <div class="col-md-6 mb-3">
+	                <label for="lastName">핸드폰</label>
+	                <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="예시 : 0100000000" value="" maxlength="30" required="" data-parsley-type="number">
+	                <div class="invalid-feedback">
+	                  Valid last name is required.
+	                </div>
+	              </div>
+	              <div class="col-md-6 mb-3">
+	                <label for="email">Email 
+	<!-- 	              <span class="text-muted">(Optional)</span> -->
+		              </label>
+		              <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="you@example.com" data-parsley-type="email">
+		              <div class="invalid-feedback">
+		                Please enter a valid email address for shipping updates.
+		              </div>
 	              </div>
 	            </div>
+<!-- 	            <div class="mb-3"> -->
+<!-- 	              <label for="email">Email  -->
+<!-- 	              <span class="text-muted">(Optional)</span> -->
+<!-- 	              </label> -->
+<!-- 	              <input type="text" class="form-control" id="email" placeholder="you@example.com" data-parsley-type="email"> -->
+<!-- 	              <div class="invalid-feedback"> -->
+<!-- 	                Please enter a valid email address for shipping updates. -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
 	
 <!-- 	            <div class="row"> -->
 <!-- 	              <div class="col-md-5 mb-3"> -->
@@ -128,14 +148,14 @@
 	            <div class="row">
 	              <div class="col-md-6 mb-3">
 	                <label for="cc-name">어린이집 이름</label>
-	                <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+	                <input type="text" class="form-control" id="centerNm" name="centerNm" placeholder="" required="">
 	                <div class="invalid-feedback">
 	                  Name on card is required
 	                </div>
 	              </div>
 	              <div class="col-md-6 mb-3">
 	                <label for="cc-number">어린이집 번호</label>
-	                <input type="text" class="form-control" id="cc-number"  placeholder="예시 : 0100000000" required="">
+	                <input type="text" class="form-control" id="centerPhone" name="centerPhone"  placeholder="예시 : 0100000000" required="">
 	                <div class="invalid-feedback">
 	                  Credit card number is required
 	                </div>
@@ -144,7 +164,7 @@
 	            <div class="row">
 	              <div class="col-md-12 mb-3">
 	                <label for="cc-expiration">어린이집 주소</label>
-	                <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+	                <input type="text" class="form-control" id="centerAddr" name="centerAddr" placeholder="" required="">
 	                <small class="text-muted float-left">상세주소로 입력</small>
 	                <div class="invalid-feedback">
 	                  Expiration date required
@@ -153,6 +173,8 @@
 	            </div>
 	            <hr class="mb-4">
 	            <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="fnRegist()">가입</button>
+	            <input type="hidden" id="userRoleCd" name="userRoleCd" value="100002">
+	               
 	          </form:form>
 	          
 	        </div>
@@ -178,19 +200,49 @@ var contextPath = "${ pageContext.request.contextPath }";
  */
 function fnRegist(){
 
-	if(!confirm("가입 하시겠습니까?")) return;
-	if($('#registFrm').parsley().validate()){
-		var data = $("#registFrm").serialize();
-    	$.ajax({
-    		type : "POST",
-    		url : contextPath + "/join",
-    		dataType : "json",
-    		data : data,
-    		success : function(data){
-    	    	
-    		}
-    	});
-	}
+	//유저 중복 확인 
+	$.ajax({
+		type : "POST",
+		url : contextPath + "/findUser",
+		data : {"userLoginId":$("#userLoginId").val()},
+		dataType : "json",
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+         },
+		success : function(data){
+			if(data.data.state){
+
+				//가입
+				if(!confirm("가입 하시겠습니까?")) return;
+				
+				if($('#registFrm').parsley().validate()){
+					var data = $("#registFrm").serialize();
+			    	$.ajax({
+			    		type : "POST",
+			    		url : contextPath + "/joinAction",
+			    		data : data,
+			    		dataType : "json",
+				        error:function(request,status,error){
+				            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				         },
+			    		success : function(data){
+			    			if(data.code=200){
+			            		alert("회원가입이 되었습니다. 로그인 해주세요.")
+			        			location.href = contextPath+"/login" ; 
+				        	}else{
+				        		//200아닌것들
+				        	}
+			    		}
+			    	});
+				}
+				
+				
+			}else{
+        		alert("비밀번호를 확인해주세요.")
+			}
+		}
+	});
+	
 }
 
 </script>

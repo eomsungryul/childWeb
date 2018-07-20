@@ -2,7 +2,7 @@ package kr.co.dwebss.child.model;
 
 import javax.persistence.*;
 
-public class Center {
+public class Center extends SearchVO{
     /**
      * 어린이집ID
      */
@@ -17,10 +17,10 @@ public class Center {
     private String centerNm;
 
     /**
-     * 어린이집주소
+     * 어린이집 주소
      */
-    @Column(name = "CETNER_ADDR")
-    private String cetnerAddr;
+    @Column(name = "CENTER_ADDR")
+    private String centerAddr;
 
     /**
      * 어린이집전화번호
@@ -29,6 +29,29 @@ public class Center {
     private String centerPhone;
 
     /**
+     * 승인 여부
+     */
+    @Column(name = "CONFRIM_YN")
+    private String confrimYn;
+
+
+	public String getConfrimYn() {
+		return confrimYn;
+	}
+
+	public void setConfrimYn(String confrimYn) {
+		this.confrimYn = confrimYn;
+	}
+
+	public String getCenterAddr() {
+		return centerAddr;
+	}
+
+	public void setCenterAddr(String centerAddr) {
+		this.centerAddr = centerAddr;
+	}
+
+	/**
      * getter어린이집ID
      *
      * @return CENTER_ID - 어린이집ID
@@ -64,23 +87,6 @@ public class Center {
         this.centerNm = centerNm;
     }
 
-    /**
-     * getter어린이집주소
-     *
-     * @return CETNER_ADDR - 어린이집주소
-     */
-    public String getCetnerAddr() {
-        return cetnerAddr;
-    }
-
-    /**
-     * setter어린이집주소
-     *
-     * @param cetnerAddr 어린이집주소
-     */
-    public void setCetnerAddr(String cetnerAddr) {
-        this.cetnerAddr = cetnerAddr;
-    }
 
     /**
      * getter어린이집전화번호

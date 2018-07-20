@@ -19,8 +19,8 @@ public class Child {
     /**
      * 아이연락처
      */
-    @Column(name = "CHILD_PHONE")
-    private String childPhone;
+    @Column(name = "PARENT_PHONE")
+    private String parentPhone;
 
     /**
      * 클래스ID
@@ -31,8 +31,8 @@ public class Child {
     /**
      * 사용자(보호자)ID
      */
-    @Column(name = "USER_ID")
-    private Integer userId;
+    @Column(name = "PARENT_USER_ID")
+    private Integer parentUserId;
 
     /**
      * getter아이ID
@@ -70,23 +70,6 @@ public class Child {
         this.childNm = childNm;
     }
 
-    /**
-     * getter아이연락처
-     *
-     * @return CHILD_PHONE - 아이연락처
-     */
-    public String getChildPhone() {
-        return childPhone;
-    }
-
-    /**
-     * setter아이연락처
-     *
-     * @param childPhone 아이연락처
-     */
-    public void setChildPhone(String childPhone) {
-        this.childPhone = childPhone;
-    }
 
     /**
      * getter클래스ID
@@ -106,21 +89,22 @@ public class Child {
         this.classId = classId;
     }
 
-    /**
-     * getter사용자(보호자)ID
-     *
-     * @return USER_ID - 사용자(보호자)ID
-     */
-    public Integer getUserId() {
-        return userId;
-    }
+	public String getParentPhone() {
+		return parentPhone;
+	}
 
-    /**
-     * setter사용자(보호자)ID
-     *
-     * @param userId 사용자(보호자)ID
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setParentPhone(String parentPhone) {
+		this.parentPhone = parentPhone;
+	}
+
+	public Integer getParentUserId() {
+		return parentUserId;
+	}
+
+	public void setParentUserId(Integer parentUserId) {
+		this.parentUserId = parentUserId;
+	}
+    
+    
+
 }

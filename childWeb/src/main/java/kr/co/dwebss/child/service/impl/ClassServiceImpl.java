@@ -7,6 +7,9 @@ import kr.co.dwebss.child.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 
@@ -18,5 +21,15 @@ import javax.annotation.Resource;
 public class ClassServiceImpl extends AbstractService<Class> implements ClassService {
     @Resource
     private ClassMapper classMapper;
+
+	@Override
+	public List<Class> selectList(Class vo) {
+		return classMapper.selectList(vo);
+	}
+
+	@Override
+	public int selectListCnt(Class vo) {
+		return classMapper.selectListCnt(vo);
+	}
 
 }

@@ -46,7 +46,7 @@
           	<div class="float-right mt-3 mb-3">
 				<div class="form-inline">
 				<!-- 검색 start  -->
-                   	<form:form modelAttribute="searchVO" action="${ contextPath }/admin/code/list" name="searchFrm">
+                   	<form:form modelAttribute="searchVO" action="${ contextPath }/director/class/list" name="searchFrm">
 		            <div>
 		            	<select class="form-control" id="searchCondition" name="searchCondition" >
 					        <option value="codeCategory" selected="selected">카테고리</option>
@@ -134,7 +134,7 @@
 	 */
 	function fnSearch(){
 		document.searchFrm.pageIndex.value = 1;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/director/class/list";
 		document.searchFrm.submit();
 	}
 	
@@ -144,7 +144,7 @@
 	 */
 	function fnLinkPage(pageNo){
 		document.searchFrm.pageIndex.value = pageNo;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/director/class/list";
 		document.searchFrm.submit();
 	}
 	
@@ -153,9 +153,9 @@
 	 */
 	function fnRegist(code ,flag){
 		if(flag=="U"){
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag+"&code="+code;
+			document.searchFrm.action = contextPath + "/director/class/regist?flag="+flag+"&code="+code;
 		}else{
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag;
+			document.searchFrm.action = contextPath + "/director/class/regist?flag="+flag;
 		}
 		document.searchFrm.submit();
 	}
@@ -163,7 +163,7 @@
 	 *  게시판 상세 페이지 
 	 */
 	function fnDetail(codeSeq){
-		document.searchFrm.action = contextPath + "/admin/code/detail?codeSeq="+codeSeq;
+		document.searchFrm.action = contextPath + "/director/class/detail?codeSeq="+codeSeq;
 		document.searchFrm.submit();
 	}
 	

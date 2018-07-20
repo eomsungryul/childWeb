@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +21,22 @@ import com.github.pagehelper.PageInfo;
 import kr.co.dwebss.child.core.Result;
 import kr.co.dwebss.child.core.ResultGenerator;
 import kr.co.dwebss.child.model.User;
+import kr.co.dwebss.child.service.CenterService;
 import kr.co.dwebss.child.service.UserService;
 
 /**
 * Created by 엄성렬 on 2018/07/20.
 */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private CenterService centerService;
+
+    @Transactional(rollbackFor=Exception.class)
     @PostMapping("/add")
     public Result add(User user) {
         userService.save(user);

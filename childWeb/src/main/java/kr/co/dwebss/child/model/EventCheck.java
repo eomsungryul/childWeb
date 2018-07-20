@@ -33,8 +33,8 @@ public class EventCheck {
     /**
      * 사용자(체크자)ID
      */
-    @Column(name = "USER_ID")
-    private Integer userId;
+    @Column(name = "CHECKER_USER_ID")
+    private Integer checkerUserId;
 
     /**
      * 이벤트체크코드
@@ -114,23 +114,6 @@ public class EventCheck {
         this.childId = childId;
     }
 
-    /**
-     * getter사용자(체크자)ID
-     *
-     * @return USER_ID - 사용자(체크자)ID
-     */
-    public Integer getUserId() {
-        return userId;
-    }
-
-    /**
-     * setter사용자(체크자)ID
-     *
-     * @param userId 사용자(체크자)ID
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     /**
      * getter이벤트체크코드
@@ -149,4 +132,14 @@ public class EventCheck {
     public void setEventCheckCd(Integer eventCheckCd) {
         this.eventCheckCd = eventCheckCd;
     }
+
+	public Integer getCheckerUserId() {
+		return checkerUserId;
+	}
+
+	public void setCheckerUserId(Integer checkerUserId) {
+		this.checkerUserId = checkerUserId;
+	}
+    
+    
 }

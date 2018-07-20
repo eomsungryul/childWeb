@@ -2,7 +2,7 @@ package kr.co.dwebss.child.model;
 
 import javax.persistence.*;
 
-public class Class {
+public class Class extends SearchVO {
     /**
      * 클래스ID
      */
@@ -25,8 +25,8 @@ public class Class {
     /**
      * 사용자(선생님)ID
      */
-    @Column(name = "USER_ID")
-    private Integer userId;
+    @Column(name = "TEACHER_USER_ID")
+    private Integer teacherUserId;
 
     /**
      * getter클래스ID
@@ -82,21 +82,14 @@ public class Class {
         this.centerId = centerId;
     }
 
-    /**
-     * getter사용자(선생님)ID
-     *
-     * @return USER_ID - 사용자(선생님)ID
-     */
-    public Integer getUserId() {
-        return userId;
-    }
+	public Integer getTeacherUserId() {
+		return teacherUserId;
+	}
 
-    /**
-     * setter사용자(선생님)ID
-     *
-     * @param userId 사용자(선생님)ID
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setTeacherUserId(Integer teacherUserId) {
+		this.teacherUserId = teacherUserId;
+	}
+    
+    
+
 }
