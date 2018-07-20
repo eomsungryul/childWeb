@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dwebss.child.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="kr.co.dwebss.child.model.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="CODE" jdbcType="INTEGER" property="code" />
+    <result column="USER_NM" jdbcType="VARCHAR" property="userNm" />
+    <result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
+    <result column="USER_LOGIN_ID" jdbcType="VARCHAR" property="userLoginId" />
+    <result column="USER_PASSWORD" jdbcType="CHAR" property="userPassword" />
+    <result column="CENTER_ID" jdbcType="INTEGER" property="centerId" />
+  </resultMap>
+  
+  
+ 	<sql id="SelectWhereQuery">
+	WHERE 1=1
+		<if test="userLoginId !='' and  userLoginId !=null">
+			AND USER_LOGIN_ID = #{userLoginId}
+		</if>	
+		<if test="userPassword !='' and  userPassword !=null">
+			AND USER_PASSWORD = #{userPassword}
+		</if>	
+	</sql>
+  
+  <select id="selectUser" parameterType="kr.co.dwebss.child.model.User" resultType="kr.co.dwebss.child.model.User">
+    	SELECT 
+			USER_ID ,
+			CODE , 
+			USER_NM , 
+			USER_PHONE , 
+			USER_LOGIN_ID , 
+			USER_PASSWORD , 
+			CENTER_ID 
+		FROM USER
+		<include refid="kr.co.dwebss.child.dao.UserMapper.SelectWhereQuery" />
+    </select>
+</mapper>
