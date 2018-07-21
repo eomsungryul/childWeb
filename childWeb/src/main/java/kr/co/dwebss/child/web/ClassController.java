@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,8 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.dwebss.child.model.Center;
 import kr.co.dwebss.child.model.Class;
+import kr.co.dwebss.child.model.CommonCode;
+import kr.co.dwebss.child.model.User;
 import kr.co.dwebss.child.service.ClassService;
+import kr.co.dwebss.child.service.CommonCodeService;
+import kr.co.dwebss.child.service.UserService;
 
 /**
 * Created by 엄성렬 on 2018/07/20.
@@ -23,50 +29,24 @@ public class ClassController {
     @Resource
     private ClassService classService;
 
-//    @PostMapping("/add")
-//    public Result add(Class vo) {
-//        classService.save(vo);
-//        return ResultGenerator.genSuccessResult();
-//    }
-//
-//    @PostMapping("/delete")
-//    public Result delete(@RequestParam Integer id) {
-//        classService.deleteById(id);
-//        return ResultGenerator.genSuccessResult();
-//    }
-//
-//    @PostMapping("/update")
-//    public Result update(Class vo) {
-//        classService.update(vo);
-//        return ResultGenerator.genSuccessResult();
-//    }
-//
-//    @PostMapping("/detail")
-//    public Result detail(@RequestParam Integer id) {
-//        Class vo = classService.findById(id);
-//        return ResultGenerator.genSuccessResult(vo);
-//    }
-    
-//    @PostMapping("/list")
-//    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-//    	PageHelper.startPage(page, size);
-//    	List<Class> list = classService.findAll();
-//    	PageInfo pageInfo = new PageInfo(list);
-//    	return ResultGenerator.genSuccessResult(pageInfo);
-//    }
+    @Resource
+    private UserService userService;
 
 	/**
 	 * 클래스 관리 목록
 	 *
-	 * @param ModelMap model
+	 * @param Class vo
 	 * @return String
 	 * @throws Exception
 	 */
-    @RequestMapping("/director/class/list")
-	public ModelAndView list(@ModelAttribute("class") Class vo
+	@RequestMapping("/director/class/list")
+	public ModelAndView list(@ModelAttribute("class") Class vo,
+			HttpSession session
 			) throws Exception {
 		
     	vo.setFirstIndex((vo.getPageIndex() - 1 ) * vo.getPageUnit());
+    	vo.setCenterId((Integer)session.getAttribute("centerId"));
+    	
 		List<Class> resultList = classService.selectList(vo);
 		int totalCnt=classService.selectListCnt(vo);
 		
@@ -74,13 +54,13 @@ public class ClassController {
 		vo.setTotalPage();
 		
 		ModelAndView mav = new ModelAndView("director/class/list");
-		
 		mav.addObject("resultList", resultList);
 		mav.addObject("totalCnt", totalCnt);
 		mav.addObject("pni", vo);
 		return mav;
 	}
-    
+	
+
     /**
 	 * 클래스 관리 글쓰기
 	 *
@@ -89,23 +69,31 @@ public class ClassController {
 	 * @throws Exception
 	 */
     @RequestMapping("/director/class/regist")
-	public String regist(
+	public ModelAndView regist(
 			HttpServletRequest request,
 			@ModelAttribute("class") Class vo,
-			ModelMap model
+			HttpSession session
 			) throws Exception {
-    	
+		ModelAndView mav = new ModelAndView("director/class/regist");
     	String flag= request.getParameter("flag");
 
 		if(flag.equals("U")){
-	        Class result = classService.findById(vo.getClassId());
-			model.addAttribute("result", result);
+			Class result = classService.findById(vo.getClassId());
+			mav.addObject("result", result);
 		}
 		
-		model.addAttribute("searchVO", vo);
-		model.addAttribute("flag", flag);
+		//담당 선생님 찾는 기능
+		User param = new User();
+		param.setCenterId((Integer)session.getAttribute("centerId"));
+		param.setUserRoleCd(100003);
+		List<User> teacherList = userService.selectTeacher(param);
 		
-		return "director/class/regist";
+		mav.addObject("searchVO", vo);
+		mav.addObject("flag", flag);
+		mav.addObject("centerId", (Integer)session.getAttribute("centerId"));
+		mav.addObject("teacherList", teacherList);
+		
+		return mav;
 	}
     
 
@@ -119,14 +107,13 @@ public class ClassController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/director/class/insert")
-	public String insert(
-			HttpServletRequest request,
+	public ModelAndView insert(
 			@ModelAttribute("class") Class vo,
 			ModelMap model) throws Exception {
-
+		ModelAndView mav = new ModelAndView("forward:/director/class/list");
 		classService.save(vo);
 
-		return "forward:/director/class/list";
+		return mav;
 	}
 	
 	/**
@@ -139,14 +126,14 @@ public class ClassController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/director/class/update")
-	public String update(
-			HttpServletRequest request,
+	public ModelAndView update(
 			@ModelAttribute("class") Class vo
 			) throws Exception {
 		
+		ModelAndView mav = new ModelAndView("forward:/director/class/list");
 		classService.update(vo);
 		
-		return "forward:/director/class/list";
+		return mav;
 	}
 
 	/**
@@ -159,12 +146,12 @@ public class ClassController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/director/class/delete")
-	public String delete(
-			HttpServletRequest request,
+	public ModelAndView delete(
 			@ModelAttribute("class") Class vo,
 			ModelMap model) throws Exception {
-
+	  ModelAndView mav = new ModelAndView("forward:/director/class/list");
       classService.deleteById(vo.getClassId());
-	  return "forward:/director/class/list";
+      
+	  return mav;
 	}
 }

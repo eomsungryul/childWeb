@@ -14,8 +14,10 @@ public interface UserService extends Service<User> {
 
 	User selectUser(User vo);
 
-	List<Center> selectList(User vo);
+	List<User> selectList(User vo);
 
 	int selectListCnt(User vo);
+
+	List<User> selectTeacher(User param);
 
 }

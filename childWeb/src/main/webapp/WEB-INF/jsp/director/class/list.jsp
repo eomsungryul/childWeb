@@ -46,11 +46,10 @@
           	<div class="float-right mt-3 mb-3">
 				<div class="form-inline">
 				<!-- 검색 start  -->
-                   	<form:form modelAttribute="searchVO" action="${ contextPath }/director/class/list" name="searchFrm">
+                   	<form:form modelAttribute="class" action="${ contextPath }/director/class/list" name="searchFrm">
 		            <div>
 		            	<select class="form-control" id="searchCondition" name="searchCondition" >
-					        <option value="codeCategory" selected="selected">카테고리</option>
-					        <option value="codeValue">코드명</option>
+					        <option value="classNm" selected="classNm">클래스명</option>
 					    </select>
 						<input type="hidden" id="pageIndex" name="pageIndex" value="${pni.pageIndex}" />
 		                <input type="text" class="form-control search" id="searchKeyword" name="searchKeyword" placeholder="검색어"  value="${pni.searchKeyword}" onkeydown="$event.keyCode===13&&fnSearch()"/>
@@ -63,21 +62,17 @@
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th>코드</th>
-                  <th>코드카테고리</th>
-                  <th>코드명</th>
-                  <th>코드설명</th>
+                  <th>클래스명</th>
+                  <th>담당 선생님</th>
                 </tr>
               </thead>
               <tbody>
               	<c:if test="${fn:length(resultList)!=0}">
                  	<c:forEach var="result" items="${ resultList }" varStatus="status">
-		                <tr onclick="fnRegist(${result.CODE },'U')">
+		                <tr onclick="fnRegist(${result.classId },'U')">
 		                  <td>${ pni.totalRecordCount - (((pni.pageIndex - 1) * pni.recordCountPerPage) + (status.index)) }</td>
-		                  <td>${result.CODE }</td>
-		                  <td>${result.CODE_CATEGORY }</td>
-		                  <td>${result.CODE_VALUE }</td>
-		                  <td>${result.CODE_DESC }</td>
+		                  <td>${result.classNm }</td>
+		                  <td>${result.teacherUserNm }</td>
 		                </tr>
                  	</c:forEach>
               	</c:if>
@@ -102,9 +97,9 @@
       </div>
     </div>
     
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
-    <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/bootstrap-4.1.1/js/bootstrap.min.js"></script>
     
 	<script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
@@ -151,9 +146,9 @@
 	/**
 	 *  게시판 등록 페이지 
 	 */
-	function fnRegist(code ,flag){
+	function fnRegist(classId ,flag){
 		if(flag=="U"){
-			document.searchFrm.action = contextPath + "/director/class/regist?flag="+flag+"&code="+code;
+			document.searchFrm.action = contextPath + "/director/class/regist?flag="+flag+"&classId="+classId;
 		}else{
 			document.searchFrm.action = contextPath + "/director/class/regist?flag="+flag;
 		}
@@ -162,8 +157,8 @@
 	/**
 	 *  게시판 상세 페이지 
 	 */
-	function fnDetail(codeSeq){
-		document.searchFrm.action = contextPath + "/director/class/detail?codeSeq="+codeSeq;
+	function fnDetail(classId){
+		document.searchFrm.action = contextPath + "/director/class/detail?classId="+classId;
 		document.searchFrm.submit();
 	}
 	

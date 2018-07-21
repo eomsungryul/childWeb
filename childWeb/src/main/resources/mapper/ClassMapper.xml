@@ -9,6 +9,8 @@
     <result column="CLASS_NM" jdbcType="VARCHAR" property="classNm" />
     <result column="CENTER_ID" jdbcType="INTEGER" property="centerId" />
     <result column="TEACHER_USER_ID" jdbcType="INTEGER" property="teacherUserId" />
+    <result column="TEACHER_USER_NM" jdbcType="VARCHAR" property="teacherUserNm" />
+    <result column="CENTER_NM" jdbcType="VARCHAR" property="centerNm" />
   </resultMap>
   
   
@@ -29,10 +31,17 @@
 				@rownum := @rownum + 1 as rownum,
 				CLASS_ID ,
 				CLASS_NM , 
-				CENTER_ID , 
-				TEACHER_USER_ID 
-			FROM CLASS, (select @rownum :=0) r
+				c.CENTER_ID , 
+				ct.CENTER_NM , 
+				TEACHER_USER_ID ,
+				u.USER_NM as TEACHER_USER_NM
+			FROM CLASS c, (select @rownum :=0) r, CENTER ct, USER u
 			<include refid="kr.co.dwebss.child.dao.ClassMapper.WhereQuery" />
+			<if test="centerId !='' and  centerId !=null">
+				AND c.CENTER_ID = #{ centerId }
+			</if>	
+			AND c.CENTER_ID = ct.CENTER_ID
+			AND c.TEACHER_USER_ID = u.USER_ID
 			ORDER BY CLASS_ID DESC
 		) A
 		where A.rownum LIMIT #{firstIndex}, #{recordCountPerPage}

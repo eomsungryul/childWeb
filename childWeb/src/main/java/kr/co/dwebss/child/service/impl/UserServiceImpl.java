@@ -28,13 +28,18 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 	}
 
 	@Override
-	public List<Center> selectList(User vo) {
+	public List<User> selectList(User vo) {
 		return userMapper.selectList(vo);
 	}
 
 	@Override
 	public int selectListCnt(User vo) {
 		return userMapper.selectListCnt(vo);
+	}
+
+	@Override
+	public List<User> selectTeacher(User vo) {
+		return userMapper.selectTeacher(vo);
 	}
 
 }

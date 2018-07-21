@@ -103,4 +103,24 @@
 		) A
     </select>
     
+    
+  <select id="selectTeacher" parameterType="kr.co.dwebss.child.model.User" resultMap="userMap">
+    	SELECT 
+			USER_ID ,
+			USER_ROLE_CD , 
+			USER_NM , 
+			USER_PHONE , 
+			USER_LOGIN_ID , 
+			USER_PASSWORD , 
+			CENTER_ID
+		FROM USER u
+		WHERE 1=1
+		<if test="centerId !='' and  centerId !=null">
+		AND CENTER_ID = #{centerId}
+		</if>
+		<if test="userRoleCd !='' and  userRoleCd !=null">
+		AND USER_ROLE_CD = #{userRoleCd}
+		</if>
+    </select>
+    
 </mapper>

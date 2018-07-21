@@ -51,8 +51,9 @@
        		<input type="hidden" name="searchKeyword" id="searchKeyword" value="${ searchVO.searchKeyword}" />
        		<input type="hidden" name="pageIndex" id="pageIndex" value="${ searchVO.pageIndex }"/>  
       		<c:if test="${flag=='U'}">
-	       		<input type="hidden" name="code" id="code" value="${ result.classId }"/>
+	       		<input type="hidden" name="classId" id="classId" value="${ result.classId }"/>
       		</c:if>
+	       		<input type="hidden" name="centerId" id="centerId" value="${ centerId }"/>
 				  <div class="form-group row">
 				    <label for="codeCategory" class="col-sm-2 col-form-label">클래스 이름</label>
 				    <div class="col-sm-10">
@@ -60,15 +61,13 @@
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="codeValue" class="col-sm-2 col-form-label">담당 선생님</label>
-				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="code_value" name="code_value" placeholder="" value="${result.centerId }" required="" maxlength="128">
-				    </div>
-				  </div>
-				  <div class="form-group row">
-				    <label for="codeDesc" class="col-sm-2 col-form-label">코드설명</label>
-				    <div class="col-sm-10">
-				 	   <textarea class="form-control" id="code_desc" name="code_desc" rows="3" data-parsley-length="[0, 2000]">${result.code_desc }</textarea>
+				    <label for="teacherUserId" class="col-sm-2 col-form-label">담당 선생님</label>
+				    <div class="col-sm-3">
+		            	<select class="form-control" id="teacherUserId" name="teacherUserId" data-parsley-required>
+		            		<c:forEach var="teacher" items="${ teacherList }" varStatus="status">
+					        	<option value="${ teacher.userId}" <c:if test="${result.teacherUserId==teacher.userId }">selected</c:if>>${ teacher.userNm}</option>
+							</c:forEach>
+					    </select>
 				    </div>
 				  </div>
 				  <div class="float-right">
@@ -94,11 +93,11 @@
       </div>
     </div>
 	
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
     <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
-    <script src="<%=contextPath%>/resources/Parsley.js-2.8.1/parsley.js"></script>
-    <script src="<%=contextPath%>/resources/ESR23Common_debug.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/Parsley.js-2.8.1/parsley.js"></script>
+    <script src="<%=contextPath%>/resources/js/ESR23Common_debug.js"></script>
     
     <script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
@@ -108,7 +107,7 @@
 	 */
 	function fnLinkPage(pageNo){
 		document.registFrm.pageIndex.value = pageNo;
-		document.registFrm.action = contextPath + "/admin/code/list";
+		document.registFrm.action = contextPath + "/director/class/list";
 		document.registFrm.submit();
 	}
 	
@@ -117,11 +116,11 @@
 	 */
 	function fnInsert(){
 		
-		if(!confirm("클래스를 등록하시겠습니까?")) return;
+		if(!confirm("클래스 정보를 등록하시겠습니까?")) return;
 		$('#registFrm').parsley().on('field:validated', function() {
 		})
 		.on('form:submit', function() {
-			document.registFrm.action = contextPath + "/admin/code/insert";
+			document.registFrm.action = contextPath + "/director/class/insert";
 		});
 		
 	}
@@ -131,14 +130,14 @@
 	 */
 	function fnUpdate(){
 		
-		if(!confirm("클래스를 수정하시겠습니까?")) return;
+		if(!confirm("클래스 정보를 수정하시겠습니까?")) return;
 // 		$('#registFrm').parsley().on('field:validated', function() {
 // 		})
 // 		.on('form:submit', function() {
-// 			document.registFrm.action = contextPath + "/admin/code/update";
+// 			document.registFrm.action = contextPath + "/director/class/update";
 // 		});
 		if($('#registFrm').parsley().validate()){
-			document.registFrm.action = contextPath + "/admin/code/update";
+			document.registFrm.action = contextPath + "/director/class/update";
 			document.registFrm.submit();
 		}
 		
@@ -148,8 +147,8 @@
 	 *  게시판 삭제
 	 */
 	function fnDelete(){
-		if(!confirm("게시판 정보를 삭제하시겠습니까?")) return;
-		document.registFrm.action = contextPath + "/admin/code/delete";
+		if(!confirm("클래스 정보를 삭제하시겠습니까?")) return;
+		document.registFrm.action = contextPath + "/director/class/delete";
 		document.registFrm.submit();
 	}
 	//]]>

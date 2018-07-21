@@ -3,6 +3,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,11 +37,14 @@ public class teacherController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/director/teacher/list")
-	public ModelAndView list(@ModelAttribute("user") User vo
+	public ModelAndView list(@ModelAttribute("user") User vo,
+			HttpSession session
 			) throws Exception {
 		
     	vo.setFirstIndex((vo.getPageIndex() - 1 ) * vo.getPageUnit());
-		List<Center> resultList = userService.selectList(vo);
+    	vo.setCenterId((Integer)session.getAttribute("centerId"));
+    	
+		List<User> resultList = userService.selectList(vo);
 		int totalCnt=userService.selectListCnt(vo);
 		
 		vo.setTotalRecordCount(totalCnt);

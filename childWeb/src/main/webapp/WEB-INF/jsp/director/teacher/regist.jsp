@@ -151,7 +151,7 @@
 	 */
 	function fnLinkPage(pageNo){
 		document.registFrm.pageIndex.value = pageNo;
-		document.registFrm.action = contextPath + "/admin/user/list";
+		document.registFrm.action = contextPath + "/director/teacher/list";
 		document.registFrm.submit();
 	}
 	
@@ -164,7 +164,7 @@
 		$('#registFrm').parsley().on('field:validated', function() {
 		})
 		.on('form:submit', function() {
-			document.registFrm.action = contextPath + "/admin/user/insert";
+			document.registFrm.action = contextPath + "/director/teacher/insert";
 		});
 		
 	}
@@ -180,10 +180,10 @@
 // 		})
 // 		.on('form:submit', function(){
 // 			debugger;
-// 			document.registFrm.action = contextPath + "/admin/user/update";
+// 			document.registFrm.action = contextPath + "/director/teacher/update";
 // 		});
 		if($('#registFrm').parsley().validate()){
-			document.registFrm.action = contextPath + "/admin/user/update";
+			document.registFrm.action = contextPath + "/director/teacher/update";
 			document.registFrm.submit();
 		}
 		
@@ -194,7 +194,7 @@
 	 */
 	function fnDelete(){
 		if(!confirm("회원 정보를 삭제하시겠습니까?")) return;
-		document.registFrm.action = contextPath + "/admin/user/delete";
+		document.registFrm.action = contextPath + "/director/teacher/delete";
 		document.registFrm.submit();
 	}
 	//]]>

@@ -46,7 +46,7 @@
           	<div class="float-right mt-3 mb-3">
 				<div class="form-inline">
 				<!-- 검색 start  -->
-                   	<form:form modelAttribute="user" action="${ contextPath }/admin/user/list" name="searchFrm">
+                   	<form:form modelAttribute="user" action="${ contextPath }/director/teacher/list" name="searchFrm">
 		            <div>
 		            	<select class="form-control" id="searchCondition" name="searchCondition" >
 					        <option value="userLoginId" selected="selected">사용자ID</option>
@@ -132,7 +132,7 @@
 	 */
 	function fnSearch(){
 		document.searchFrm.pageIndex.value = 1;
-		document.searchFrm.action = contextPath + "/admin/user/list";
+		document.searchFrm.action = contextPath + "/director/teacher/list";
 		document.searchFrm.submit();
 	}
 	
@@ -142,7 +142,7 @@
 	 */
 	function fnLinkPage(pageNo){
 		document.searchFrm.pageIndex.value = pageNo;
-		document.searchFrm.action = contextPath + "/admin/user/list";
+		document.searchFrm.action = contextPath + "/director/teacher/list";
 		document.searchFrm.submit();
 	}
 	
@@ -151,9 +151,9 @@
 	 */
 	function fnRegist(userId ,flag){
 		if(flag=="U"){
-			document.searchFrm.action = contextPath + "/admin/user/regist?flag="+flag+"&userId="+userId;
+			document.searchFrm.action = contextPath + "/director/teacher/regist?flag="+flag+"&userId="+userId;
 		}else{
-			document.searchFrm.action = contextPath + "/admin/user/regist?flag="+flag;
+			document.searchFrm.action = contextPath + "/director/teacher/regist?flag="+flag;
 		}
 		document.searchFrm.submit();
 	}
@@ -162,7 +162,7 @@
 	 *  게시판 상세 페이지 
 	 */
 	function fnDetail(userId){
-		document.searchFrm.action = contextPath + "/admin/user/detail?userId="+userId;
+		document.searchFrm.action = contextPath + "/director/teacher/detail?userId="+userId;
 		document.searchFrm.submit();
 	}
 	

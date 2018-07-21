@@ -37,14 +37,12 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/admin/user/list")
-	public ModelAndView list(@ModelAttribute("user") User vo,
-			HttpSession session
+	public ModelAndView list(@ModelAttribute("user") User vo
 			) throws Exception {
 		
     	vo.setFirstIndex((vo.getPageIndex() - 1 ) * vo.getPageUnit());
-    	vo.setCenterId((Integer)session.getAttribute("centerId"));
     	
-		List<Center> resultList = userService.selectList(vo);
+		List<User> resultList = userService.selectList(vo);
 		int totalCnt=userService.selectListCnt(vo);
 		
 		vo.setTotalRecordCount(totalCnt);

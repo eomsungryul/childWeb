@@ -27,8 +27,32 @@ public class Class extends SearchVO {
      */
     @Column(name = "TEACHER_USER_ID")
     private Integer teacherUserId;
+    
+    @Transient
+    private String teacherUserNm;
+    
+    @Transient
+    private String centerNm;
+    
+    
 
-    /**
+    public String getTeacherUserNm() {
+		return teacherUserNm;
+	}
+
+	public void setTeacherUserNm(String teacherUserNm) {
+		this.teacherUserNm = teacherUserNm;
+	}
+
+	public String getCenterNm() {
+		return centerNm;
+	}
+
+	public void setCenterNm(String centerNm) {
+		this.centerNm = centerNm;
+	}
+
+	/**
      * getter클래스ID
      *
      * @return CLASS_ID - 클래스ID
