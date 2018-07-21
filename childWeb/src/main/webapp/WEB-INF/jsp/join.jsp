@@ -200,22 +200,21 @@ var contextPath = "${ pageContext.request.contextPath }";
  */
 function fnRegist(){
 
-	//유저 중복 확인 
-	$.ajax({
-		type : "POST",
-		url : contextPath + "/findUser",
-		data : {"userLoginId":$("#userLoginId").val()},
-		dataType : "json",
-        error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-         },
-		success : function(data){
-			if(data.data.state){
-
-				//가입
-				if(!confirm("가입 하시겠습니까?")) return;
-				
-				if($('#registFrm').parsley().validate()){
+	if($('#registFrm').parsley().validate()){
+		//유저 중복 확인 
+		$.ajax({
+			type : "POST",
+			url : contextPath + "/findUser",
+			data : {"userLoginId":$("#userLoginId").val()},
+			dataType : "json",
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	         },
+			success : function(data){
+				if(data.data.state){
+	
+					//가입
+					if(!confirm("가입 하시겠습니까?")) return;
 					var data = $("#registFrm").serialize();
 			    	$.ajax({
 			    		type : "POST",
@@ -234,14 +233,14 @@ function fnRegist(){
 				        	}
 			    		}
 			    	});
+					
+				}else{
+	        		alert("비밀번호를 확인해주세요.");
 				}
-				
-				
-			}else{
-        		alert("비밀번호를 확인해주세요.")
 			}
-		}
-	});
+		});
+
+	}
 	
 }
 

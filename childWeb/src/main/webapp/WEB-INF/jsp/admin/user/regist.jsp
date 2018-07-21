@@ -51,68 +51,70 @@
        		<input type="hidden" name="searchKeyword" id="searchKeyword" value="${ searchVO.searchKeyword}" />
        		<input type="hidden" name="pageIndex" id="pageIndex" value="${ searchVO.pageIndex }"/>  
       		<c:if test="${flag=='U'}">
-	       		<input type="hidden" name="gym_id" id="gym_id" value="${ result.gym_id }"/>
-	       		<input type="hidden" name="user_id" id="user_id" value="${ result.user_id }"/>
+	       		<input type="hidden" name="userId" id="userId" value="${ result.userId }"/>
       		</c:if>
 				  <div class="form-group row">
-				    <label for="codeCategory" class="col-sm-2 col-form-label">헬스장 이름</label>
+				    <label for="userLoginId" class="col-sm-2 col-form-label">사용자ID</label>
 				    <div class="col-sm-10">
-				      ${result.gym_nm }
+				      ${result.userLoginId }
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="codeCategory" class="col-sm-2 col-form-label">사용자 이름</label>
+				    <label for="userNm" class="col-sm-2 col-form-label">사용자 이름</label>
 				    <div class="col-sm-10">
 <%-- 				      <input type="text" class="form-control" id="user_nm" name="user_nm" placeholder="" value="${result.user_nm }" required="" maxlength="20"> --%>
-				      ${result.user_nm }
+				      ${result.userNm }
 				    </div>
 				  </div>
-<!-- 				  <div class="form-group row"> -->
-<!-- 				    <label for="codeValue" class="col-sm-2 col-form-label">키</label> -->
-<!-- 				    <div class="col-sm-10"> -->
-<%-- 				      <input type="text" class="form-control" id="user_height" name="user_height" placeholder="" value="${result.user_height }" required="" maxlength="128"> --%>
-<!-- 				    </div> -->
-<!-- 				  </div> -->
-<!-- 				  <div class="form-group row"> -->
-<!-- 				    <label for="codeDesc" class="col-sm-2 col-form-label">몸무게</label> -->
-<!-- 				    <div class="col-sm-10"> -->
-<%-- 				 	   <input type="text" class="form-control" id="user_weight" name="user_weight" placeholder="" value="${result.user_weight }" required="" maxlength="20"> --%>
-<!-- 				    </div> -->
-<!-- 				  </div> -->
-<!-- 				  <div class="form-group row"> -->
-<!-- 				    <label for="codeDesc" class="col-sm-2 col-form-label">핸드폰번호</label> -->
-<!-- 				    <div class="col-sm-10"> -->
-<%-- 				 	   <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="" value="${result.user_phone }" required="" maxlength="20"> --%>
-<!-- 				    </div> -->
-<!-- 				  </div> -->
-<!-- 				  <div class="form-group row"> -->
-<!-- 				    <label for="codeDesc" class="col-sm-2 col-form-label">이메일</label> -->
-<!-- 				    <div class="col-sm-10"> -->
-<%-- 				 	   <input type="text" class="form-control" id="user_email" name="user_email" data-parsley-length="[0, 2000]" value="${result.user_email }"/> --%>
-<!-- 				    </div> -->
-<!-- 				  </div> -->
-				  
 				  <div class="form-group row">
-				    <label for="user_role_cd" class="col-sm-2 col-form-label">사용자타입</label>
-				    <div class="col-sm-6">
-		            	<select class="form-control" id="user_role_cd" name="user_role_cd" data-parsley-required>
+				    <label for="userPhone" class="col-sm-2 col-form-label">사용자 연락처</label>
+				    <div class="col-sm-10">
+<%-- 				      <input type="text" class="form-control" id="user_nm" name="user_nm" placeholder="" value="${result.user_nm }" required="" maxlength="20"> --%>
+				      ${result.userPhone }
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="userRoleCd" class="col-sm-2 col-form-label">사용자타입</label>
+				    <div class="col-sm-3">
+		            	<select class="form-control" id="userRoleCd" name="userRoleCd" data-parsley-required>
 		            		<c:forEach var="type" items="${ typeList }" varStatus="status">
-					        	<option value="${ type.code}" <c:if test="${result.user_role_cd==type.code }">selected</c:if>>${ type.code_desc}</option>
+					        	<option value="${ type.code}" <c:if test="${result.userRoleCd==type.code }">selected</c:if>>${ type.codeNm}</option>
 							</c:forEach>
 					    </select>
 				    </div>
 				  </div>
-				  
 				  <div class="form-group row">
-				    <label for="approval_yn" class="col-sm-2 col-form-label">승인여부 </label>
+				    <label for="codeCategory" class="col-sm-2 col-form-label">어린이집명</label>
 				    <div class="col-sm-10">
-					  <input class="" type="radio" name="approval_yn" id="approval_yn_Y" value="Y" <c:if test="${result.approval_yn=='Y' }">checked</c:if> data-parsley-required>
-					  <label class="" for="approval_yn_Y">Y</label>
-					  <input class="" type="radio" name="approval_yn" id="approval_yn_N" value="N" <c:if test="${result.approval_yn=='N' }">checked</c:if>>
-					  <label class="" for="approval_yn_N">N</label>
+<%-- 				      <input type="text" class="form-control" id="centerNm" name="centerNm" placeholder="" value="${result.centerNm }" required="" maxlength="128"> --%>
+				    	${result.centerNm }
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="codeValue" class="col-sm-2 col-form-label">어린이집주소</label>
+				    <div class="col-sm-10">
+<%-- 				      <input type="text" class="form-control" id="centerAddr" name="centerAddr" placeholder="" value="${result.centerAddr }" required="" maxlength="128"> --%>
+				    	${result.centerAddr }
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="codeDesc" class="col-sm-2 col-form-label">어린이집전화번호</label>
+				    <div class="col-sm-10">
+<%-- 				 	   <textarea class="form-control" id="centerPhone" name="centerPhone" rows="3" data-parsley-length="[0, 2000]">${result.centerPhone }</textarea> --%>
+				   			${result.centerPhone }
 				    </div>
 				  </div>
 				  
+				  
+				  <div class="form-group row">
+				    <label for="confirmYn" class="col-sm-2 col-form-label">승인여부 </label>
+				    <div class="col-sm-10">
+					  <input class="" type="radio" name="confirmYn" id="confirmYn_Y" value="Y" <c:if test="${result.confirmYn=='Y' }">checked</c:if> data-parsley-required>
+					  <label class="" for="confirmYn_Y">Y</label>
+					  <input class="" type="radio" name="confirmYn" id="confirmYn_N" value="N" <c:if test="${result.confirmYn=='N' }">checked</c:if>>
+					  <label class="" for="confirmYn_N">N</label>
+				    </div>
+				  </div>
 				  <div class="float-right">
 				    <div>
               		<c:if test="${flag=='U'}">
@@ -123,7 +125,6 @@
               		<c:if test="${flag=='I'}">
 			        	<button type="submit" class="btn btn-primary" onclick="fnInsert();">등록</button>
               		</c:if>
-				      
 				      
 				    <button type="submit" class="btn btn-secondary"  onclick="fnLinkPage('${ param.pageIndex }'); return false;">목록</button>
 				    </div>
@@ -136,11 +137,11 @@
       </div>
     </div>
 	
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
-    <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
-    <script src="<%=contextPath%>/resources/Parsley.js-2.8.1/parsley.js"></script>
-    <script src="<%=contextPath%>/resources/ESR23Common_debug.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/Parsley.js-2.8.1/parsley.js"></script>
+    <script src="<%=contextPath%>/resources/js/ESR23Common_debug.js"></script>
     
     <script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
@@ -150,7 +151,7 @@
 	 */
 	function fnLinkPage(pageNo){
 		document.registFrm.pageIndex.value = pageNo;
-		document.registFrm.action = contextPath + "/cmmn/userMng/list";
+		document.registFrm.action = contextPath + "/admin/user/list";
 		document.registFrm.submit();
 	}
 	
@@ -163,7 +164,7 @@
 		$('#registFrm').parsley().on('field:validated', function() {
 		})
 		.on('form:submit', function() {
-			document.registFrm.action = contextPath + "/cmmn/userMng/insert";
+			document.registFrm.action = contextPath + "/admin/user/insert";
 		});
 		
 	}
@@ -179,10 +180,10 @@
 // 		})
 // 		.on('form:submit', function(){
 // 			debugger;
-// 			document.registFrm.action = contextPath + "/cmmn/userMng/update";
+// 			document.registFrm.action = contextPath + "/admin/user/update";
 // 		});
 		if($('#registFrm').parsley().validate()){
-			document.registFrm.action = contextPath + "/cmmn/userMng/update";
+			document.registFrm.action = contextPath + "/admin/user/update";
 			document.registFrm.submit();
 		}
 		
@@ -193,7 +194,7 @@
 	 */
 	function fnDelete(){
 		if(!confirm("회원 정보를 삭제하시겠습니까?")) return;
-		document.registFrm.action = contextPath + "/cmmn/userMng/delete";
+		document.registFrm.action = contextPath + "/admin/user/delete";
 		document.registFrm.submit();
 	}
 	//]]>

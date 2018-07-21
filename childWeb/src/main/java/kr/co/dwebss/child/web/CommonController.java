@@ -112,17 +112,6 @@ public class CommonController {
 		return "join";
 	}
 
-	@RequestMapping(value="/admin/code/list")
-	public String main(
-			HttpServletRequest request,
-			@RequestParam HashMap<String, String> paramMap,
-			HttpSession session,
-			ModelMap model)
-			throws Exception {
-		return "admin/code/list";
-	}
-	
-	
 	
 
 }

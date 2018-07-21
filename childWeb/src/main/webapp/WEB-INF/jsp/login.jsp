@@ -70,15 +70,19 @@ function fnLogin(){
 	        success : function(data) {
 	        	if(data.code=200){
 		        	if(data.data.state){
-		        		if(data.data.userRoleCode = 100001){
+		        		if(data.data.userRoleCode == 100001){
 			        		//관리자
 		        			location.href = contextPath+"/admin/center/list" ; 
 		        		}else{
 		        			//원장 님 및 선생님
-		        			location.href = contextPath+"/director/class/list" ; 
+		        			if(data.data.confirmYn=='Y'){	        				
+			        			location.href = contextPath+"/director/class/list" ; 
+		        			}else{
+				        		alert("승인이 허가되지 않았습니다. 관리자에게 문의해주세요.");
+		        			}
 		        		}
 		        	}else{
-		        		alert("비밀번호를 확인해주세요.")
+		        		alert("비밀번호를 확인해주세요.");
 		        	}
 	        	}else{
 	        		//200아닌것들

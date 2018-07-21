@@ -46,42 +46,50 @@
           <div class="row mt-3">
 	        <div class="col-md-8 order-md-1">
 	        
-          	<form:form modelAttribute="codeVO" id="registFrm" name="registFrm"  data-toggle="validator">
+          	<form:form modelAttribute="center" id="registFrm" name="registFrm"  data-toggle="validator">
        		<input type="hidden" name="searchCondition" id="searchCondition" value="${ searchVO.searchCondition}" />
        		<input type="hidden" name="searchKeyword" id="searchKeyword" value="${ searchVO.searchKeyword}" />
        		<input type="hidden" name="pageIndex" id="pageIndex" value="${ searchVO.pageIndex }"/>  
       		<c:if test="${flag=='U'}">
-	       		<input type="hidden" name="code" id="code" value="${ result.code }"/>
+	       		<input type="hidden" name="centerId" id="centerId" value="${ result.centerId }"/>
       		</c:if>
 				  <div class="form-group row">
-				    <label for="codeCategory" class="col-sm-2 col-form-label">코드카테고리</label>
+				    <label for="codeCategory" class="col-sm-2 col-form-label">어린이집명</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="code_category" name="code_category" placeholder="" value="${result.code_category }" required="" maxlength="128">
+				      <input type="text" class="form-control" id="centerNm" name="centerNm" placeholder="" value="${result.centerNm }" required="" maxlength="50">
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="codeValue" class="col-sm-2 col-form-label">코드값</label>
+				    <label for="codeValue" class="col-sm-2 col-form-label">어린이집주소</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="code_value" name="code_value" placeholder="" value="${result.code_value }" required="" maxlength="128">
+				      <input type="text" class="form-control" id="centerAddr" name="centerAddr" placeholder="" value="${result.centerAddr }" required="" maxlength="255">
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="codeDesc" class="col-sm-2 col-form-label">코드설명</label>
+				    <label for="codeDesc" class="col-sm-2 col-form-label">전화번호</label>
 				    <div class="col-sm-10">
-				 	   <textarea class="form-control" id="code_desc" name="code_desc" rows="3" data-parsley-length="[0, 2000]">${result.code_desc }</textarea>
+<%-- 				 	   <textarea class="form-control" id="centerPhone" name="centerPhone" rows="3" data-parsley-length="[0, 2000]">${result.centerPhone }</textarea> --%>
+				      <input type="text" class="form-control" id="centerPhone" name="centerPhone" placeholder="" value="${result.centerPhone }" required="" maxlength="30">
+				    </div>
+				  </div>
+				  <div class="form-group row">
+				    <label for="confirmYn" class="col-sm-2 col-form-label">승인여부 </label>
+				    <div class="col-sm-10">
+					  <input class="" type="radio" name="confirmYn" id="confirmYn_Y" value="Y" <c:if test="${result.confirmYn=='Y' }">checked</c:if> data-parsley-required>
+					  <label class="" for="confirmYn_Y">Y</label>
+					  <input class="" type="radio" name="confirmYn" id="confirmYn_N" value="N" <c:if test="${result.confirmYn=='N' }">checked</c:if>>
+					  <label class="" for="confirmYn_N">N</label>
 				    </div>
 				  </div>
 				  <div class="float-right">
 				    <div>
               		<c:if test="${flag=='U'}">
-              		
 			        	<button type="submit" class="btn btn-primary" onclick="fnUpdate(); return false;">수정</button>
 			        	<button type="submit" class="btn btn-primary" onclick="fnDelete(); return false;">삭제</button>
               		</c:if>
               		<c:if test="${flag=='I'}">
 			        	<button type="submit" class="btn btn-primary" onclick="fnInsert();">등록</button>
               		</c:if>
-				      
 				      
 				    <button type="submit" class="btn btn-secondary"  onclick="fnLinkPage('${ param.pageIndex }'); return false;">목록</button>
 				    </div>
@@ -94,62 +102,62 @@
       </div>
     </div>
 	
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
-    <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
-    <script src="<%=contextPath%>/resources/Parsley.js-2.8.1/parsley.js"></script>
-    <script src="<%=contextPath%>/resources/ESR23Common_debug.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/Parsley.js-2.8.1/parsley.js"></script>
+    <script src="<%=contextPath%>/resources/js/ESR23Common_debug.js"></script>
     
     <script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
 	
 	/**
-	 *  게시판 리스트 페이지 이동
+	 *  어린이집 리스트 페이지 이동
 	 */
 	function fnLinkPage(pageNo){
 		document.registFrm.pageIndex.value = pageNo;
-		document.registFrm.action = contextPath + "/admin/code/list";
+		document.registFrm.action = contextPath + "/admin/center/list";
 		document.registFrm.submit();
 	}
 	
 	/**
-	 *  게시판 등록 
+	 *  어린이집 등록 
 	 */
 	function fnInsert(){
 		
-		if(!confirm("어린이집를 등록하시겠습니까?")) return;
+		if(!confirm("어린이집 정보를 등록하시겠습니까?")) return;
 		$('#registFrm').parsley().on('field:validated', function() {
 		})
 		.on('form:submit', function() {
-			document.registFrm.action = contextPath + "/admin/code/insert";
+			document.registFrm.action = contextPath + "/admin/center/insert";
 		});
 		
 	}
 	
 	/**
-	 *  게시판 수정 
+	 *  어린이집 수정 
 	 */
 	function fnUpdate(){
 		
-		if(!confirm("어린이집를 수정하시겠습니까?")) return;
+		if(!confirm("어린이집 정보를 수정하시겠습니까?")) return;
 // 		$('#registFrm').parsley().on('field:validated', function() {
 // 		})
 // 		.on('form:submit', function() {
-// 			document.registFrm.action = contextPath + "/admin/code/update";
+// 			document.registFrm.action = contextPath + "/admin/center/update";
 // 		});
 		if($('#registFrm').parsley().validate()){
-			document.registFrm.action = contextPath + "/admin/code/update";
+			document.registFrm.action = contextPath + "/admin/center/update";
 			document.registFrm.submit();
 		}
 		
 	}
 	
 	/**
-	 *  게시판 삭제
+	 *  어린이집 삭제
 	 */
 	function fnDelete(){
-		if(!confirm("게시판 정보를 삭제하시겠습니까?")) return;
-		document.registFrm.action = contextPath + "/admin/code/delete";
+		if(!confirm("어린이집 정보를 삭제하시겠습니까?")) return;
+		document.registFrm.action = contextPath + "/admin/center/delete";
 		document.registFrm.submit();
 	}
 	//]]>

@@ -1,5 +1,9 @@
 package kr.co.dwebss.child.service;
+import kr.co.dwebss.child.model.Center;
 import kr.co.dwebss.child.model.User;
+
+import java.util.List;
+
 import kr.co.dwebss.child.core.Service;
 
 
@@ -9,5 +13,9 @@ import kr.co.dwebss.child.core.Service;
 public interface UserService extends Service<User> {
 
 	User selectUser(User vo);
+
+	List<Center> selectList(User vo);
+
+	int selectListCnt(User vo);
 
 }

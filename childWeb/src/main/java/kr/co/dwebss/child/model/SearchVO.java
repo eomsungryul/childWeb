@@ -2,6 +2,8 @@ package kr.co.dwebss.child.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Transient;
+
 public class SearchVO implements Serializable{
 
 	/**
@@ -10,57 +12,75 @@ public class SearchVO implements Serializable{
 	private static final long serialVersionUID = -2762108379321194700L;
 
 	/** 검색조건 */
+    @Transient
 	private String searchCondition = "";
 
 	/** 검색Keyword */
+    @Transient
 	private String searchKeyword = "";
 
 	/** 검색사용여부 */
+    @Transient
 	private String searchUseYn = "";
 
 	/** 검색시작날짜 */
+    @Transient
 	private String searchStartDate = "";
 
 	/** 검색종료날짜 */
+    @Transient
 	private String searchEndDate = "";
 
 	/** 검색그룹 */
+    @Transient
 	private String searchGroup = "";
 
 	/** 현재페이지 */
+    @Transient
 	private int pageIndex = 1;
 
 	/** 페이지갯수 */
+    @Transient
 	private int pageUnit = 10;
 
 	/** 페이지사이즈 */
+    @Transient
 	private int pageSize = 5;
 
 	/** firstIndex */
+    @Transient
 	private int firstIndex = 1;
 
 	/** lastIndex */
+    @Transient
 	private int lastIndex = 1;
 
 	/** recordCountPerPage */
+    @Transient
 	private int recordCountPerPage = 10;
 
 	/** 검색KeywordFrom */
+    @Transient
 	private String searchKeywordFrom = "";
 
 	/** 검색KeywordTo */
+    @Transient
 	private String searchKeywordTo = "";
 
 	/** 정렬 컬럼명 */
+    @Transient
 	private String orderColumn = "";
 
 	/** 정렬 순 */
+    @Transient
 	private String orderType = "";
 
 	/** 전체 게시물 건 수.  */
+    @Transient
 	private int totalRecordCount;
 
 	/** 전체 페이지 수  */
+    @Transient
 	private int totalPage;
 	
 	public int getTotalPage() {

@@ -77,7 +77,7 @@
 		                  <td>${result.centerNm }</td>
 		                  <td>${result.centerAddr }</td>
 		                  <td>${result.centerPhone }</td>
-		                  <td>${result.confrimYn }</td>
+		                  <td>${result.confirmYn }</td>
 		                </tr>
                  	</c:forEach>
               	</c:if>

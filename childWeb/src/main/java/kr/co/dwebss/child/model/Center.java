@@ -31,16 +31,15 @@ public class Center extends SearchVO{
     /**
      * 승인 여부
      */
-    @Column(name = "CONFRIM_YN")
-    private String confrimYn;
+    @Column(name = "CONFIRM_YN")
+    private String confirmYn;
 
-
-	public String getConfrimYn() {
-		return confrimYn;
+	public String getConfirmYn() {
+		return confirmYn;
 	}
 
-	public void setConfrimYn(String confrimYn) {
-		this.confrimYn = confrimYn;
+	public void setConfirmYn(String confirmYn) {
+		this.confirmYn = confirmYn;
 	}
 
 	public String getCenterAddr() {

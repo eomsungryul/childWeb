@@ -56,10 +56,12 @@ public class LoginController {
    	}else{ // 조회성공
    		res.put("id",login.getUserId());
    		res.put("userRoleCode",login.getUserRoleCd());
+   		res.put("confirmYn",login.getConfirmYn());
    		res.put("state",true);
 			HttpSession session = request.getSession();
 			session.setAttribute("id",login.getUserId());
 			session.setAttribute("userRoleCode",login.getUserRoleCd());
+			session.setAttribute("centerId",login.getCenterId());
    	}
 		//비밀번호를 리턴하지않게함
 //		vo.setUserPassword("");

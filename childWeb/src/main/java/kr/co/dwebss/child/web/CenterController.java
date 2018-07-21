@@ -7,6 +7,7 @@ import kr.co.dwebss.child.service.CenterService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,41 +29,8 @@ public class CenterController {
     @Resource
     private CenterService centerService;
 
-//    @PostMapping("/add")
-//    public Result add(Center center) {
-//        centerService.save(center);
-//        return ResultGenerator.genSuccessResult();
-//    }
-//
-//    @PostMapping("/delete")
-//    public Result delete(@RequestParam Integer id) {
-//        centerService.deleteById(id);
-//        return ResultGenerator.genSuccessResult();
-//    }
-//
-//    @PostMapping("/update")
-//    public Result update(Center center) {
-//        centerService.update(center);
-//        return ResultGenerator.genSuccessResult();
-//    }
-//
-//    @PostMapping("/detail")
-//    public Result detail(@RequestParam Integer id) {
-//        Center center = centerService.findById(id);
-//        return ResultGenerator.genSuccessResult(center);
-//    }
-//
-//    @PostMapping("/list")
-//    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-//        PageHelper.startPage(page, size);
-//        List<Center> list = centerService.findAll();
-//        PageInfo pageInfo = new PageInfo(list);
-//        return ResultGenerator.genSuccessResult(pageInfo);
-//    }
-
-
 	/**
-	 * 클래스 관리 목록
+	 * 센터 관리 목록
 	 *
 	 * @param Class vo
 	 * @return String
@@ -83,6 +52,93 @@ public class CenterController {
 		mav.addObject("totalCnt", totalCnt);
 		mav.addObject("pni", vo);
 		return mav;
+	}
+	
+	
+
+    /**
+	 * 어린이집 관리 글쓰기
+	 *
+	 * @param ModelMap model
+	 * @return String
+	 * @throws Exception
+	 */
+    @RequestMapping("/admin/center/regist")
+	public ModelAndView regist(
+			HttpServletRequest request,
+			@ModelAttribute("center") Center vo
+			) throws Exception {
+		ModelAndView mav = new ModelAndView("admin/center/regist");
+    	String flag= request.getParameter("flag");
+
+		if(flag.equals("U")){
+			Center result = centerService.findById(vo.getCenterId());
+			mav.addObject("result", result);
+		}
+		
+		mav.addObject("searchVO", vo);
+		mav.addObject("flag", flag);
+		
+		return mav;
+	}
+    
+
+	/**
+	 * 어린이집 등록
+	 *
+	 * @param HttpServletRequest request
+	 * @param Map<String, Object> codeMap
+	 * @param ModelMap model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/center/insert")
+	public ModelAndView insert(
+			@ModelAttribute("center") Center vo,
+			ModelMap model) throws Exception {
+		ModelAndView mav = new ModelAndView("forward:/admin/center/list");
+		centerService.save(vo);
+
+		return mav;
+	}
+	
+	/**
+	 * 어린이집 수정
+	 *
+	 * @param HttpServletRequest request
+	 * @param Map<String, Object> codeMap
+	 * @param ModelMap model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/center/update")
+	public ModelAndView update(
+			@ModelAttribute("center") Center vo
+			) throws Exception {
+
+		ModelAndView mav = new ModelAndView("forward:/admin/center/list");
+		centerService.update(vo);
+		
+		return mav;
+	}
+
+	/**
+	 * 어린이집 삭제
+	 *
+	 * @param HttpServletRequest request
+	 * @param Class vo
+	 * @param ModelMap model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/admin/center/delete")
+	public ModelAndView delete(
+			@ModelAttribute("center") Center vo,
+			ModelMap model) throws Exception {
+	  ModelAndView mav = new ModelAndView("forward:/admin/center/list");
+      centerService.deleteById(vo.getCenterId());
+      
+	  return mav;
 	}
     
 	

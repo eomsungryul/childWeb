@@ -9,7 +9,7 @@
     <result column="CENTER_NM" jdbcType="VARCHAR" property="centerNm" />
     <result column="CENTER_ADDR" jdbcType="VARCHAR" property="centerAddr" />
     <result column="CENTER_PHONE" jdbcType="VARCHAR" property="centerPhone" />
-    <result column="CONFRIM_YN" jdbcType="VARCHAR" property="confrimYn" />
+    <result column="CONFIRM_YN" jdbcType="VARCHAR" property="confirmYn" />
   </resultMap>
   
     <sql id="WhereQuery">
@@ -45,7 +45,7 @@
 				CENTER_NM , 
 				CENTER_ADDR , 
 				CENTER_PHONE,
-				CONFRIM_YN
+				CONFIRM_YN
 			FROM CENTER, (select @rownum :=0) r
 			<include refid="kr.co.dwebss.child.dao.CenterMapper.WhereQuery" />
 			ORDER BY CENTER_ID DESC
@@ -60,7 +60,7 @@
 				CENTER_NM , 
 				CENTER_ADDR , 
 				CENTER_PHONE,
-				CONFRIM_YN
+				CONFIRM_YN
 			FROM CENTER
 			<include refid="kr.co.dwebss.child.dao.CenterMapper.WhereQuery" />
 			ORDER BY CENTER_ID

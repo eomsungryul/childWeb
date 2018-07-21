@@ -2,7 +2,7 @@ package kr.co.dwebss.child.model;
 
 import javax.persistence.*;
 
-public class User {
+public class User extends SearchVO {
     /**
      * 사용자ID
      */
@@ -15,6 +15,7 @@ public class User {
      */
     @Column(name = "USER_ROLE_CD")
     private Integer userRoleCd;
+
 
     /**
      * 사용자이름
@@ -45,6 +46,18 @@ public class User {
      */
     @Column(name = "CENTER_ID")
     private Integer centerId;
+    
+    /**
+     * 어린이집ID
+     */
+    @Column(name = "CONFIRM_YN")
+    private String confirmYn;
+    
+    /**
+     * 어린이집ID
+     */
+    @Column(name = "USER_EMAIL")
+    private String userEmail;
 
     /**
      * 어린이집이름
@@ -68,7 +81,37 @@ public class User {
     
     @Transient
     private String userPasswordChk;
+
+    /**
+     * 사용자권한이름
+     */
+    @Transient
+    private String userRoleNm;
     
+
+	public String getConfirmYn() {
+		return confirmYn;
+	}
+
+	public void setConfirmYn(String confirmYn) {
+		this.confirmYn = confirmYn;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getUserRoleNm() {
+		return userRoleNm;
+	}
+
+	public void setUserRoleNm(String userRoleNm) {
+		this.userRoleNm = userRoleNm;
+	}
 
 	public String getCenterAddr() {
 		return centerAddr;

@@ -12,6 +12,12 @@
     <result column="USER_LOGIN_ID" jdbcType="VARCHAR" property="userLoginId" />
     <result column="USER_PASSWORD" jdbcType="CHAR" property="userPassword" />
     <result column="CENTER_ID" jdbcType="INTEGER" property="centerId" />
+    <result column="CONFIRM_YN" jdbcType="CHAR" property="confirmYn" />
+    <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+    <result column="USER_ROLE_NM" jdbcType="VARCHAR" property="userRoleNm" />
+    <result column="CENTER_NM" jdbcType="VARCHAR" property="centerNm" />
+    <result column="CENTER_ADDR" jdbcType="VARCHAR" property="centerAddr" />
+    <result column="CENTER_PHONE" jdbcType="VARCHAR" property="centerPhone" />
   </resultMap>
   
  	<sql id="SelectWhereQuery">
@@ -21,6 +27,22 @@
 		</if>	
 		<if test="userPassword !='' and  userPassword !=null">
 			AND USER_PASSWORD = #{userPassword}
+		</if>	
+		<if test="userId !='' and  userId !=null">
+			AND USER_ID = #{userId}
+		</if>	
+	</sql>
+	
+    <sql id="WhereQuery">
+	WHERE 1=1
+		<if test="searchCondition=='userLoginId' and searchKeyword!='' and searchKeyword!=null">
+			AND USER_LOGIN_ID LIKE CONCAT('%',#{ searchKeyword },'%')
+		</if>	
+		<if test="searchCondition=='userNm' and searchKeyword!='' and searchKeyword!=null">
+			AND USER_NM LIKE CONCAT('%',#{ searchKeyword },'%')
+		</if>	
+		<if test="centerId !='' and  centerId !=null">
+			AND CENTER_ID = #{ centerId }
 		</if>	
 	</sql>
   
@@ -32,8 +54,53 @@
 			USER_PHONE , 
 			USER_LOGIN_ID , 
 			USER_PASSWORD , 
-			CENTER_ID 
-		FROM USER
+			u.CONFIRM_YN , 
+			u.CENTER_ID ,
+			c.CENTER_NM ,
+			c.CENTER_ADDR ,
+			c.CENTER_PHONE 
+		FROM USER u, CENTER c
 		<include refid="kr.co.dwebss.child.dao.UserMapper.SelectWhereQuery" />
+		AND u.center_id = c.center_id
     </select>
+    
+    
+    <select id="selectList" parameterType="kr.co.dwebss.child.model.User" resultMap="userMap">
+    	SELECT A.* FROM (
+			SELECT 
+				@rownum := @rownum + 1 as rownum,
+				USER_ID ,
+				USER_ROLE_CD , 
+        		cc.CODE_NM as USER_ROLE_NM,
+				USER_NM ,  
+				USER_PHONE,
+				USER_LOGIN_ID,
+				USER_PASSWORD,
+				CENTER_ID,
+				CONFIRM_YN,
+				USER_EMAIL
+			FROM USER u, (select @rownum :=0) r, common_code cc
+			<include refid="kr.co.dwebss.child.dao.UserMapper.WhereQuery" />
+			and u.user_role_cd = cc.code
+			ORDER BY USER_ID DESC
+		) A
+		where A.rownum LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+    
+    <select id="selectListCnt" parameterType="kr.co.dwebss.child.model.User" resultType="INTEGER">
+    	SELECT COUNT(*) FROM (
+			SELECT 
+				USER_ID ,
+				USER_ROLE_CD , 
+				USER_NM , 
+				USER_PHONE,
+				USER_LOGIN_ID,
+				USER_PASSWORD,
+				CENTER_ID
+			FROM USER
+			<include refid="kr.co.dwebss.child.dao.UserMapper.WhereQuery" />
+			ORDER BY USER_ID
+		) A
+    </select>
+    
 </mapper>

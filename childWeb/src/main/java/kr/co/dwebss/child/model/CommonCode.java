@@ -3,7 +3,7 @@ package kr.co.dwebss.child.model;
 import javax.persistence.*;
 
 @Table(name = "common_code")
-public class CommonCode {
+public class CommonCode extends SearchVO{
     /**
      * 코드
      */

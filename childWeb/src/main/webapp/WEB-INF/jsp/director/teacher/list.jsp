@@ -17,7 +17,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title>선생님 관리</title>
-
+	
     <!-- Bootstrap core CSS -->
     <link href="<%=contextPath%>/resources/bootstrap-4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -46,11 +46,12 @@
           	<div class="float-right mt-3 mb-3">
 				<div class="form-inline">
 				<!-- 검색 start  -->
-                   	<form:form modelAttribute="searchVO" action="${ contextPath }/admin/code/list" name="searchFrm">
+                   	<form:form modelAttribute="user" action="${ contextPath }/admin/user/list" name="searchFrm">
 		            <div>
 		            	<select class="form-control" id="searchCondition" name="searchCondition" >
-					        <option value="codeCategory" selected="selected">카테고리</option>
-					        <option value="codeValue">코드명</option>
+					        <option value="userLoginId" selected="selected">사용자ID</option>
+					        <option value="userNm">사용자이름</option>
+					        <option value="approvalYn">승인여부</option>
 					    </select>
 						<input type="hidden" id="pageIndex" name="pageIndex" value="${pni.pageIndex}" />
 		                <input type="text" class="form-control search" id="searchKeyword" name="searchKeyword" placeholder="검색어"  value="${pni.searchKeyword}" onkeydown="$event.keyCode===13&&fnSearch()"/>
@@ -63,21 +64,21 @@
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th>코드</th>
-                  <th>코드카테고리</th>
-                  <th>코드명</th>
-                  <th>코드설명</th>
+                  <th>사용자ID</th>
+                  <th>사용자명</th>
+                  <th>권한</th>
+                  <th>승인여부</th>
                 </tr>
               </thead>
               <tbody>
               	<c:if test="${fn:length(resultList)!=0}">
                  	<c:forEach var="result" items="${ resultList }" varStatus="status">
-		                <tr onclick="fnRegist(${result.CODE },'U')">
+		                <tr onclick="fnRegist(${result.userId },'U')">
 		                  <td>${ pni.totalRecordCount - (((pni.pageIndex - 1) * pni.recordCountPerPage) + (status.index)) }</td>
-		                  <td>${result.CODE }</td>
-		                  <td>${result.CODE_CATEGORY }</td>
-		                  <td>${result.CODE_VALUE }</td>
-		                  <td>${result.CODE_DESC }</td>
+		                  <td>${result.userLoginId }</td>
+		                  <td>${result.userNm }</td>
+		                  <td>${result.userRoleNm }</td>
+		                  <td>${result.confirmYn }</td>
 		                </tr>
                  	</c:forEach>
               	</c:if>
@@ -90,11 +91,6 @@
             </table>
             
 			  <ul id="pagination" class="pagination-sm justify-content-center"></ul>
-			  
-	          <div class="float-right mb-3">
-		          <button type="button" class="btn btn-primary" onclick="fnRegist('','I'); return false;">등록</button>
-	          </div>
-		      
           </div>
 
           
@@ -102,9 +98,11 @@
       </div>
     </div>
     
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
-    <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/Parsley.js-2.8.1/parsley.js"></script>
+    <script src="<%=contextPath%>/resources/js/ESR23Common_debug.js"></script>
     
 	<script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
@@ -134,7 +132,7 @@
 	 */
 	function fnSearch(){
 		document.searchFrm.pageIndex.value = 1;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/admin/user/list";
 		document.searchFrm.submit();
 	}
 	
@@ -144,26 +142,27 @@
 	 */
 	function fnLinkPage(pageNo){
 		document.searchFrm.pageIndex.value = pageNo;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/admin/user/list";
 		document.searchFrm.submit();
 	}
 	
 	/**
 	 *  게시판 등록 페이지 
 	 */
-	function fnRegist(code ,flag){
+	function fnRegist(userId ,flag){
 		if(flag=="U"){
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag+"&code="+code;
+			document.searchFrm.action = contextPath + "/admin/user/regist?flag="+flag+"&userId="+userId;
 		}else{
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag;
+			document.searchFrm.action = contextPath + "/admin/user/regist?flag="+flag;
 		}
 		document.searchFrm.submit();
 	}
+	
 	/**
 	 *  게시판 상세 페이지 
 	 */
-	function fnDetail(codeSeq){
-		document.searchFrm.action = contextPath + "/admin/code/detail?codeSeq="+codeSeq;
+	function fnDetail(userId){
+		document.searchFrm.action = contextPath + "/admin/user/detail?userId="+userId;
 		document.searchFrm.submit();
 	}
 	
