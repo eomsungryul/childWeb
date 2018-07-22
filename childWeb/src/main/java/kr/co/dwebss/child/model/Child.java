@@ -2,7 +2,7 @@ package kr.co.dwebss.child.model;
 
 import javax.persistence.*;
 
-public class Child {
+public class Child extends SearchVO {
     /**
      * 아이ID
      */
@@ -33,8 +33,42 @@ public class Child {
      */
     @Column(name = "PARENT_USER_ID")
     private Integer parentUserId;
+    
+    @Transient
+    private String classNm;
+    
+    @Transient
+    private String parentUserNm;
+    
+    @Transient
+    private Integer centerId;
+    
 
-    /**
+	public Integer getCenterId() {
+		return centerId;
+	}
+
+	public void setCenterId(Integer centerId) {
+		this.centerId = centerId;
+	}
+
+	public String getClassNm() {
+		return classNm;
+	}
+
+	public void setClassNm(String classNm) {
+		this.classNm = classNm;
+	}
+
+	public String getParentUserNm() {
+		return parentUserNm;
+	}
+
+	public void setParentUserNm(String parentUserNm) {
+		this.parentUserNm = parentUserNm;
+	}
+
+	/**
      * getter아이ID
      *
      * @return CHILD_ID - 아이ID

@@ -11,4 +11,6 @@ public interface ClassMapper extends Mapper<Class> {
 	List<Class> selectList(Class vo);
 
 	int selectListCnt(Class vo);
+
+	List<Class> selectClass(Class param);
 }

@@ -1,11 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dwebss.child.dao.ChildQrCodeMapper">
-  <resultMap id="BaseResultMap" type="kr.co.dwebss.child.model.ChildQrCode">
+  <resultMap id="childQrMap" type="kr.co.dwebss.child.model.ChildQrCode">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="CHILD_ID" jdbcType="CHAR" property="childId" />
-    <result column="CHILD_QR_CODE_IMG" jdbcType="LONGVARBINARY" property="childQrCodeImg" />
+    <result column="CHILD_NM" jdbcType="VARCHAR" property="childNm" />
+    <result column="PARENT_PHONE" jdbcType="VARCHAR" property="parentPhone" />
+    <result column="CLASS_ID" jdbcType="INTEGER" property="classId" />
+    <result column="PARENT_USER_ID" jdbcType="INTEGER" property="parentUserId" />
+    <result column="PARENT_USER_NM" jdbcType="VARCHAR" property="parentUserNm" />
+    <result column="CLASS_NM" jdbcType="VARCHAR" property="classNm" />
+    <result column="CHILD_QR_CODE_IMG" jdbcType="VARCHAR" property="childQrCodeImg" />
+    <result column="CENTER_NM" jdbcType="VARCHAR" property="centerNm" />
   </resultMap>
+  
+  
+  <sql id="WhereQuery">
+	WHERE 1=1
+		<if test="centerId !='' and  centerId !=null">
+			AND c.CLASS_ID in (SELECT CLASS_ID FROM CLASS WHERE CENTER_ID =  #{ centerId })
+		</if>
+		<if test="searchCondition=='classNm' and searchKeyword!='' and searchKeyword!=null">
+			AND cl.CLASS_NM  LIKE CONCAT('%',#{ searchKeyword },'%')
+		</if>	
+		<if test="searchCondition=='childNm' and searchKeyword!='' and searchKeyword!=null">
+			AND c.CHILD_NM  LIKE CONCAT('%',#{ searchKeyword },'%')
+		</if>	
+	</sql>
+  
+   <select id="selectQrcode" parameterType="kr.co.dwebss.child.model.ChildQrCode" resultMap="childQrMap">
+		SELECT A.* FROM (
+			select 
+			c.*,
+			cl.CLASS_NM ,
+      		cqc.CHILD_QR_CODE_IMG,
+      		ct.CENTER_NM
+			FROM
+				(
+				SELECT 
+					c.* ,
+					u.user_Nm as PARENT_USER_NM
+				FROM CHILD c
+				LEFT JOIN USER u 
+				ON c.PARENT_USER_ID =  u.USER_ID
+				ORDER BY c.CLASS_ID DESC
+				)c, CLASS cl, child_qr_code cqc, center ct
+			<include refid="kr.co.dwebss.child.dao.ChildQrCodeMapper.WhereQuery" />
+			AND c.CLASS_ID = cl.CLASS_ID
+			AND c.child_id = cqc.child_id
+			AND cl.CENTER_ID = ct.CENTER_ID
+		) A
+		
+		
+   </select>
 </mapper>

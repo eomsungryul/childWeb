@@ -16,11 +16,8 @@
   
   <sql id="WhereQuery">
 	WHERE 1=1
-		<if test="searchCondition=='codeCategory' and searchKeyword!='' and searchKeyword!=null">
-			AND CODE_CATEGORY LIKE CONCAT('%',#{ searchKeyword },'%')
-		</if>	
-		<if test="searchCondition=='codeValue' and searchKeyword!='' and searchKeyword!=null">
-			AND CODE_VALUE LIKE CONCAT('%',#{ searchKeyword },'%')
+		<if test="searchCondition=='classNm' and searchKeyword!='' and searchKeyword!=null">
+			AND CLASS_NM LIKE CONCAT('%',#{ searchKeyword },'%')
 		</if>	
 	</sql>
 	
@@ -47,6 +44,7 @@
 		where A.rownum LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
     
+    
     <select id="selectListCnt" parameterType="kr.co.dwebss.child.model.Class" resultType="INTEGER">
     	SELECT COUNT(*) FROM (
 			SELECT 
@@ -59,6 +57,17 @@
 			<include refid="kr.co.dwebss.child.dao.ClassMapper.WhereQuery" />
 			ORDER BY CLASS_ID
 		) A
+    </select>
+    
+    
+  <select id="selectClass" parameterType="kr.co.dwebss.child.model.Class" resultMap="classMap">
+    	SELECT 
+			CLASS_ID ,
+			CLASS_NM , 
+			CENTER_ID , 
+			TEACHER_USER_ID 
+		FROM CLASS 
+		WHERE CENTER_ID = #{ centerId }
     </select>
   
   

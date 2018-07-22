@@ -1,9 +1,17 @@
 package kr.co.dwebss.child.model;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
-public class User extends SearchVO {
+public class User extends SearchVO implements Serializable {
+	
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1546123647770023275L;
+
+	/**
      * 사용자ID
      */
     @Id

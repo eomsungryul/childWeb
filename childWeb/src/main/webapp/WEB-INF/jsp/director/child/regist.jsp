@@ -42,7 +42,7 @@
 		<!-- aside end -->	    
 		
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-         <h2 class="mt-3">공통 코드 등록</h2>
+         <h2 class="mt-3">어린이 등록</h2>
           <div class="row mt-3">
 	        <div class="col-md-8 order-md-1">
 	        
@@ -51,26 +51,32 @@
        		<input type="hidden" name="searchKeyword" id="searchKeyword" value="${ searchVO.searchKeyword}" />
        		<input type="hidden" name="pageIndex" id="pageIndex" value="${ searchVO.pageIndex }"/>  
       		<c:if test="${flag=='U'}">
-	       		<input type="hidden" name="code" id="code" value="${ result.code }"/>
+	       		<input type="hidden" name="childId" id="childId" value="${ result.childId }"/>
       		</c:if>
 				  <div class="form-group row">
-				    <label for="codeCategory" class="col-sm-2 col-form-label">코드카테고리</label>
+				    <label for="codeCategory" class="col-sm-2 col-form-label">어린이명</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="code_category" name="code_category" placeholder="" value="${result.code_category }" required="" maxlength="128">
+				      <input type="text" class="form-control" id="childNm" name="childNm" placeholder="" value="${result.childNm }" required="" maxlength="50">
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="codeValue" class="col-sm-2 col-form-label">코드값</label>
+				    <label for="codeValue" class="col-sm-2 col-form-label">부모님 연락처</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="code_value" name="code_value" placeholder="" value="${result.code_value }" required="" maxlength="128">
+				      <input type="text" class="form-control" id="parentPhone" name="parentPhone" placeholder="" value="${result.parentPhone }" required="" maxlength="30">
 				    </div>
 				  </div>
+				  
 				  <div class="form-group row">
-				    <label for="codeDesc" class="col-sm-2 col-form-label">코드설명</label>
-				    <div class="col-sm-10">
-				 	   <textarea class="form-control" id="code_desc" name="code_desc" rows="3" data-parsley-length="[0, 2000]">${result.code_desc }</textarea>
+				    <label for="classId" class="col-sm-2 col-form-label">어린이 클래스</label>
+				    <div class="col-sm-3">
+		            	<select class="form-control" id="classId" name="classId" data-parsley-required>
+		            		<c:forEach var="item" items="${ classList }" varStatus="status">
+					        	<option value="${ item.classId}" <c:if test="${result.classId==item.classId }">selected</c:if>>${ item.classNm}</option>
+							</c:forEach>
+					    </select>
 				    </div>
 				  </div>
+				  
 				  <div class="float-right">
 				    <div>
               		<c:if test="${flag=='U'}">
@@ -94,62 +100,62 @@
       </div>
     </div>
 	
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
     <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
-    <script src="<%=contextPath%>/resources/Parsley.js-2.8.1/parsley.js"></script>
-    <script src="<%=contextPath%>/resources/ESR23Common_debug.js"></script>
+    <script src="<%=contextPath%>/resources/js/Parsley.js-2.8.1/parsley.js"></script>
+    <script src="<%=contextPath%>/resources/js/ESR23Common_debug.js"></script>
     
     <script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
 	
 	/**
-	 *  게시판 리스트 페이지 이동
+	 *  어린이 리스트 페이지 이동
 	 */
 	function fnLinkPage(pageNo){
 		document.registFrm.pageIndex.value = pageNo;
-		document.registFrm.action = contextPath + "/admin/code/list";
+		document.registFrm.action = contextPath + "/director/child/list";
 		document.registFrm.submit();
 	}
 	
 	/**
-	 *  게시판 등록 
+	 *  어린이 등록 
 	 */
 	function fnInsert(){
 		
-		if(!confirm("공통 코드를 등록하시겠습니까?")) return;
+		if(!confirm("어린이 정보를 등록하시겠습니까?")) return;
 		$('#registFrm').parsley().on('field:validated', function() {
 		})
 		.on('form:submit', function() {
-			document.registFrm.action = contextPath + "/admin/code/insert";
+			document.registFrm.action = contextPath + "/director/child/insert";
 		});
 		
 	}
 	
 	/**
-	 *  게시판 수정 
+	 *  어린이 수정 
 	 */
 	function fnUpdate(){
 		
-		if(!confirm("공통 코드를 수정하시겠습니까?")) return;
+		if(!confirm("어린이 정보를 수정하시겠습니까?")) return;
 // 		$('#registFrm').parsley().on('field:validated', function() {
 // 		})
 // 		.on('form:submit', function() {
-// 			document.registFrm.action = contextPath + "/admin/code/update";
+// 			document.registFrm.action = contextPath + "/director/child/update";
 // 		});
 		if($('#registFrm').parsley().validate()){
-			document.registFrm.action = contextPath + "/admin/code/update";
+			document.registFrm.action = contextPath + "/director/child/update";
 			document.registFrm.submit();
 		}
 		
 	}
 	
 	/**
-	 *  게시판 삭제
+	 *  어린이 삭제
 	 */
 	function fnDelete(){
-		if(!confirm("게시판 정보를 삭제하시겠습니까?")) return;
-		document.registFrm.action = contextPath + "/admin/code/delete";
+		if(!confirm("어린이 정보를 삭제하시겠습니까?")) return;
+		document.registFrm.action = contextPath + "/director/child/delete";
 		document.registFrm.submit();
 	}
 	//]]>

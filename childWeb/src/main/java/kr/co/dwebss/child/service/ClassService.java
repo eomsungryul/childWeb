@@ -13,6 +13,9 @@ import kr.co.dwebss.child.core.Service;
 public interface ClassService extends Service<Class> {
 
 	List<Class> selectList(Class vo);
+	
 	int selectListCnt(Class vo);
+	
+	List<Class> selectClass(Class param);
 
 }

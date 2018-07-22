@@ -111,6 +111,8 @@ public class CommonController {
 			throws Exception {
 		return "join";
 	}
+	
+	
 
 	
 

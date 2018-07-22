@@ -16,7 +16,7 @@
 %>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>공통 코드 관리</title>
+    <title>어린이 관리</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<%=contextPath%>/resources/bootstrap-4.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -41,16 +41,16 @@
 		<!-- aside end -->	    
 		
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-         <h2 class="mt-3">공통 코드 관리</h2>
+         <h2 class="mt-3">어린이 관리</h2>
           <div class="col-md-8 table-responsive">
           	<div class="float-right mt-3 mb-3">
 				<div class="form-inline">
 				<!-- 검색 start  -->
-                   	<form:form modelAttribute="searchVO" action="${ contextPath }/admin/code/list" name="searchFrm">
+                   	<form:form modelAttribute="searchVO" action="${ contextPath }/director/child/list" name="searchFrm">
 		            <div>
 		            	<select class="form-control" id="searchCondition" name="searchCondition" >
-					        <option value="codeCategory" selected="selected">카테고리</option>
-					        <option value="codeValue">코드명</option>
+					        <option value="classNm" selected="selected">반명</option>
+					        <option value="childNm">어린이명</option>
 					    </select>
 						<input type="hidden" id="pageIndex" name="pageIndex" value="${pni.pageIndex}" />
 		                <input type="text" class="form-control search" id="searchKeyword" name="searchKeyword" placeholder="검색어"  value="${pni.searchKeyword}" onkeydown="$event.keyCode===13&&fnSearch()"/>
@@ -59,25 +59,25 @@
 		            </form:form>
 		        </div>
           	</div>
-            <table class="table">
+            <table class="table text-center">
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th>코드</th>
-                  <th>코드카테고리</th>
-                  <th>코드명</th>
-                  <th>코드설명</th>
+                  <th>어린이명</th>
+                  <th>반명</th>
+                  <th>부모성함</th>
+                  <th>명찰</th>
                 </tr>
               </thead>
               <tbody>
               	<c:if test="${fn:length(resultList)!=0}">
                  	<c:forEach var="result" items="${ resultList }" varStatus="status">
-		                <tr onclick="fnRegist(${result.CODE },'U')">
-		                  <td>${ pni.totalRecordCount - (((pni.pageIndex - 1) * pni.recordCountPerPage) + (status.index)) }</td>
-		                  <td>${result.CODE }</td>
-		                  <td>${result.CODE_CATEGORY }</td>
-		                  <td>${result.CODE_VALUE }</td>
-		                  <td>${result.CODE_DESC }</td>
+		                <tr>
+		                  <td onclick="fnRegist( '${result.childId }' ,'U')">${ pni.totalRecordCount - (((pni.pageIndex - 1) * pni.recordCountPerPage) + (status.index)) }</td>
+		                  <td onclick="fnRegist( '${result.childId }' ,'U')">${result.childNm }</td>
+		                  <td onclick="fnRegist( '${result.childId }' ,'U')">${result.classNm }</td>
+		                  <td onclick="fnRegist( '${result.childId }' ,'U')">${result.parentUserNm }</td>
+		                  <td><button type="button" class="btn btn-info btn-sm" onclick="fnPopup( '${result.childId }')">명찰보기</button></td>
 		                </tr>
                  	</c:forEach>
               	</c:if>
@@ -92,8 +92,12 @@
 			  <ul id="pagination" class="pagination-sm justify-content-center"></ul>
 			  
 	          <div class="float-right mb-3">
+	          	  <button type="button" class="btn btn-info" onclick="fnResultPopup()">검색된 명찰보기</button>
 		          <button type="button" class="btn btn-primary" onclick="fnRegist('','I'); return false;">등록</button>
 	          </div>
+	          <div class="float-right mb-3 mr-3">
+	          	<input type="text" class="form-control" id="pageExport" name="pageExport" placeholder="명찰 수량 " >	 
+			  </div>
 		      
           </div>
 
@@ -102,9 +106,9 @@
       </div>
     </div>
     
-    <script src="<%=contextPath%>/resources/jquery-3.1.0.js"></script>
-    <script src="<%=contextPath%>/resources/jquery.twbsPagination.min.js"></script>
     <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
+    <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
     
 	<script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
@@ -130,41 +134,66 @@
 		
 	})
 	/**
-	 *  게시판 리스트 검색
+	 *  어린이 리스트 검색
 	 */
 	function fnSearch(){
 		document.searchFrm.pageIndex.value = 1;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/director/child/list";
 		document.searchFrm.submit();
 	}
 	
 	
 	/**
-	 *  게시판 리스트 페이지 이동
+	 *  어린이 리스트 페이지 이동
 	 */
 	function fnLinkPage(pageNo){
 		document.searchFrm.pageIndex.value = pageNo;
-		document.searchFrm.action = contextPath + "/admin/code/list";
+		document.searchFrm.action = contextPath + "/director/child/list";
 		document.searchFrm.submit();
 	}
 	
 	/**
-	 *  게시판 등록 페이지 
+	 *  어린이 등록 페이지 
 	 */
-	function fnRegist(code ,flag){
+	function fnRegist(childId ,flag){
 		if(flag=="U"){
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag+"&code="+code;
+			document.searchFrm.action = contextPath + "/director/child/regist?flag="+flag+"&childId="+childId;
 		}else{
-			document.searchFrm.action = contextPath + "/admin/code/regist?flag="+flag;
+			document.searchFrm.action = contextPath + "/director/child/regist?flag="+flag;
 		}
 		document.searchFrm.submit();
 	}
 	/**
-	 *  게시판 상세 페이지 
+	 *  어린이 상세 페이지 
 	 */
-	function fnDetail(codeSeq){
-		document.searchFrm.action = contextPath + "/admin/code/detail?codeSeq="+codeSeq;
+	function fnDetail(childId){
+		document.searchFrm.action = contextPath + "/director/child/detail?childId="+childId;
 		document.searchFrm.submit();
+	}
+	
+	/**
+	 *  어린이 명찰보기 1개
+	 */
+	function fnPopup(childId){
+		var popUrl = contextPath + "/director/childQr/detail?childId="+childId;	//팝업창에 출력될 페이지 URL
+// 		var popOption = "width=370, height=360, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+		var popOption = "resizable=no, scrollbars=no, status=no; fullscreen= yes;";    //팝업창 옵션(optoin)
+			window.open(popUrl,"",popOption);
+	}
+	
+	/**
+	 *  어린이 검색된 명찰보기
+	 */
+	function fnResultPopup(){
+		var popUrl = contextPath + "/director/childQr/detail";	//팝업창에 출력될 페이지 URL
+		
+		var param = "?pageExport="+$("#pageExport").val()
+		+"&searchCondition="+$("#searchCondition").val()
+		+"&searchKeyword="+$("#searchKeyword").val();
+		
+// 		var popOption = "width=370, height=360, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+		var popOption = "resizable=no, scrollbars=no, status=no; fullscreen= yes;";    //팝업창 옵션(optoin)
+			window.open(popUrl+param,"",popOption);
 	}
 	
 	//]]>

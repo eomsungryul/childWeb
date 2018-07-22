@@ -32,4 +32,9 @@ public class ClassServiceImpl extends AbstractService<Class> implements ClassSer
 		return classMapper.selectListCnt(vo);
 	}
 
+	@Override
+	public List<Class> selectClass(Class param) {
+		return classMapper.selectClass(param);
+	}
+
 }

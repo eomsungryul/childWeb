@@ -16,7 +16,7 @@
 %>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>Kids Diary</title>
+    <title>방금</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<%=contextPath%>/resources/bootstrap-4.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -27,8 +27,8 @@
   	
   <body class="text-center">
     <form class="form-signin">
-      <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">I SEE U</h1>
+      <img class="mb-4" src="<%=contextPath%>/resources/images/icon.png" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">방금</h1>
       <label for="user_login_id" class="sr-only">ID</label>
       <input type="text" id="user_login_id" name="user_login_id" class="form-control" placeholder="ID" required="" autofocus=""onkeydown="fnLogin2()">
       <label for="user_password" class="sr-only">Password</label>
