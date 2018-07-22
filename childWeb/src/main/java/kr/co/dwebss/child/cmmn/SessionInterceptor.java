@@ -16,7 +16,7 @@ public class SessionInterceptor  extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		try {
 			HttpSession session = request.getSession();
-			String id = (String)session.getAttribute("id");
+			String id = (String)session.getAttribute("authId");
 				
 			if(id == null ||  id.equals("")){			//로그인 사용자의 정보가 없으면 로그인 페이지로 이동한다.
 				response.sendRedirect(request.getContextPath()+"/login");

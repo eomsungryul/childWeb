@@ -120,16 +120,20 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     //인터셉터 추가
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
+    	// SessionInterceptor 추가
+        registry.addInterceptor(new SessionInterceptor())
+                .addPathPatterns("/director/*")
+                .addPathPatterns("/admin/*")
+                .excludePathPatterns("/login") //로그인 쪽은 예외처리를 한다.
+                .excludePathPatterns("/loginAction") //로그인 쪽은 예외처리를 한다.
+                .excludePathPatterns("/join") //회원가입 쪽은 예외처리를 한다.
+                .excludePathPatterns("/joinAction") //회원가입 쪽은 예외처리를 한다.
+        		.excludePathPatterns("/logout"); //회원가입 쪽은 예외처리를 한다.	
         
         //인터페이스 서명 인증 인터셉터, 서명 인증은 비교적 간단합니다, 실제 프로젝트는 Json Web Token 또는 다른 좋은 방법으로 대체 될 수 있습니다.
         if (!"dev".equals(env)) { //개발 환경에서 서명 인증을 무시합니다.
         	
-        	// SessionInterceptor 추가
-            registry.addInterceptor(new SessionInterceptor())
-                    .addPathPatterns("/*")
-                    .excludePathPatterns("/login") //로그인 쪽은 예외처리를 한다.
-                    .excludePathPatterns("/join"); //회원가입 쪽은 예외처리를 한다.
-            
 //            registry.addInterceptor(new HandlerInterceptorAdapter() {
 //                @Override
 //                public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

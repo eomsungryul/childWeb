@@ -59,7 +59,7 @@ public class LoginController {
    		res.put("confirmYn",login.getConfirmYn());
    		res.put("state",true);
 			HttpSession session = request.getSession();
-			session.setAttribute("id",login.getUserId());
+			session.setAttribute("authId",login.getUserId());
 			session.setAttribute("userRoleCode",login.getUserRoleCd());
 			session.setAttribute("centerId",login.getCenterId());
    	}
