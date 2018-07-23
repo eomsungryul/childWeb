@@ -12,4 +12,5 @@
     <result column="USER_ID" jdbcType="INTEGER" property="userId" />
     <result column="EVENT_CD" jdbcType="INTEGER" property="eventCd" />
   </resultMap>
+  	
 </mapper>
