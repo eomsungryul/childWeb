@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import kr.co.dwebss.child.cmmn.ScrtyUtil;
 import kr.co.dwebss.child.core.Result;
 import kr.co.dwebss.child.core.ResultGenerator;
 import kr.co.dwebss.child.model.Center;
@@ -38,6 +39,10 @@ public class LoginController {
 
    @Resource
    private CenterService centerService;
+
+   @Resource
+   private ScrtyUtil scrtyUtil;
+
 
    /** 로그인 */
    @RequestMapping("/loginAction") 
@@ -97,7 +102,7 @@ public class LoginController {
 
     @Transactional(rollbackFor=Exception.class)
     @RequestMapping("/joinAction")
-    public Result add(User user) {
+    public Result add(User user) throws Exception {
     	ModelAndView mav = new ModelAndView("/login");
     	Center center = new Center();
     	center.setCenterNm(user.getCenterNm());
@@ -106,6 +111,7 @@ public class LoginController {
     	
     	centerService.insertCenter(center);
     	user.setCenterId(center.getCenterId());
+    	user.setUserPassword(scrtyUtil.LockPassword(user.getUserPassword()));
         userService.save(user);
         
         return ResultGenerator.genSuccessResult();
