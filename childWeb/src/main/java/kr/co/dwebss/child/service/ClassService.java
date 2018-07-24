@@ -18,4 +18,8 @@ public interface ClassService extends Service<Class> {
 	
 	List<Class> selectClass(Class param);
 
+	void insertClass(Class vo);
+
+	void insertClassEventThisYear(Integer classId);
+
 }

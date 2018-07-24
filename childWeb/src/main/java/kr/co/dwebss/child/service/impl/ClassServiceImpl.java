@@ -37,4 +37,14 @@ public class ClassServiceImpl extends AbstractService<Class> implements ClassSer
 		return classMapper.selectClass(param);
 	}
 
+	@Override
+	public void insertClass(Class vo) {
+		classMapper.insertClass(vo);
+	}
+
+	@Override
+	public void insertClassEventThisYear(Integer classId) {
+		classMapper.insertClassEventThisYear(classId);
+	}
+
 }

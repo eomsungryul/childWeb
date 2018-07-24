@@ -11,7 +11,10 @@
     <result column="TEACHER_USER_ID" jdbcType="INTEGER" property="teacherUserId" />
     <result column="TEACHER_USER_NM" jdbcType="VARCHAR" property="teacherUserNm" />
     <result column="CENTER_NM" jdbcType="VARCHAR" property="centerNm" />
+    <result column="CLASS_YEAR" jdbcType="VARCHAR" property="classYear" />
   </resultMap>
+  
+  
   
   
   <sql id="WhereQuery">
@@ -69,6 +72,36 @@
 		FROM CLASS 
 		WHERE CENTER_ID = #{ centerId }
     </select>
+    
+    
+    <insert id="insertClass" parameterType="kr.co.dwebss.child.model.Class" >
+    	<selectKey resultType="INTEGER" keyProperty="classId" order="BEFORE">
+            SELECT COALESCE(MAX(CLASS_ID)+1,0) FROM CLASS
+        </selectKey>
+		INSERT INTO CLASS (
+			CLASS_ID ,
+			CLASS_NM , 
+			CENTER_ID , 
+			TEACHER_USER_ID,
+			CLASS_YEAR
+        )
+        VALUES (
+	        #{ classId },
+	        #{ classNm },
+	        #{ centerId },
+	       	#{ teacherUserId },
+	       	#{ classYear }
+       	)
+    </insert>
+    
+    
+  	<select id="insertClassEventThisYear" parameterType="kr.co.dwebss.child.model.Class"
+	    resultMap="classMap" statementType="CALLABLE">
+	    { call insertClassEventThisYear(
+	        #{classId, mode=IN, jdbcType=INTEGER}
+	     )
+	    }
+	</select>
   
   
   

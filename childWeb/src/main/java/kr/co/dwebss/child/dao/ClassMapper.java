@@ -1,6 +1,5 @@
 package kr.co.dwebss.child.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import kr.co.dwebss.child.core.Mapper;
@@ -13,4 +12,8 @@ public interface ClassMapper extends Mapper<Class> {
 	int selectListCnt(Class vo);
 
 	List<Class> selectClass(Class param);
+
+	void insertClass(Class vo);
+
+	void insertClassEventThisYear(Integer integer);
 }

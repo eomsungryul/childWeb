@@ -34,9 +34,24 @@ public class Class extends SearchVO {
     @Transient
     private String centerNm;
     
+
+    /**
+     * 클래스이름
+     */
+    @Column(name = "CLASS_YEAR")
+    private String classYear;
+    
     
 
-    public String getTeacherUserNm() {
+    public String getClassYear() {
+		return classYear;
+	}
+
+	public void setClassYear(String classYear) {
+		this.classYear = classYear;
+	}
+
+	public String getTeacherUserNm() {
 		return teacherUserNm;
 	}
 

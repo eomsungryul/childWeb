@@ -123,8 +123,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     	// SessionInterceptor 추가
         registry.addInterceptor(new SessionInterceptor())
-                .addPathPatterns("/director/*")
-                .addPathPatterns("/admin/*")
+                .addPathPatterns("/director/**/*")
+                .addPathPatterns("/admin/**/*")
                 .excludePathPatterns("/login") //로그인 쪽은 예외처리를 한다.
                 .excludePathPatterns("/loginAction") //로그인 쪽은 예외처리를 한다.
                 .excludePathPatterns("/join") //회원가입 쪽은 예외처리를 한다.

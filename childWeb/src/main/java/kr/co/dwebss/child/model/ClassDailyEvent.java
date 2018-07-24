@@ -1,6 +1,9 @@
 package kr.co.dwebss.child.model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.*;
 
 @Table(name = "class_daily_event")
@@ -30,11 +33,7 @@ public class ClassDailyEvent {
     @Column(name = "CLASS_ID")
     private Integer classId;
 
-    /**
-     * 사용자(대리체크자)ID
-     */
-    @Column(name = "SECOND_CHECKER_USER_ID")
-    private Integer secondCheckerUserId;
+    
 
     /**
      * 이벤트코드
@@ -42,7 +41,63 @@ public class ClassDailyEvent {
     @Column(name = "EVENT_CD")
     private Integer eventCd;
 
-    /**
+    @Column(name = "EVENT_CAR_NEED_YN")
+    private String eventCarNeedYn;
+    
+    @Column(name = "DESTINY_NM")
+    private String destinyNm;
+    
+    @Column(name = "EVENT_ALARM_TIME")
+    private Integer eventAlarmTime;
+    
+    @Column(name = "EVENT_DAILY_GROUP_ID")
+    private String eventDailyGroupId;
+    
+    @Transient
+    private List<Map<String,Object>> list;
+    
+    
+    public List<Map<String, Object>> getList() {
+		return list;
+	}
+
+	public void setList(List<Map<String, Object>> list) {
+		this.list = list;
+	}
+
+	public String getEventCarNeedYn() {
+		return eventCarNeedYn;
+	}
+
+	public void setEventCarNeedYn(String eventCarNeedYn) {
+		this.eventCarNeedYn = eventCarNeedYn;
+	}
+
+	public String getDestinyNm() {
+		return destinyNm;
+	}
+
+	public void setDestinyNm(String destinyNm) {
+		this.destinyNm = destinyNm;
+	}
+
+	public Integer getEventAlarmTime() {
+		return eventAlarmTime;
+	}
+
+	public void setEventAlarmTime(Integer eventAlarmTime) {
+		this.eventAlarmTime = eventAlarmTime;
+	}
+
+	public String getEventDailyGroupId() {
+		return eventDailyGroupId;
+	}
+
+	public void setEventDailyGroupId(String eventDailyGroupId) {
+		this.eventDailyGroupId = eventDailyGroupId;
+	}
+
+	/**
      * getter클래스일일이벤트ID
      *
      * @return CLASS_DAILY_EVENT_ID - 클래스일일이벤트ID
@@ -113,14 +168,6 @@ public class ClassDailyEvent {
     public void setClassId(Integer classId) {
         this.classId = classId;
     }
-
-    public Integer getSecondCheckerUserId() {
-		return secondCheckerUserId;
-	}
-
-	public void setSecondCheckerUserId(Integer secondCheckerUserId) {
-		this.secondCheckerUserId = secondCheckerUserId;
-	}
 
 	/**
      * getter이벤트코드

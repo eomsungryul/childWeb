@@ -1,4 +1,5 @@
 package kr.co.dwebss.child.web;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,13 +108,18 @@ public class ClassController {
 	 * @return String
 	 * @throws Exception
 	 */
+    @Transactional(rollbackFor=Exception.class)
 	@RequestMapping(value = "/director/class/insert")
 	public ModelAndView insert(
 			@ModelAttribute("class") Class vo,
 			ModelMap model) throws Exception {
 		ModelAndView mav = new ModelAndView("forward:/director/class/list");
-		classService.save(vo);
-
+		
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		vo.setClassYear(String.valueOf(year));
+		classService.insertClass(vo);
+		classService.insertClassEventThisYear(vo.getClassId());
+		
 		return mav;
 	}
 	

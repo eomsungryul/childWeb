@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dwebss.child.dao.ClassDailyEventMapper">
-  <resultMap id="BaseResultMap" type="kr.co.dwebss.child.model.ClassDailyEvent">
+  <resultMap id="classDailyEventMap" type="kr.co.dwebss.child.model.ClassDailyEvent">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="CLASS_DAILY_EVENT_ID" jdbcType="INTEGER" property="classDailyEventId" />
-    <result column="EVENT_ORDER" jdbcType="INTEGER" property="eventOrder" />
     <result column="EVENT_DATE" jdbcType="DATE" property="eventDate" />
+    <result column="EVENT_ORDER" jdbcType="INTEGER" property="eventOrder" />
     <result column="CLASS_ID" jdbcType="INTEGER" property="classId" />
-    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
     <result column="EVENT_CD" jdbcType="INTEGER" property="eventCd" />
+    <result column="EVENT_CAR_NEED_YN" jdbcType="CHAR" property="eventCarNeedYn" />
+    <result column="DESTINY_NM" jdbcType="VARCHAR" property="destinyNm" />
+    <result column="EVENT_ALARM_TIME" jdbcType="INTEGER" property="eventAlarmTime" />
+    <result column="EVENT_DAILY_GROUP_ID" jdbcType="CHAR" property="eventDailyGroupId" />
   </resultMap>
+  
+  <select id="selectClassEvent" parameterType="kr.co.dwebss.child.model.ClassDailyEvent" resultMap="classDailyEventMap">
+    	SELECT 
+			CLASS_DAILY_EVENT_ID ,
+			EVENT_DATE ,
+			EVENT_ORDER ,
+			CLASS_ID ,
+			EVENT_CD ,
+			EVENT_CAR_NEED_YN ,
+			DESTINY_NM ,
+			EVENT_ALARM_TIME ,
+			EVENT_DAILY_GROUP_ID
+		FROM CLASS_DAILY_EVENT 
+		WHERE 1=1
+		AND CLASS_ID = #{classId}
+		<if	test="eventDate != null">
+			AND EVENT_DATE = DATE_FORMAT( #{ eventDate }, '%Y-%m-%d')
+		</if>
+    </select>
+    
+  	
+  	
   	
 </mapper>

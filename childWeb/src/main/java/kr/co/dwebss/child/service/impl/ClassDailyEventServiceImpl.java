@@ -7,6 +7,8 @@ import kr.co.dwebss.child.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 
@@ -18,5 +20,10 @@ import javax.annotation.Resource;
 public class ClassDailyEventServiceImpl extends AbstractService<ClassDailyEvent> implements ClassDailyEventService {
     @Resource
     private ClassDailyEventMapper classDailyEventMapper;
+
+	@Override
+	public List<ClassDailyEvent> selectClassEvent(ClassDailyEvent vo) {
+		return classDailyEventMapper.selectClassEvent(vo);
+	}
 
 }
