@@ -49,8 +49,8 @@
 		              <div class="card-body">
 				      <div class="row">
 				        <div class="col-md-8">
-				         <p class="display-4">${result.centerNm}</p>
-				         <p class="display-3"><small>${result.classNm}</small> ${result.childNm}</p>
+				         <p class="display-4"><small><small>${result.centerNm}</small></small></p>
+				         <p class="display-4"><small>${result.classNm} ${result.childNm}</small></p>
 <%-- 				         <p class="card-title text-muted">부모님 전화번호 : ${result.parentPhone}</p> --%>
 				         </div>
 				        <div class="col-md-4">

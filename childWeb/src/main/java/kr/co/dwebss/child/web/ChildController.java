@@ -133,6 +133,35 @@ public class ChildController {
 		
 		return mav;
 	}
+    
+
+	/**
+	 * 어린이 QR코드 전체 재등록 하는 기능 
+	 *
+	 * @param HttpServletRequest request
+	 * @param Map<String, Object> codeMap
+	 * @param ModelMap model
+	 * @return String
+	 * @throws Exception
+	 */
+//    @Transactional(rollbackFor=Exception.class)
+//	@RequestMapping(value = "/director/child/test")
+//	public ModelAndView test(
+//			@ModelAttribute("child") Child vo,
+//			ModelMap model) throws Exception {
+//		ModelAndView mav = new ModelAndView("forward:/director/child/list");
+//
+//    	vo.setFirstIndex((vo.getPageIndex() - 1 ) * vo.getPageUnit());
+//    	vo.setRecordCountPerPage(1000);
+//		List<Child> resultList = childService.selectList(vo);
+//		for ( Child vov : resultList) {
+//			ChildQrCode cqrVO = new ChildQrCode();
+//			cqrVO.setChildId(vov.getChildId());
+//			cqrVO.setChildQrCodeImg(qrcodeUtil.generateQrCode(vov.getChildId()));
+//			childQrCodeService.save(cqrVO);
+//		}
+//		return mav;
+//	}
 	
 	/**
 	 * 어린이 수정
