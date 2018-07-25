@@ -16,42 +16,34 @@ public class ClassDailyEvent {
     private Integer classDailyEventId;
 
     /**
-     * 이벤트순서
-     */
-    @Column(name = "EVENT_ORDER")
-    private Integer eventOrder;
-
-    /**
      * 이벤트발생일
      */
     @Column(name = "EVENT_DATE")
     private Date eventDate;
 
     /**
+     * 이벤트순서
+     */
+    @Column(name = "EVENT_ORDER")
+    private Integer eventOrder;
+
+    /**
      * 클래스ID
      */
     @Column(name = "CLASS_ID")
     private Integer classId;
-
-    
-
-    /**
-     * 이벤트코드
-     */
-    @Column(name = "EVENT_CD")
-    private Integer eventCd;
-
-    @Column(name = "EVENT_CAR_NEED_YN")
-    private String eventCarNeedYn;
     
     @Column(name = "DESTINY_NM")
-    private String destinyNm;
+    private String destinyNm;;
+
+    @Column(name = "EVENT_ALARM_END_T")
+    private Integer eventAlarmEndT;
     
-    @Column(name = "EVENT_ALARM_TIME")
-    private Integer eventAlarmTime;
+    @Column(name = "EVENT_ALARM_START_T")
+    private Integer eventAlarmStartT;
     
-    @Column(name = "EVENT_DAILY_GROUP_ID")
-    private String eventDailyGroupId;
+    @Column(name = "EVENT_CAR_NEED_YN")
+    private String eventCarNeedYn;
     
     @Transient
     private List<Map<String,Object>> list;
@@ -81,21 +73,6 @@ public class ClassDailyEvent {
 		this.destinyNm = destinyNm;
 	}
 
-	public Integer getEventAlarmTime() {
-		return eventAlarmTime;
-	}
-
-	public void setEventAlarmTime(Integer eventAlarmTime) {
-		this.eventAlarmTime = eventAlarmTime;
-	}
-
-	public String getEventDailyGroupId() {
-		return eventDailyGroupId;
-	}
-
-	public void setEventDailyGroupId(String eventDailyGroupId) {
-		this.eventDailyGroupId = eventDailyGroupId;
-	}
 
 	/**
      * getter클래스일일이벤트ID
@@ -169,21 +146,21 @@ public class ClassDailyEvent {
         this.classId = classId;
     }
 
-	/**
-     * getter이벤트코드
-     *
-     * @return EVENT_CD - 이벤트코드
-     */
-    public Integer getEventCd() {
-        return eventCd;
-    }
+	public Integer getEventAlarmEndT() {
+		return eventAlarmEndT;
+	}
 
-    /**
-     * setter이벤트코드
-     *
-     * @param eventCd 이벤트코드
-     */
-    public void setEventCd(Integer eventCd) {
-        this.eventCd = eventCd;
-    }
+	public void setEventAlarmEndT(Integer eventAlarmEndT) {
+		this.eventAlarmEndT = eventAlarmEndT;
+	}
+
+	public Integer getEventAlarmStartT() {
+		return eventAlarmStartT;
+	}
+
+	public void setEventAlarmStartT(Integer eventAlarmStartT) {
+		this.eventAlarmStartT = eventAlarmStartT;
+	}
+    
+
 }

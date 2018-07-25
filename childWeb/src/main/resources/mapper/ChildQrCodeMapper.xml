@@ -28,6 +28,9 @@
 		<if test="searchCondition=='childNm' and searchKeyword!='' and searchKeyword!=null">
 			AND c.CHILD_NM  LIKE CONCAT('%',#{ searchKeyword },'%')
 		</if>	
+		<if test="childId !='' and  childId !=null">
+			AND cqc.child_id = #{ childId }
+		</if>
 	</sql>
   
    <select id="selectQrcode" parameterType="kr.co.dwebss.child.model.ChildQrCode" resultMap="childQrMap">
@@ -44,7 +47,7 @@
 					u.user_Nm as PARENT_USER_NM
 				FROM CHILD c
 				LEFT JOIN USER u 
-				ON c.PARENT_USER_ID =  u.USER_ID
+				ON c.PARENT_PHONE =  (SELECT user_phone from USER WHERE user_id =   u.USER_ID)
 				ORDER BY c.CLASS_ID DESC
 				)c, CLASS cl, child_qr_code cqc, center ct
 			<include refid="kr.co.dwebss.child.dao.ChildQrCodeMapper.WhereQuery" />

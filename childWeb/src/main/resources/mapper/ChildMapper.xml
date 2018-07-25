@@ -39,7 +39,7 @@
 					u.user_Nm as PARENT_USER_NM
 				FROM CHILD c
 				LEFT JOIN USER u 
-				ON c.PARENT_USER_ID =  u.USER_ID
+				ON c.PARENT_PHONE =  (SELECT user_phone from USER WHERE user_id =   u.USER_ID)
 				ORDER BY c.CLASS_ID DESC
 				)c, (select @rownum :=0) r, CLASS cl
 			<include refid="kr.co.dwebss.child.dao.ChildMapper.WhereQuery" />

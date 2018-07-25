@@ -13,7 +13,8 @@
     <result column="USER_PASSWORD" jdbcType="CHAR" property="userPassword" />
     <result column="CENTER_ID" jdbcType="INTEGER" property="centerId" />
     <result column="CONFIRM_YN" jdbcType="CHAR" property="confirmYn" />
-    <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+    <result column="USER_EMAIL_GMAIL" jdbcType="VARCHAR" property="userEmailGmail" />
+    <result column="USER_EMAIL_FACEBOOK" jdbcType="VARCHAR" property="userEmailFacebook" />
     <result column="USER_ROLE_NM" jdbcType="VARCHAR" property="userRoleNm" />
     <result column="CENTER_NM" jdbcType="VARCHAR" property="centerNm" />
     <result column="CENTER_ADDR" jdbcType="VARCHAR" property="centerAddr" />
@@ -78,7 +79,8 @@
 				USER_PASSWORD,
 				CENTER_ID,
 				CONFIRM_YN,
-				USER_EMAIL
+				USER_EMAIL_GMAIL,
+				USER_EMAIL_FACEBOOK
 			FROM USER u, (select @rownum :=0) r, common_code cc
 			<include refid="kr.co.dwebss.child.dao.UserMapper.WhereQuery" />
 			and u.user_role_cd = cc.code

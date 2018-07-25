@@ -64,8 +64,14 @@ public class User extends SearchVO implements Serializable {
     /**
      * 어린이집ID
      */
-    @Column(name = "USER_EMAIL")
-    private String userEmail;
+    @Column(name = "USER_EMAIL_GMAIL")
+    private String userEmailGmail;
+    
+    /**
+     * 어린이집ID
+     */
+    @Column(name = "USER_EMAIL_FACEBOOK")
+    private String userEmailFacebook;
 
     /**
      * 어린이집이름
@@ -85,17 +91,34 @@ public class User extends SearchVO implements Serializable {
      */
     @Transient
     private String centerAddr;
-    
-    
-    @Transient
-    private String userPasswordChk;
 
-    /**
+	/**
      * 사용자권한이름
      */
     @Transient
     private String userRoleNm;
     
+    
+    
+    @Transient
+    private String userPasswordChk;
+
+    public String getUserEmailGmail() {
+		return userEmailGmail;
+	}
+
+	public void setUserEmailGmail(String userEmailGmail) {
+		this.userEmailGmail = userEmailGmail;
+	}
+
+	public String getUserEmailFacebook() {
+		return userEmailFacebook;
+	}
+
+	public void setUserEmailFacebook(String userEmailFacebook) {
+		this.userEmailFacebook = userEmailFacebook;
+	}
+
 
 	public String getConfirmYn() {
 		return confirmYn;
@@ -104,14 +127,7 @@ public class User extends SearchVO implements Serializable {
 	public void setConfirmYn(String confirmYn) {
 		this.confirmYn = confirmYn;
 	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+	
 
 	public String getUserRoleNm() {
 		return userRoleNm;
