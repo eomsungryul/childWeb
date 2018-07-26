@@ -15,17 +15,43 @@
 
 <c:if test="${fn:length(resultList)!=0}">
 	<c:forEach var="result" items="${ resultList }" varStatus="status">
-<%-- 		<tr onclick="fnRegist(${result.classId },'U')"> --%>
-<%-- 		<td>${ pni.totalRecordCount - (((pni.pageIndex - 1) * pni.recordCountPerPage) + (status.index)) }</td> --%>
-<%-- 		<td>${result.classNm }</td> --%>
-<%-- 		<td>${result.teacherUserNm }</td> --%>
-<!-- 		</tr> -->
 		<div class="group">
-		    <h3>${result.destinyNm }</h3>
+		    <h3>목적지는 <input type="text" class="form-control ct" id="destinyNm${status.count}" name="destinyNm${status.count}" value="${result.destinyNm }" required="" maxlength="50">입니다. <button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button></h3>
 		    <div class="eventList">
-		    <input type="hidden" name="classDailyEventId" value="${result.classDailyEventId }">
-		    <input type="hidden" name="flag" value="U">
-		    	승차 시간 <input type="text" class="form-control ct" name="classNm" placeholder="승차시간" required="" maxlength="50">
+		    <input type="hidden" name="classDailyEventId${status.count}" value="${result.classDailyEventId }">
+		    <fmt:formatDate var="newFormattedDateString" value="${result.eventDate}" pattern="yyyy-MM-dd"/>​
+		    <input type="hidden" name="eventDate${status.count}" value="${newFormattedDateString }">
+		    <input type="hidden" name="eventOrder${status.count}" value="${result.eventOrder }">
+		    <input type="hidden" name="classId${status.count}" value="${result.classId }">
+		    <input type="hidden" name="flag${status.count}" value="U">
+		    	<div class="form-group row">
+				    <div class="col-sm-12">출발한지<input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	>분이 지나면 긴급알람이 옵니다.
+				    </div>
+<!-- 				    <label for="confirmYn" class="col-sm-4 col-form-label">출발한지  </label> -->
+<!-- 				    <div class="col-sm-4"> -->
+				    
+<!-- 				    </div> -->
+<!-- 				    <div class="col-sm-4"> -->
+				     
+<!-- 				    </div> -->
+				 </div>
+				 <div class="form-group row">
+<!-- 				    <label for="" class="col-sm-4 col-form-label">도착 긴급알람 시간</label> -->
+<!-- 				    <div class="col-sm-8"> -->
+<%-- 					<input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="출발 긴급알람 시간" required="" maxlength="4" data-parsley-type="number"	> --%>
+<!-- 				    </div> -->
+				    <div class="col-sm-12">도착한지<input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	> 분이 지나면 긴급알람이 옵니다.
+				    </div>
+				 </div>
+		    	 <div class="form-group row">
+				    <label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label>
+				    <div class="col-sm-8">
+					  <input class="" type="radio" name="eventCarNeedYn${status.count}" id="eventCarNeedYn_Y${status.count}" value="Y" <c:if test="${result.eventCarNeedYn=='Y' }">checked="checked"</c:if> data-parsley-required>
+					  <label class="" for="">Y</label>
+					  <input class="" type="radio" name="eventCarNeedYn${status.count}" id="eventCarNeedYn_Y${status.count}"  value="N" <c:if test="${result.eventCarNeedYn=='N' }">checked="checked"</c:if>>
+					  <label class="" for="">N</label>
+				    </div>
+				 </div>
 		    </div>			
 		</div>
 	</c:forEach>

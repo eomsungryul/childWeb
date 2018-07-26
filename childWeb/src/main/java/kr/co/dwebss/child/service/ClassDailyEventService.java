@@ -13,4 +13,10 @@ public interface ClassDailyEventService extends Service<ClassDailyEvent> {
 
 	List<ClassDailyEvent> selectClassEvent(ClassDailyEvent vo);
 
+	void deleteClassDailyEventCenter(ClassDailyEvent vo);
+
+	void deleteClassDailyEvent(ClassDailyEvent vo);
+
+	void insertEventAllClass(ClassDailyEvent vo);
+
 }

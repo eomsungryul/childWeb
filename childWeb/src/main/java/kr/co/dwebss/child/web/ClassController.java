@@ -118,7 +118,7 @@ public class ClassController {
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		vo.setClassYear(String.valueOf(year));
 		classService.insertClass(vo);
-		classService.insertClassEventThisYear(vo.getClassId());
+		classService.insertClassEventThisYear(vo.getClassId().toString());
 		
 		return mav;
 	}

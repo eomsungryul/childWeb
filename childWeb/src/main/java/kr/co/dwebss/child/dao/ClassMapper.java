@@ -15,5 +15,5 @@ public interface ClassMapper extends Mapper<Class> {
 
 	void insertClass(Class vo);
 
-	void insertClassEventThisYear(Integer integer);
+	void insertClassEventThisYear(String string);
 }

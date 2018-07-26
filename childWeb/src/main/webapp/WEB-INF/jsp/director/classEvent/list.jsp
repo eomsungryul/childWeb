@@ -31,7 +31,7 @@
   
 	<style>
 	table tr.active {background: #ccc;}
-	.ct{    display: inline; width:30%  }
+	.ct{    display: inline; width:20%  }
 	</style>
   <body>
   	
@@ -49,7 +49,7 @@
 		<!-- aside end -->	    
 		
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-         <h2 class="mt-3">클래스 이벤트 관리 </h2>
+         <h2 class="mt-3">어린이집 활동 관리 </h2>
       		<div class="col-md-8">
 	      	<div class="row">
 	      	<div class="col-md-12">
@@ -74,7 +74,7 @@
 	          	<div class="col-md-12">
 	          	<div class="float-right mt-3 mb-3">
 		         <a class="btn icon-btn btn-success" href="javascript:AddAccordion();">
-					클래스 이벤트 추가
+					목적지 추가
 				</a>
 				</div>
 				</div>
@@ -82,15 +82,15 @@
 	          	<div class="col-md-4" style="overflow-y: auto;height: 350px;">
 		          	<table class="table">
 		              <thead>
-		                <tr>
-		                  <th>클래스명</th>
+		                <tr  style="cursor: pointer;" onclick="fnClick(this,'CENTER_${ centerInfo.centerId }' );return false;">
+		                  <th>${centerInfo.centerNm}</th>
 		                </tr>
 		              </thead>
 		              <tbody id="class">
 		              	<c:if test="${fn:length(resultList)!=0}">
 		                 	<c:forEach var="result" items="${ resultList }" varStatus="status">
 				                <tr style="cursor: pointer;" onclick="fnClick(this,${ result.classId } );return false;">
-				                  <td>${result.classNm }</td>
+				                  <td>ㄴ${result.classNm }</td>
 				                </tr>
 		                 	</c:forEach>
 		              	</c:if>
@@ -118,7 +118,7 @@
 	      		
 	          	<div class="col-md-12">
 	          	<div class="float-right mt-3 mb-3">
-				<button type="button" class="btn btn-primary" onclick="fnInsert();">클래스 이벤트 등록</button>
+				<button type="button" class="btn btn-primary" onclick="fnInsert();">변경 사항 저장</button>
 				</div>
 				</div>
 	          	
@@ -143,14 +143,14 @@
 	<script type="text/javascript">
 	
 	var contextPath = "${ pageContext.request.contextPath }";
-	var clickVal;
+	var classVal;
+	var delList = [];
 
 	
 	$(document).ready(function(){
 		$('#searchKeyword').datepicker({
 			language: "kr",
 			format: "yyyy/mm/dd",
-// 			daysOfWeekDisabled: "0",
 		    todayHighlight: true
 		}
 		);
@@ -190,7 +190,7 @@
     		type : "POST",
     		url : contextPath + "/director/classEvent/eventList",
     		dataType : "html",
-    		data : {"classId" : clickVal,
+    		data : {"classId" : classVal,
     				"eventDate" : $("#searchKeyword").val()
     		},
     		success : function(data){
@@ -205,15 +205,17 @@
 	 *  클래스 클릭 시 이벤트
 	 */
 	function fnClick(target,code){
-    	$("#class > tr").removeClass("active");
+		$("thead > tr").removeClass("active");
+		$("tbody > tr").removeClass("active");
+//     	$(".table > tr").removeClass("active");
         $(target).toggleClass("active");
-        clickVal = code;
+        classVal = code;
 		
     	$.ajax({
     		type : "POST",
     		url : contextPath + "/director/classEvent/eventList",
     		dataType : "html",
-    		data : {"classId" : clickVal,
+    		data : {"classId" : classVal,
     				"eventDate" : $("#searchKeyword").val()
     		},
     		success : function(data){
@@ -229,135 +231,119 @@
 	 */
 	function AddAccordion(){
 		
+// 		data = '<div class="group"><h3>'
+// 		+'<input type="text" class="form-control ct" name="destinyNm" placeholder="목적지" required="" maxlength="50">'
+// 		+'<button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button>'
+// 		+'</h3><div class="eventList">'
+// 		+'<input type="hidden" name="eventDate" value="'+$("#searchKeyword").val()+'">'
+// 		+'<input type="hidden" name="classId" value="'+classVal+'">'
+// 		+'<input type="hidden" name="flag" value="I">'
+// 		+'<div class="form-group row"><label for="confirmYn" class="col-sm-4 col-form-label">출발 긴급알람 시간  </label>'
+// 		+'<div class="col-sm-8"><input type="text" class="form-control ct" name="eventAlarmStartT" value="" placeholder="출발 긴급알람 시간" required="" maxlength="4" data-parsley-type="number"></div>'
+// 		+'</div>'
+// 		+'<div class="form-group row"><label for="confirmYn" class="col-sm-4 col-form-label">도착 긴급알람 시간  </label>'
+// 		+'<div class="col-sm-8"><input type="text" class="form-control ct" name="eventAlarmEndT" value="" placeholder="출발 긴급알람 시간" required="" maxlength="4" data-parsley-type="number"></div>'
+// 		+'</div>'
+// 		+'<div class="form-group row"><label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label>'
+// 		+'<div class="col-sm-8">'
+// 		+'<input class="" type="radio" name="eventCarNeedYn" id="eventCarNeedYn_Y" value="Y"checked="checked"data-parsley-required>'
+// 		+' <label class="" for="">Y</label>'
+// 		+' <input class="" type="radio" name="eventCarNeedYn" id="eventCarNeedYn_Y"  value="N">'
+// 		+' <label class="" for="">N</label>'
+// 		+'</div>'
+// 		+'</div></div>'
+		
 		data = '<div class="group"><h3>'
-		+'<input type="text" class="form-control ct" id="classNm" name="classNm" placeholder="목적지" required="" maxlength="50">'
+		+'목적지는 <input type="text" class="form-control ct" name="destinyNm" placeholder="목적지" required="" maxlength="50">입니다. '
 		+'<button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button>'
 		+'</h3><div class="eventList">'
-		+'승차 시간 <input type="text" class="form-control ct" id="classNm" name="classNm" placeholder="목적지" required="" maxlength="50">'
+		+'<input type="hidden" name="eventDate" value="'+$("#searchKeyword").val()+'">'
+		+'<input type="hidden" name="classId" value="'+classVal+'">'
+		+'<input type="hidden" name="flag" value="I">'
+		+'<div class="form-group row">'
+		+'<div class="col-sm-12">출발한지<input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	>분이 지나면 긴급알람이 옵니다.'
+		+'</div>'
+		+'</div>'
+		+'<div class="form-group row">'
+		+'<div class="col-sm-12">도착한지<input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	> 분이 지나면 긴급알람이 옵니다.'
+		+'</div>'
+		+'</div>'
+		+'<div class="form-group row"><label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label>'
+		+'<div class="col-sm-8">'
+		+'<input class="" type="radio" name="eventCarNeedYn" id="eventCarNeedYn_Y" value="Y"checked="checked"data-parsley-required>'
+		+' <label class="" for="">Y</label>'
+		+' <input class="" type="radio" name="eventCarNeedYn" id="eventCarNeedYn_Y"  value="N">'
+		+' <label class="" for="">N</label>'
+		+'</div>'
 		+'</div></div>'
+		
 		$("#accordion").append(data);
 		$("#accordion").accordion( "refresh" );
 	}
-	
+
+	/**
+	 *  삭제 이벤트 
+	 */
 	function DeleteAccordion(target){
+// 		if ($(target).parent().find("input[name^='destinyNm']").val() !=undefined){
+// 			delList.push($(target).parent().parent().find("input[name^='classDailyEventId']").val());
+// 		}
 		$(target).parent().parent().remove();
 	}
 	
-	
-	
 	/**
-	 *  체크박스 클릭시 업데이트
-	 */
-	function chkBoxOnClick(target,code){
-		
-		var use_yn = $(target).is(":checked") ? 'Y' : 'N';
-		var exercise_equip_cd = clickVal;
-		var exercise_range_cd = code;
-		
-    	$.ajax({
-    		type : "POST",
-    		url : contextPath + "/director/classEvent/insert",
-    		dataType : "html",
-    		data : {"use_yn" : use_yn, 
-    				"exercise_equip_cd" : exercise_equip_cd,
-    				"exercise_range_cd" : exercise_range_cd,
-    				},
-    		success : function(data){
-//     			$("#part").html(data);
-    		}
-    	});
-        
-	}
-	
-	
-	
-	/**
-	 *  부위 클릭 시 상세정보 입력창 
-	 */
-	function partClick(target,code){
-
-		var exercise_equip_cd = clickVal;
-		var exercise_range_cd = code;
-		var use_yn = $(target).find("input:checkbox").is(":checked") ? true : false;
-		if(!use_yn){
-			alert('기구-부위 매핑 체크박스를 체크해주세요.');
-			return;
-		}
-    	$.ajax({
-    		type : "POST",
-    		url : contextPath + "/director/classEvent/partDetail",
-    		dataType : "html",
-    		data : {
-    				"exercise_equip_cd" : exercise_equip_cd,
-    				"exercise_range_cd" : exercise_range_cd
-    				},
-    		success : function(data){
-    			$("#partDetail").html(data);
-    		}
-    	});
-        
-	}
-	
-	
-	
-	/**
-	 *  기구-부위 등록  
+	 *  클래스 이벤트 관리 등록
 	 */
 	function fnInsert(){
 		
 		var  len = $("#accordion").find(".group").length;
         var eventList = new Array() ;
-
-		
 		for (var i=0; i<len; i++){
-//             var data = new Object() ;
-			var classNm = $($("#accordion").find(".group").get(i)).find('div').find('input[name="classNm"]').val();
+			//h3 구역 
+			var destinyNm = $($("#accordion").find(".group").get(i)).find('input[name^="destinyNm"]').val()
+			//div 구역값들
+			var eventDate = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventDate"]').val();
+// 			var classNm = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="classNm"]').val();
+// 			var eventOrder = $($("#accordion").find(".group").get(i)).find('div').find('input[name="eventOrder"]').val();
+			var classId = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="classId"]').val();
+// 			var flag = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="flag"]').val();
+			var eventAlarmStartT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmStartT"]').val();
+			var eventAlarmEndT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmEndT"]').val();
+			var eventCarNeedYn = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventCarNeedYn"]:checked').val();
 			
 			data = {
-					"classNm" : classNm,
-					"ddd" : classNm
+					"eventDate" : eventDate ,
+					"eventOrder" : i+1,
+					"classId" : classId,
+					"destinyNm" : destinyNm,
+// 					"flag" : flag,
+					"eventAlarmStartT" : eventAlarmStartT,
+					"eventAlarmEndT" : eventAlarmEndT,
+					"eventCarNeedYn" : eventCarNeedYn,
 			}
 			eventList.push(data);
 		}
+// 		delData = {"delList":delList};
+// 		eventList.push(delData);
 		
 		debugger;
-// 		console.log(clickVal);
+// 		console.log(classVal);
 // 		var partArray=[];
 // 		$("input:checkbox[name=partChk]:checked").each(function(){
 // 			partArray.push($(this).val());
 // 		});
 // 		console.log(partArray);
 // 		var jsonData = JSON.stringify(eventList) ;
-
+		
     	$.ajax({
     		type : "POST",
     		url : contextPath + "/director/classEvent/insert",
     		dataType : "json",
-    		data : {"list":eventList},
+    		data : {"list":JSON.stringify(eventList)},
+//     		data : JSON.stringify(eventList),
     		success : function(data){
     		}
     	});
-	}
-	
-	
-	/**
-	 *  기구-부위 상세등록  
-	 */
-	function fnDetailInsert(){
-
-		if(!confirm("기구-부위 상세등록을 하시겠습니까?")) return;
-		if($('#registFrm').parsley().validate()){
-			var data = $("#registFrm").serialize();
-	    	$.ajax({
-	    		type : "POST",
-	    		url : contextPath + "/director/classEvent/detailUpdate",
-	    		dataType : "json",
-	    		data : data,
-	    		success : function(data){
-	    	    	
-	    		}
-	    	});
-		}
 	}
 	
 	

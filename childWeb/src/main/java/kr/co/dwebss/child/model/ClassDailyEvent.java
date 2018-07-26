@@ -31,7 +31,7 @@ public class ClassDailyEvent {
      * 클래스ID
      */
     @Column(name = "CLASS_ID")
-    private Integer classId;
+    private String classId;
     
     @Column(name = "DESTINY_NM")
     private String destinyNm;;
@@ -46,14 +46,47 @@ public class ClassDailyEvent {
     private String eventCarNeedYn;
     
     @Transient
-    private List<Map<String,Object>> list;
+    private String list;
+    
+    @Transient
+    private String flag;
+
+    @Transient
+    private Integer centerId;
+
+    @Transient
+    private String addCenterId;
     
     
-    public List<Map<String, Object>> getList() {
+    public String getAddCenterId() {
+		return addCenterId;
+	}
+
+	public void setAddCenterId(String addCenterId) {
+		this.addCenterId = addCenterId;
+	}
+
+	public Integer getCenterId() {
+		return centerId;
+	}
+
+	public void setCenterId(Integer centerId) {
+		this.centerId = centerId;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+
+	public String getList() {
 		return list;
 	}
 
-	public void setList(List<Map<String, Object>> list) {
+	public void setList(String list) {
 		this.list = list;
 	}
 
@@ -127,24 +160,14 @@ public class ClassDailyEvent {
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
+    
+	public String getClassId() {
+		return classId;
+	}
 
-    /**
-     * getter클래스ID
-     *
-     * @return CLASS_ID - 클래스ID
-     */
-    public Integer getClassId() {
-        return classId;
-    }
-
-    /**
-     * setter클래스ID
-     *
-     * @param classId 클래스ID
-     */
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
 
 	public Integer getEventAlarmEndT() {
 		return eventAlarmEndT;

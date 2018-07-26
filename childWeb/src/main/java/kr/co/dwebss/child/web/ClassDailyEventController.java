@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.boot.json.JsonSimpleJsonParser;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,9 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonParser;
+
+import kr.co.dwebss.child.model.Center;
 import kr.co.dwebss.child.model.ClassDailyEvent;
+import kr.co.dwebss.child.service.CenterService;
 import kr.co.dwebss.child.service.ClassDailyEventService;
 import kr.co.dwebss.child.service.ClassService;
+import net.minidev.json.parser.JSONParser;
 
 /**
 * Created by 엄성렬 on 2018/07/20.
@@ -33,6 +42,9 @@ public class ClassDailyEventController {
     
     @Resource
     private ClassService classService;
+
+    @Resource
+    private CenterService centerService;
 
 	/**
 	 * 클래스 관리 목록
@@ -50,9 +62,12 @@ public class ClassDailyEventController {
 
 		//어린이집의 반을 가져오는 기능 
 		vo.setCenterId((Integer)session.getAttribute("centerId"));
+		
+		Center centerInfo = centerService.findById(vo.getCenterId());
 		List<kr.co.dwebss.child.model.Class> resultList = classService.selectClass(vo);
 		mav.addObject("searchVO", vo);
 		mav.addObject("resultList", resultList);
+		mav.addObject("centerInfo", centerInfo);
 		
 		return mav;
 	}
@@ -126,7 +141,7 @@ public class ClassDailyEventController {
     
 
 	/**
-	 * 클래스 등록
+	 * 변경 사항 수정 
 	 *
 	 * @param HttpServletRequest request
 	 * @param Map<String, Object> codeMap
@@ -137,55 +152,69 @@ public class ClassDailyEventController {
     @Transactional(rollbackFor=Exception.class)
 	@RequestMapping(value = "/director/classEvent/insert")
 	public ModelAndView insert(
-			@ModelAttribute("classDailyEvent") ClassDailyEvent vo,
-//			@RequestBody List<Map<String,String>> dd, 
+			HttpServletRequest request,
 			ModelMap model) throws Exception {
-    	
-		ModelAndView mav = new ModelAndView("director/classEvent/list");
-//		System.out.println("dd : "+dd);
-//		int year = Calendar.getInstance().get(Calendar.YEAR);
-//		vo.setclassEventYear(String.valueOf(year));
+	ModelAndView mav = new ModelAndView("director/classEvent/list");
+	String param = request.getParameter("list");
+	JSONArray arr = (JSONArray) JSON.parse(param);
+	ClassDailyEvent vo = null;
+	String classId = "";
+	String realCenterId = "";
+	String centerId = "";
+	
+	
+	for(int i = 0; i<arr.size(); i++) {
+	   JSONObject obj = (JSONObject) arr.get(i);
+	   vo = new ClassDailyEvent();
+	   classId = obj.get("classId").toString();
+
+	   if(i==0) {
+		   // 기존에 있던 것들을 삭제 처리 한다. 
+		   vo.setEventDate(new SimpleDateFormat("yyyy-MM-dd").parse((String) obj.get("eventDate")));
+		   vo.setClassId(obj.get("classId").toString());
+		   if(classId.indexOf("CENTER_")>-1) {
+			   //센터,클래스 전체 이벤트 변경이다
+				   centerId = obj.get("classId").toString();
+				   vo.setCenterId(Integer.parseInt(centerId.split("CENTER_")[1]));
+				   classDailyEventService.deleteClassDailyEventCenter(vo);
+		   }else {
+			   //클래스 이벤트 변경이다.
+				   classDailyEventService.deleteClassDailyEvent(vo);
+		   }
+	   }
+
+	   vo.setEventDate(new SimpleDateFormat("yyyy-MM-dd").parse((String) obj.get("eventDate")));
+	   vo.setEventOrder(Integer.parseInt(obj.get("eventOrder").toString()));
+	   vo.setClassId(obj.get("classId").toString());
+	   vo.setDestinyNm(obj.get("destinyNm").toString());
+	   vo.setEventAlarmStartT(Integer.parseInt(obj.get("eventAlarmStartT").toString()));
+	   vo.setEventAlarmEndT(Integer.parseInt(obj.get("eventAlarmEndT").toString()));
+	   vo.setEventCarNeedYn(obj.get("eventCarNeedYn").toString());
+	   
+	   classDailyEventService.save(vo);
+	   
+	}
+	
+	if(!centerId.equals("")) {
 		
+		//어린이집 내의 클래스들을 insert 해야함
+		kr.co.dwebss.child.model.Class clVO = new kr.co.dwebss.child.model.Class();
+		clVO.setCenterId(Integer.parseInt(centerId.split("CENTER_")[1]));
+		List<kr.co.dwebss.child.model.Class> classList = classService.selectClass(clVO);
+
+		for(int i = 0; i<classList.size(); i++) {
+			vo.setClassId(classList.get(i).getClassId().toString());
+			vo.setAddCenterId(centerId);
+			classDailyEventService.insertEventAllClass(vo);
+		}
+	}
+	
+	
+				
+				
 		return mav;
 	}
 	
-	/**
-	 * 클래스 수정
-	 *
-	 * @param HttpServletRequest request
-	 * @param Map<String, Object> codeMap
-	 * @param ModelMap model
-	 * @return String
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/director/classEvent/update")
-	public ModelAndView update(
-			@ModelAttribute("classDailyEvent") ClassDailyEvent vo
-			) throws Exception {
-		
-		ModelAndView mav = new ModelAndView("forward:/director/classEvent/list");
-//		classEventService.update(vo);
-		
-		return mav;
-	}
 
-	/**
-	 * 클래스 삭제
-	 *
-	 * @param HttpServletRequest request
-	 * @param classEvent vo
-	 * @param ModelMap model
-	 * @return String
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/director/classEvent/delete")
-	public ModelAndView delete(
-			@ModelAttribute("classDailyEvent") ClassDailyEvent vo,
-			ModelMap model) throws Exception {
-	  ModelAndView mav = new ModelAndView("forward:/director/classEvent/list");
-//      classEventService.deleteById(vo.getclassEventId());
-      
-	  return mav;
-	}
 
 }

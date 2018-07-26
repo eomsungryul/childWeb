@@ -92,11 +92,13 @@
 			  <ul id="pagination" class="pagination-sm justify-content-center"></ul>
 			  
 	          <div class="float-right mb-3">
-	          	  <button type="button" class="btn btn-info" onclick="fnResultPopup()">검색된 명찰보기</button>
+	          	  <button type="button" class="btn btn-info" onclick="fnResultPopup()">검색된 어린이 명찰 인쇄</button>
 		          <button type="button" class="btn btn-primary" onclick="fnRegist('','I'); return false;">등록</button>
 	          </div>
-	          <div class="float-right mb-3 mr-3">
-	          	<input type="text" class="form-control" id="pageExport" name="pageExport" placeholder="명찰 수량 " >	 
+	          <div class="mb-3 mr-3">	 
+	          		<p>
+		          	한 아이 당  몇<input type="text" class="form-control" style="display: inline;
+    				width: 10%;" id="pageExport" name="pageExport" value="1">부 씩 인쇄합니다.   </p>
 			  </div>
 		      
           </div>

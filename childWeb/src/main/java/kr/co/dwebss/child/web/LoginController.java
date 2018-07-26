@@ -26,6 +26,7 @@ import kr.co.dwebss.child.core.ResultGenerator;
 import kr.co.dwebss.child.model.Center;
 import kr.co.dwebss.child.model.User;
 import kr.co.dwebss.child.service.CenterService;
+import kr.co.dwebss.child.service.ClassService;
 import kr.co.dwebss.child.service.UserService;
 
 /**
@@ -42,6 +43,9 @@ public class LoginController {
 
    @Resource
    private ScrtyUtil scrtyUtil;
+
+   @Resource
+   private ClassService classService;
 
 
    /** 로그인 */
@@ -110,6 +114,10 @@ public class LoginController {
     	center.setCenterPhone(user.getCenterPhone());
     	
     	centerService.insertCenter(center);
+    	//센터의 어린이집 활동 이벤트 프로시저 
+    	String centerClassId = "CENTER_"+center.getCenterId();
+		classService.insertClassEventThisYear(centerClassId);
+    	
     	user.setCenterId(center.getCenterId());
     	user.setUserPassword(scrtyUtil.LockPassword(user.getUserPassword()));
         userService.save(user);
