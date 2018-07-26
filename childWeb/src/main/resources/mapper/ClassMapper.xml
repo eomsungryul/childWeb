@@ -98,7 +98,16 @@
   	<select id="insertClassEventThisYear" parameterType="kr.co.dwebss.child.model.Class"
 	    resultMap="classMap" statementType="CALLABLE">
 	    { call insertClassEventThisYear(
-	        #{classId, mode=IN, jdbcType=INTEGER}
+	        #{classId, mode=IN, jdbcType=INTEGER},
+	        #{inputCenterId, mode=IN, jdbcType=VARCHAR}
+	     )
+	    }
+	</select>
+	
+  	<select id="insertCenterEventThisYear" parameterType="kr.co.dwebss.child.model.Class"
+	    resultMap="classMap" statementType="CALLABLE">
+	    { call insertCenterEventThisYear(
+	        #{centerId, mode=IN, jdbcType=VARCHAR}
 	     )
 	    }
 	</select>

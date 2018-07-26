@@ -112,13 +112,16 @@ public class ClassController {
 	@RequestMapping(value = "/director/class/insert")
 	public ModelAndView insert(
 			@ModelAttribute("class") Class vo,
-			ModelMap model) throws Exception {
+			ModelMap model,
+			HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("forward:/director/class/list");
 		
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		vo.setClassYear(String.valueOf(year));
 		classService.insertClass(vo);
-		classService.insertClassEventThisYear(vo.getClassId().toString());
+		
+    	vo.setInputCenterId("CENTER_"+session.getAttribute("centerId"));
+		classService.insertClassEventThisYear(vo);
 		
 		return mav;
 	}

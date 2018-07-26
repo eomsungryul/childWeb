@@ -52,14 +52,14 @@
 	
 	
 	<insert id="insertEventAllClass" parameterType="kr.co.dwebss.child.model.ClassDailyEvent">
-		
 		INSERT INTO class_daily_event
-		(EVENT_DATE,EVENT_ORDER,CLASS_ID,
+		(CLASS_DAILY_EVENT_ID,EVENT_DATE,EVENT_ORDER,CLASS_ID,
 		DESTINY_NM,
 		EVENT_ALARM_END_T,
 		EVENT_ALARM_START_T,
 		EVENT_CAR_NEED_YN)
 		select 
+		CLASS_DAILY_EVENT_ID,
 		EVENT_DATE,
 		EVENT_ORDER,
 		#{classId} AS CLASS_ID, -- 

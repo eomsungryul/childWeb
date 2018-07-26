@@ -116,7 +116,7 @@ public class LoginController {
     	centerService.insertCenter(center);
     	//센터의 어린이집 활동 이벤트 프로시저 
     	String centerClassId = "CENTER_"+center.getCenterId();
-		classService.insertClassEventThisYear(centerClassId);
+		classService.insertCenterEventThisYear(centerClassId);
     	
     	user.setCenterId(center.getCenterId());
     	user.setUserPassword(scrtyUtil.LockPassword(user.getUserPassword()));

@@ -159,8 +159,7 @@ public class ClassDailyEventController {
 	JSONArray arr = (JSONArray) JSON.parse(param);
 	ClassDailyEvent vo = null;
 	String classId = "";
-	String realCenterId = "";
-	String centerId = "";
+	String centerId = ""; // event_daily 
 	
 	
 	for(int i = 0; i<arr.size(); i++) {

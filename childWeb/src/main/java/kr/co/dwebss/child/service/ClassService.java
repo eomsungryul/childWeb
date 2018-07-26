@@ -20,6 +20,8 @@ public interface ClassService extends Service<Class> {
 
 	void insertClass(Class vo);
 
-	void insertClassEventThisYear(String centerClassId);
+	void insertClassEventThisYear(Class vo);
+
+	void insertCenterEventThisYear(String centerClassId);
 
 }

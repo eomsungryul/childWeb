@@ -43,8 +43,13 @@ public class ClassServiceImpl extends AbstractService<Class> implements ClassSer
 	}
 
 	@Override
-	public void insertClassEventThisYear(String classId) {
-		classMapper.insertClassEventThisYear(classId);
+	public void insertClassEventThisYear(Class vo) {
+		classMapper.insertClassEventThisYear(vo);
+	}
+
+	@Override
+	public void insertCenterEventThisYear(String centerClassId) {
+		classMapper.insertCenterEventThisYear(centerClassId);
 	}
 
 }

@@ -41,9 +41,19 @@ public class Class extends SearchVO {
     @Column(name = "CLASS_YEAR")
     private String classYear;
     
+    @Transient
+    private String inputCenterId; //프로시저에 넣을 값 CENTER_센터아이디 를 붙여야하기 때문에 
     
 
-    public String getClassYear() {
+    public String getInputCenterId() {
+		return inputCenterId;
+	}
+
+	public void setInputCenterId(String inputCenterId) {
+		this.inputCenterId = inputCenterId;
+	}
+
+	public String getClassYear() {
 		return classYear;
 	}
 
