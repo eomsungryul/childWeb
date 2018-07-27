@@ -8,4 +8,6 @@ import kr.co.dwebss.child.model.ChildQrCode;
 public interface ChildQrCodeMapper extends Mapper<ChildQrCode> {
 
 	List<ChildQrCode> selectQrcode(ChildQrCode vo);
+
+	List<ChildQrCode> selectQrcodeArray(ChildQrCode vo);
 }

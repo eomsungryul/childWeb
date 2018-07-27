@@ -25,13 +25,15 @@
   	<link href="<%=contextPath%>/resources/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
   	<link href="<%=contextPath%>/resources/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+    <link href="<%=contextPath%>/resources/bootstrap-4.1.1/parsley.css" rel="stylesheet">
     
     
 </head>
   
 	<style>
 	table tr.active {background: #ccc;}
-	.ct{    display: inline; width:20%  }
+	.ct{    display: inline; width:15%  }
+	.ht{    display: inline; width:25%  }
 	</style>
   <body>
   	
@@ -103,6 +105,8 @@
 		            </table>
 	          	</div>
 	          	<div class="col-md-8">
+	          	
+                   	<form:form modelAttribute="classList" action="${ contextPath }/director/classEvent/list" name="registFrm" id="registFrm" >
 	          		<div id="accordion">
 					  <div class="group">
 						    <h3>반을 선택해 주세요</h3>
@@ -112,6 +116,7 @@
 						</div>
 	
 					</div>	
+					</form:form>
 	          	</div>
 	          	
 	          	
@@ -254,18 +259,18 @@
 // 		+'</div></div>'
 		
 		data = '<div class="group"><h3>'
-		+'목적지는 <input type="text" class="form-control ct" name="destinyNm" placeholder="목적지" required="" maxlength="50">입니다. '
+		+'목적지는  <input type="text" class="form-control ht" name="destinyNm" placeholder="목적지" required="" maxlength="50" data-parsley-errors-messages-disabled> 입니다. '
 		+'<button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button>'
 		+'</h3><div class="eventList">'
 		+'<input type="hidden" name="eventDate" value="'+$("#searchKeyword").val()+'">'
 		+'<input type="hidden" name="classId" value="'+classVal+'">'
 		+'<input type="hidden" name="flag" value="I">'
 		+'<div class="form-group row">'
-		+'<div class="col-sm-12">출발한지<input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	>분이 지나면 긴급알람이 옵니다.'
+		+'<div class="col-sm-12">출발한지 <input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다.'
 		+'</div>'
 		+'</div>'
 		+'<div class="form-group row">'
-		+'<div class="col-sm-12">도착한지<input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	> 분이 지나면 긴급알람이 옵니다.'
+		+'<div class="col-sm-12">도착한지 <input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다.'
 		+'</div>'
 		+'</div>'
 		+'<div class="form-group row"><label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label>'
@@ -323,27 +328,26 @@
 			}
 			eventList.push(data);
 		}
-// 		delData = {"delList":delList};
-// 		eventList.push(delData);
+		delData = {"delList":delList};
+		eventList.push(delData);
 		
-		debugger;
-// 		console.log(classVal);
-// 		var partArray=[];
-// 		$("input:checkbox[name=partChk]:checked").each(function(){
-// 			partArray.push($(this).val());
-// 		});
-// 		console.log(partArray);
-// 		var jsonData = JSON.stringify(eventList) ;
-		
-    	$.ajax({
-    		type : "POST",
-    		url : contextPath + "/director/classEvent/insert",
-    		dataType : "json",
-    		data : {"list":JSON.stringify(eventList)},
-//     		data : JSON.stringify(eventList),
-    		success : function(data){
-    		}
-    	});
+		if($('#registFrm').parsley().validate()){
+
+	     	$.ajax({
+	     		type : "POST",
+	     		url : contextPath + "/director/classEvent/insert",
+	     		dataType : "json",
+	     		data : {"list":JSON.stringify(eventList)},
+	     		success : function(data){
+	     		}
+	     	});
+	     	
+		}else{
+			alert("작성 시 모든 입력란에 입력해주세요.");
+		}
+
+
+
 	}
 	
 	

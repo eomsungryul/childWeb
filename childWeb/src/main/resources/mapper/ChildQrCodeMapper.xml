@@ -29,7 +29,13 @@
 			AND c.CHILD_NM  LIKE CONCAT('%',#{ searchKeyword },'%')
 		</if>	
 		<if test="childId !='' and  childId !=null">
-			AND cqc.child_id = #{ childId }
+			AND cqc.child_id =  #{childId}
+		</if>
+		<if test="childArray.size !=0 ">
+			AND cqc.child_id in 
+			<foreach collection="childArray" item="child"   open="(" close=")" separator=",">
+			#{child}
+ 			</foreach>
 		</if>
 	</sql>
   
@@ -55,7 +61,29 @@
 			AND c.child_id = cqc.child_id
 			AND cl.CENTER_ID = ct.CENTER_ID
 		) A
-		
-		
+   </select>
+  
+   <select id="selectQrcodeArray" parameterType="kr.co.dwebss.child.model.ChildQrCode" resultMap="childQrMap">
+		SELECT A.* FROM (
+			select 
+			c.*,
+			cl.CLASS_NM ,
+      		cqc.CHILD_QR_CODE_IMG,
+      		ct.CENTER_NM
+			FROM
+				(
+				SELECT 
+					c.* ,
+					u.user_Nm as PARENT_USER_NM
+				FROM CHILD c
+				LEFT JOIN USER u 
+				ON c.PARENT_PHONE =  (SELECT user_phone from USER WHERE user_id =   u.USER_ID)
+				ORDER BY c.CLASS_ID DESC
+				)c, CLASS cl, child_qr_code cqc, center ct
+			<include refid="kr.co.dwebss.child.dao.ChildQrCodeMapper.WhereQuery" />
+			AND c.CLASS_ID = cl.CLASS_ID
+			AND c.child_id = cqc.child_id
+			AND cl.CENTER_ID = ct.CENTER_ID
+		) A
    </select>
 </mapper>

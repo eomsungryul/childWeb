@@ -44,14 +44,20 @@ public class ChildQrCodeController {
 		ModelAndView mav = new ModelAndView("director/childQr/detail");
 
 		vo.setCenterId((Integer)session.getAttribute("centerId"));
+		
+		
 		String pageExport = request.getParameter("pageExport");
 		if(pageExport==""||pageExport==null) {
 	    	mav.addObject("pageExport", 1);
 		}else {
 	    	mav.addObject("pageExport", Integer.parseInt(pageExport));
 		}
-		
-    	List<ChildQrCode> resultList = childQrCodeService.selectQrcode(vo);
+		List<ChildQrCode> resultList = null;
+		if(vo.getChildArray().size()>0) {
+			resultList = childQrCodeService.selectQrcodeArray(vo);
+		}else {
+			resultList = childQrCodeService.selectQrcode(vo);
+		}
     	mav.addObject("resultList", resultList);
     	
 		return mav;

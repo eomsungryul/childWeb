@@ -26,4 +26,9 @@ public class ChildQrCodeServiceImpl extends AbstractService<ChildQrCode> impleme
 		return childQrCodeMapper.selectQrcode(vo);
 	}
 
+	@Override
+	public List<ChildQrCode> selectQrcodeArray(ChildQrCode vo) {
+		return childQrCodeMapper.selectQrcodeArray(vo);
+	}
+
 }

@@ -15,14 +15,11 @@
   String contextPath = (String)request.getContextPath();
 %>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <title>어린이 관리</title>
-
     <!-- Bootstrap core CSS -->
     <link href="<%=contextPath%>/resources/bootstrap-4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="<%=contextPath%>/resources/bootstrap-4.1.1/dashboard.css" rel="stylesheet">
-
 </head>
   
   <body>
@@ -62,6 +59,7 @@
             <table class="table text-center">
               <thead>
                 <tr>
+                  <th class="align-middle"><input type="checkbox" id="checkall" onclick="window.ESR23Common.checkbox_checkall('checkall','childChk')"></th>
                   <th>번호</th>
                   <th>어린이명</th>
                   <th>반명</th>
@@ -73,6 +71,9 @@
               	<c:if test="${fn:length(resultList)!=0}">
                  	<c:forEach var="result" items="${ resultList }" varStatus="status">
 		                <tr>
+		                  <td class="align-middle"> 
+							<input type="checkbox" id="childChk${status.count}" name="childChk" value="${result.childId}">
+						  </td>
 		                  <td onclick="fnRegist( '${result.childId }' ,'U')">${ pni.totalRecordCount - (((pni.pageIndex - 1) * pni.recordCountPerPage) + (status.index)) }</td>
 		                  <td onclick="fnRegist( '${result.childId }' ,'U')">${result.childNm }</td>
 		                  <td onclick="fnRegist( '${result.childId }' ,'U')">${result.classNm }</td>
@@ -90,20 +91,18 @@
             </table>
             
 			  <ul id="pagination" class="pagination-sm justify-content-center"></ul>
-			  
-	          <div class="float-right mb-3">
-	          	  <button type="button" class="btn btn-info" onclick="fnResultPopup()">검색된 어린이 명찰 인쇄</button>
-		          <button type="button" class="btn btn-primary" onclick="fnRegist('','I'); return false;">등록</button>
+	          <div class="float-right mb-3" style="width: 36%!important;">
+	          	<div class="col-12">
+	          		<span>
+			          	한 아이 당  <input type="text" class="form-control" style="display: inline; width: 15%;" id="pageExport" name="pageExport" value="1"> 장 씩   
+			          	<button type="button" class="btn btn-info" onclick="fnResultPopup()">인쇄합니다</button> 
+		          	</span>
+	          		<span>
+		          		<button type="button" class="btn btn-primary" onclick="fnRegist('','I'); return false;">등록</button>
+		          	</span>
+	          	</div>
 	          </div>
-	          <div class="mb-3 mr-3">	 
-	          		<p>
-		          	한 아이 당  몇<input type="text" class="form-control" style="display: inline;
-    				width: 10%;" id="pageExport" name="pageExport" value="1">부 씩 인쇄합니다.   </p>
-			  </div>
-		      
           </div>
-
-          
         </main>
       </div>
     </div>
@@ -111,6 +110,7 @@
     <script src="<%=contextPath%>/resources/bootstrap-4.1.1/js/bootstrap.min.js"></script>
     <script src="<%=contextPath%>/resources/js/jquery-3.1.0.js"></script>
     <script src="<%=contextPath%>/resources/js/jquery.twbsPagination.min.js"></script>
+    <script src="<%=contextPath%>/resources/js/ESR23Common_debug.js"></script>
     
 	<script type="text/javascript">
 	var contextPath = "${ pageContext.request.contextPath }";
@@ -133,7 +133,6 @@
 		        }
 		    });
 		}
-		
 	})
 	/**
 	 *  어린이 리스트 검색
@@ -187,12 +186,20 @@
 	 *  어린이 검색된 명찰보기
 	 */
 	function fnResultPopup(){
-		var popUrl = contextPath + "/director/childQr/detail";	//팝업창에 출력될 페이지 URL
+		
+		var childArray=[];
+		$("input:checkbox[name=childChk]:checked").each(function(){
+			childArray.push($(this).val());
+		});
+// 		console.log(childArray);
+
 		
 		var param = "?pageExport="+$("#pageExport").val()
-		+"&searchCondition="+$("#searchCondition").val()
-		+"&searchKeyword="+$("#searchKeyword").val();
+				+"&childArray="+childArray;
+// 		+"&searchCondition="+$("#searchCondition").val()
+// 		+"&searchKeyword="+$("#searchKeyword").val();
 		
+		var popUrl = contextPath + "/director/childQr/detail";	//팝업창에 출력될 페이지 URL
 // 		var popOption = "width=370, height=360, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 		var popOption = "resizable=no, scrollbars=no, status=no; fullscreen= yes;";    //팝업창 옵션(optoin)
 			window.open(popUrl+param,"",popOption);

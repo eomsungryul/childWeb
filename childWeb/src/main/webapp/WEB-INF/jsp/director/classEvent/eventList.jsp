@@ -16,7 +16,7 @@
 <c:if test="${fn:length(resultList)!=0}">
 	<c:forEach var="result" items="${ resultList }" varStatus="status">
 		<div class="group">
-		    <h3>목적지는 <input type="text" class="form-control ct" id="destinyNm${status.count}" name="destinyNm${status.count}" value="${result.destinyNm }" required="" maxlength="50">입니다. <button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button></h3>
+		    <h3>목적지는 <input type="text" class="form-control ht" id="destinyNm${status.count}" name="destinyNm${status.count}" value="${result.destinyNm }" required="" maxlength="50"  data-parsley-errors-messages-disabled> 입니다. <button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button></h3>
 		    <div class="eventList">
 		    <input type="hidden" name="classDailyEventId${status.count}" value="${result.classDailyEventId }">
 		    <fmt:formatDate var="newFormattedDateString" value="${result.eventDate}" pattern="yyyy-MM-dd"/>​
@@ -25,7 +25,7 @@
 		    <input type="hidden" name="classId${status.count}" value="${result.classId }">
 		    <input type="hidden" name="flag${status.count}" value="U">
 		    	<div class="form-group row">
-				    <div class="col-sm-12">출발한지<input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	>분이 지나면 긴급알람이 옵니다.
+				    <div class="col-sm-12">출발한지 <input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다.
 				    </div>
 <!-- 				    <label for="confirmYn" class="col-sm-4 col-form-label">출발한지  </label> -->
 <!-- 				    <div class="col-sm-4"> -->
@@ -40,7 +40,7 @@
 <!-- 				    <div class="col-sm-8"> -->
 <%-- 					<input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="출발 긴급알람 시간" required="" maxlength="4" data-parsley-type="number"	> --%>
 <!-- 				    </div> -->
-				    <div class="col-sm-12">도착한지<input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	> 분이 지나면 긴급알람이 옵니다.
+				    <div class="col-sm-12">도착한지 <input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다.
 				    </div>
 				 </div>
 		    	 <div class="form-group row">

@@ -1,5 +1,7 @@
 package kr.co.dwebss.child.model;
 
+import java.util.ArrayList;
+
 import javax.persistence.*;
 
 @Table(name = "child_qr_code")
@@ -41,9 +43,18 @@ public class ChildQrCode extends SearchVO {
     @Transient
     private Integer centerId;
     
-    
+    @Transient
+    private ArrayList<String> childArray;
 
-    public Integer getCenterId() {
+    public ArrayList<String> getChildArray() {
+		return childArray;
+	}
+
+	public void setChildArray(ArrayList<String> childArray) {
+		this.childArray = childArray;
+	}
+
+	public Integer getCenterId() {
 		return centerId;
 	}
 

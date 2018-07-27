@@ -13,4 +13,6 @@ public interface ChildQrCodeService extends Service<ChildQrCode> {
 
 	List<ChildQrCode> selectQrcode(ChildQrCode vo);
 
+	List<ChildQrCode> selectQrcodeArray(ChildQrCode vo);
+
 }
