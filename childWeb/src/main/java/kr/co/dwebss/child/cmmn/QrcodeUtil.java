@@ -25,7 +25,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 @Component("qrcodeUtil")
-public class QrcodeUtil {
+public class QrcodeUtil { 
 
     @Value("${qrcodePath}") 
 	String qrcodePath;
