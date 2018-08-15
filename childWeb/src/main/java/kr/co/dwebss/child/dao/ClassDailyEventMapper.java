@@ -16,4 +16,6 @@ public interface ClassDailyEventMapper extends Mapper<ClassDailyEvent> {
 	void insertEventAllClass(ClassDailyEvent vo);
 
 	void deleteClassEvent(String string);
+
+	void updateClassDailyEvent(ClassDailyEvent vo);
 }

@@ -45,6 +45,9 @@
 	<delete id="deleteClassDailyEvent" parameterType="kr.co.dwebss.child.model.ClassDailyEvent">
 		DELETE FROM CLASS_DAILY_EVENT 
 		WHERE 1=1 
+		<if	test="classDailyEventId != null">
+		AND CLASS_DAILY_EVENT_ID = #{classDailyEventId}
+		</if>
 		AND EVENT_DATE = DATE_FORMAT( #{ eventDate }, '%Y-%m-%d')
 		AND CLASS_ID = #{classId}
 	</delete>
@@ -62,7 +65,7 @@
 		CLASS_DAILY_EVENT_ID,
 		EVENT_DATE,
 		EVENT_ORDER,
-		#{classId} AS CLASS_ID, -- 
+		#{classId} AS CLASS_ID,d
 		DESTINY_NM,
 		EVENT_ALARM_END_T,
 		EVENT_ALARM_START_T,
@@ -80,10 +83,20 @@
 		WHERE 1=1 
 		AND CLASS_ID = #{classId}
 	</delete>
-    
-    
-    
-    
+	
+	<update id="updateClassDailyEvent" parameterType="kr.co.dwebss.child.model.ClassDailyEvent">
+		UPDATE CLASS_DAILY_EVENT SET
+			EVENT_ORDER = #{ eventOrder },
+			DESTINY_NM = #{ destinyNm },
+			EVENT_ALARM_START_T = #{ eventAlarmStartT },
+			EVENT_CAR_NEED_YN = #{ eventCarNeedYn }
+		WHERE 1=1 
+		AND CLASS_DAILY_EVENT_ID = #{classDailyEventId}
+		AND EVENT_DATE = DATE_FORMAT( #{ eventDate }, '%Y-%m-%d')
+		AND CLASS_ID = #{classId}
+	</update>
+	
+	
     
     
   	

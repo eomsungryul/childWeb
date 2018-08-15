@@ -58,13 +58,8 @@
 	          	<div class="float-right mt-3 mb-3">
 					<div class="form-inline">
 	                   	<form:form modelAttribute="searchVO" action="${ contextPath }/admin/code/list" name="searchFrm">
-			           
-			           <input type="text" id="searchKeyword" class="form-control">
+			            <input type="text" id="searchKeyword" class="form-control">
 			            <button type="button" onclick="fnSearch()" class="btn btn-secondary" >검색</button>
-	<!-- 		            <div> -->
-	<%-- 		                <input type="text" class="form-control search" id="searchKeyword" name="searchKeyword" placeholder="검색어"  value="${pni.searchKeyword}"/> --%>
-	<!-- 		                <button type="button" onclick="fnSearch()" class="btn btn-secondary" >검색</button> -->
-	<!-- 		            </div> -->
 			            </form:form>
 			        </div>
 	          	</div>
@@ -150,7 +145,6 @@
 	var contextPath = "${ pageContext.request.contextPath }";
 	var classVal;
 	var delList = [];
-
 	
 	$(document).ready(function(){
 		$('#searchKeyword').datepicker({
@@ -213,7 +207,6 @@
 	function fnClick(target,code){
 		$("thead > tr").removeClass("active");
 		$("tbody > tr").removeClass("active");
-//     	$(".table > tr").removeClass("active");
         $(target).toggleClass("active");
         classVal = code;
 		
@@ -269,9 +262,18 @@
 	 *  삭제 이벤트 
 	 */
 	function DeleteAccordion(target){
-// 		if ($(target).parent().find("input[name^='destinyNm']").val() !=undefined){
+		if ($(target).parent().parent().find("input[name^='classDailyEventId']").val() !=undefined){
 // 			delList.push($(target).parent().parent().find("input[name^='classDailyEventId']").val());
-// 		}
+			var classDailyEventId = $(target).parent().parent().find("input[name^='classDailyEventId']").val()
+			var eventDate = $(target).parent().parent().find('input[name^="eventDate"]').val();
+			var classId = $(target).parent().parent().find('input[name^="classId"]').val();
+			data = {
+					"classDailyEventId" : classDailyEventId ,
+					"eventDate" : eventDate ,
+					"classId" : classId,
+			}
+			delList.push(data);
+		}
 		$(target).parent().parent().remove();
 	}
 	
@@ -281,40 +283,52 @@
 	function fnInsert(){
 		
 		var  len = $("#accordion").find(".group").length;
-        var eventList = new Array() ;
+        var eventList = {};
+        var addList =  new Array();
 		for (var i=0; i<len; i++){
 			//h3 구역 
 			var destinyNm = $($("#accordion").find(".group").get(i)).find('input[name^="destinyNm"]').val()
 			//div 구역값들
-			var eventDate = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventDate"]').val();
 // 			var classNm = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="classNm"]').val();
 // 			var eventOrder = $($("#accordion").find(".group").get(i)).find('div').find('input[name="eventOrder"]').val();
+			var classDailyEventId = $($("#accordion").find(".group").get(i)).find('div').find("input[name^='classDailyEventId']").val()
+			var eventDate = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventDate"]').val();
 			var classId = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="classId"]').val();
-// 			var flag = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="flag"]').val();
+			var flag = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="flag"]').val();
 			var eventAlarmStartT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmStartT"]').val();
 // 			var eventAlarmEndT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmEndT"]').val();
 			var eventCarNeedYn = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventCarNeedYn"]:checked').val();
 			
 			data = {
+					"classDailyEventId" : classDailyEventId ,
 					"eventDate" : eventDate ,
 					"eventOrder" : i+1,
 					"classId" : classId,
 					"destinyNm" : destinyNm,
-// 					"flag" : flag,
+					"flag" : flag,
 					"eventAlarmStartT" : eventAlarmStartT,
 // 					"eventAlarmEndT" : eventAlarmEndT,
 					"eventCarNeedYn" : eventCarNeedYn,
 			}
-			eventList.push(data);
+			addList.push(data);
 		}
-// 		delData = {"delList":delList};
-// 		eventList.push(delData);
+		eventList = {"delList":delList,
+					 "addList":addList };
+		
+// 		console.log(JSON.stringify(eventList));
+		//어린이집 전체 수정일 경우
+		if(classVal.toString().indexOf("CENTER_")>-1){
+			url = contextPath + "/director/classEvent/insertCenterEvent";
+			if(!confirm("어린이집 전체 정보 수정 시 \n어린이집 내의 전체 반의 정보가 수정됩니다. \n정보를 수정하시겠습니까?")) return;
+		}else{
+			url = contextPath + "/director/classEvent/insertClassEvent";
+			if(!confirm("클래스 활동 정보를 수정하시겠습니까?")) return;
+		}
 		
 		if($('#registFrm').parsley().validate()){
 	     	$.ajax({
 	     		type : "POST",
-	     		url : contextPath + "/director/classEvent/insert",
-// 	     		dataType : "json",
+	     		url : url,
 	     		data : {"list":JSON.stringify(eventList)},
 		        error:function(request,status,error){
 		            alert("code:"+request.status+"\n"+"error:"+error+"\n"+"message:"+request.responseText);
