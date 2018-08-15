@@ -42,4 +42,9 @@ public class ClassDailyEventServiceImpl extends AbstractService<ClassDailyEvent>
 		classDailyEventMapper.insertEventAllClass(vo);
 	}
 
+	@Override
+	public void deleteClassEvent(String string) {
+		classDailyEventMapper.deleteClassEvent(string);
+	}
+
 }

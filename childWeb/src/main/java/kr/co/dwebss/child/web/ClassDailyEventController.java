@@ -154,7 +154,7 @@ public class ClassDailyEventController {
 	public ModelAndView insert(
 			HttpServletRequest request,
 			ModelMap model) throws Exception {
-	ModelAndView mav = new ModelAndView("director/classEvent/list");
+	ModelAndView mav = new ModelAndView("forward:/director/classEvent/list");
 	String param = request.getParameter("list");
 	JSONArray arr = (JSONArray) JSON.parse(param);
 	ClassDailyEvent vo = null;
@@ -169,7 +169,7 @@ public class ClassDailyEventController {
 
 	   if(i==0) {
 		   // 기존에 있던 것들을 삭제 처리 한다. 
-		   vo.setEventDate(new SimpleDateFormat("yyyy-MM-dd").parse((String) obj.get("eventDate")));
+		   vo.setEventDate(new SimpleDateFormat("yyyy/MM/dd").parse((String) obj.get("eventDate")));
 		   vo.setClassId(obj.get("classId").toString());
 		   if(classId.indexOf("CENTER_")>-1) {
 			   //센터,클래스 전체 이벤트 변경이다
@@ -182,12 +182,12 @@ public class ClassDailyEventController {
 		   }
 	   }
 
-	   vo.setEventDate(new SimpleDateFormat("yyyy-MM-dd").parse((String) obj.get("eventDate")));
+	   vo.setEventDate(new SimpleDateFormat("yyyy/MM/dd").parse((String) obj.get("eventDate")));
 	   vo.setEventOrder(Integer.parseInt(obj.get("eventOrder").toString()));
 	   vo.setClassId(obj.get("classId").toString());
 	   vo.setDestinyNm(obj.get("destinyNm").toString());
 	   vo.setEventAlarmStartT(Integer.parseInt(obj.get("eventAlarmStartT").toString()));
-	   vo.setEventAlarmEndT(Integer.parseInt(obj.get("eventAlarmEndT").toString()));
+//	   vo.setEventAlarmEndT(Integer.parseInt(obj.get("eventAlarmEndT").toString()));
 	   vo.setEventCarNeedYn(obj.get("eventCarNeedYn").toString());
 	   
 	   classDailyEventService.save(vo);
@@ -207,9 +207,6 @@ public class ClassDailyEventController {
 			classDailyEventService.insertEventAllClass(vo);
 		}
 	}
-	
-	
-				
 				
 		return mav;
 	}

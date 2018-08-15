@@ -19,4 +19,6 @@ public interface ClassDailyEventService extends Service<ClassDailyEvent> {
 
 	void insertEventAllClass(ClassDailyEvent vo);
 
+	void deleteClassEvent(String string);
+
 }

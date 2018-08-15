@@ -18,6 +18,7 @@ import kr.co.dwebss.child.model.Center;
 import kr.co.dwebss.child.model.Class;
 import kr.co.dwebss.child.model.CommonCode;
 import kr.co.dwebss.child.model.User;
+import kr.co.dwebss.child.service.ClassDailyEventService;
 import kr.co.dwebss.child.service.ClassService;
 import kr.co.dwebss.child.service.CommonCodeService;
 import kr.co.dwebss.child.service.UserService;
@@ -33,6 +34,9 @@ public class ClassController {
 
     @Resource
     private UserService userService;
+    
+    @Resource
+    private ClassDailyEventService classDailyEventService;
 
 	/**
 	 * 클래스 관리 목록
@@ -155,12 +159,15 @@ public class ClassController {
 	 * @return String
 	 * @throws Exception
 	 */
+    @Transactional(rollbackFor=Exception.class)
 	@RequestMapping(value = "/director/class/delete")
 	public ModelAndView delete(
 			@ModelAttribute("class") Class vo,
 			ModelMap model) throws Exception {
 	  ModelAndView mav = new ModelAndView("forward:/director/class/list");
       classService.deleteById(vo.getClassId());
+
+      classDailyEventService.deleteClassEvent(vo.getClassId().toString());
       
 	  return mav;
 	}

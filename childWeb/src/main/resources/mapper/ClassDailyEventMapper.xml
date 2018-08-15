@@ -73,6 +73,13 @@
 		AND CLASS_ID = #{addCenterId}
 		
 	</insert>
+	
+	
+	<delete id="deleteClassEvent" parameterType="String">
+		DELETE FROM CLASS_DAILY_EVENT 
+		WHERE 1=1 
+		AND CLASS_ID = #{classId}
+	</delete>
     
     
     

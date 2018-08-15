@@ -161,6 +161,7 @@
 		);
 		$('#searchKeyword').datepicker('update', new Date());
 		accordionInit();
+		$("table tr")[0].click();
 	});
 	
 	function accordionInit(){
@@ -236,28 +237,6 @@
 	 */
 	function AddAccordion(){
 		
-// 		data = '<div class="group"><h3>'
-// 		+'<input type="text" class="form-control ct" name="destinyNm" placeholder="목적지" required="" maxlength="50">'
-// 		+'<button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button>'
-// 		+'</h3><div class="eventList">'
-// 		+'<input type="hidden" name="eventDate" value="'+$("#searchKeyword").val()+'">'
-// 		+'<input type="hidden" name="classId" value="'+classVal+'">'
-// 		+'<input type="hidden" name="flag" value="I">'
-// 		+'<div class="form-group row"><label for="confirmYn" class="col-sm-4 col-form-label">출발 긴급알람 시간  </label>'
-// 		+'<div class="col-sm-8"><input type="text" class="form-control ct" name="eventAlarmStartT" value="" placeholder="출발 긴급알람 시간" required="" maxlength="4" data-parsley-type="number"></div>'
-// 		+'</div>'
-// 		+'<div class="form-group row"><label for="confirmYn" class="col-sm-4 col-form-label">도착 긴급알람 시간  </label>'
-// 		+'<div class="col-sm-8"><input type="text" class="form-control ct" name="eventAlarmEndT" value="" placeholder="출발 긴급알람 시간" required="" maxlength="4" data-parsley-type="number"></div>'
-// 		+'</div>'
-// 		+'<div class="form-group row"><label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label>'
-// 		+'<div class="col-sm-8">'
-// 		+'<input class="" type="radio" name="eventCarNeedYn" id="eventCarNeedYn_Y" value="Y"checked="checked"data-parsley-required>'
-// 		+' <label class="" for="">Y</label>'
-// 		+' <input class="" type="radio" name="eventCarNeedYn" id="eventCarNeedYn_Y"  value="N">'
-// 		+' <label class="" for="">N</label>'
-// 		+'</div>'
-// 		+'</div></div>'
-		
 		data = '<div class="group"><h3>'
 		+'목적지는  <input type="text" class="form-control ht" name="destinyNm" placeholder="목적지" required="" maxlength="50" data-parsley-errors-messages-disabled> 입니다. '
 		+'<button type="submit" class="btn btn-primary float-right" onclick="DeleteAccordion(this); return false;">삭제</button>'
@@ -266,13 +245,13 @@
 		+'<input type="hidden" name="classId" value="'+classVal+'">'
 		+'<input type="hidden" name="flag" value="I">'
 		+'<div class="form-group row">'
-		+'<div class="col-sm-12">출발한지 <input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다.'
+		+'<div class="col-sm-12">출발한지 <input type="text" class="form-control ct" name="eventAlarmStartT${status.count}" value="${result.eventAlarmStartT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지났는데도 도착하지 않았다면 긴급알람이 옵니다.'
 		+'</div>'
 		+'</div>'
-		+'<div class="form-group row">'
-		+'<div class="col-sm-12">도착한지 <input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다.'
-		+'</div>'
-		+'</div>'
+// 		+'<div class="form-group row">'
+// 		+'<div class="col-sm-12">도착한지 <input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다.'
+// 		+'</div>'
+// 		+'</div>'
 		+'<div class="form-group row"><label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label>'
 		+'<div class="col-sm-8">'
 		+'<input class="" type="radio" name="eventCarNeedYn" id="eventCarNeedYn_Y" value="Y"checked="checked"data-parsley-required>'
@@ -313,7 +292,7 @@
 			var classId = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="classId"]').val();
 // 			var flag = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="flag"]').val();
 			var eventAlarmStartT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmStartT"]').val();
-			var eventAlarmEndT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmEndT"]').val();
+// 			var eventAlarmEndT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmEndT"]').val();
 			var eventCarNeedYn = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventCarNeedYn"]:checked').val();
 			
 			data = {
@@ -323,22 +302,25 @@
 					"destinyNm" : destinyNm,
 // 					"flag" : flag,
 					"eventAlarmStartT" : eventAlarmStartT,
-					"eventAlarmEndT" : eventAlarmEndT,
+// 					"eventAlarmEndT" : eventAlarmEndT,
 					"eventCarNeedYn" : eventCarNeedYn,
 			}
 			eventList.push(data);
 		}
-		delData = {"delList":delList};
-		eventList.push(delData);
+// 		delData = {"delList":delList};
+// 		eventList.push(delData);
 		
 		if($('#registFrm').parsley().validate()){
-
 	     	$.ajax({
 	     		type : "POST",
 	     		url : contextPath + "/director/classEvent/insert",
-	     		dataType : "json",
+// 	     		dataType : "json",
 	     		data : {"list":JSON.stringify(eventList)},
+		        error:function(request,status,error){
+		            alert("code:"+request.status+"\n"+"error:"+error+"\n"+"message:"+request.responseText);
+		        },
 	     		success : function(data){
+	     			location.reload();
 	     		}
 	     	});
 	     	
