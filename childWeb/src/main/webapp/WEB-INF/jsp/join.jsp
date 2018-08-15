@@ -32,7 +32,7 @@
 	        <div class="col-md-12 order-md-1">
 	          <h4 class="mt-3">회원 가입</h4>
 	          
-          		<form:form class="needs-validation" id="registFrm" name="registFrm"  data-toggle="validator">
+          		<form:form class="needs-validation" id="registFrm" name="registFrm" data-toggle="validator" onsubmit="return false;">
 	            <div class="row">
 	              <div class="col-md-6 mb-3">
 	                <label for="firstName">사용자 ID</label>
@@ -80,15 +80,15 @@
 	                  Valid last name is required.
 	                </div>
 	              </div>
-	              <div class="col-md-6 mb-3">
+	              <!-- <div class="col-md-6 mb-3">
 	                <label for="email">Email 
-	<!-- 	              <span class="text-muted">(Optional)</span> -->
+		              <span class="text-muted">(Optional)</span>
 		              </label>
-		              <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="you@example.com" data-parsley-type="email">
+		              <input type="text" class="form-control" id="userEmailGmail" name="userEmailGmail" placeholder="GMAIL이나 FACEBOOK " data-parsley-type="email">  data-parsley-pattern="^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(gmail|facebook)\.com$"
 		              <div class="invalid-feedback">
-		                Please enter a valid email address for shipping updates.
+						메일 주소는 gmail 또는 facebook 아이디만 입력 가능합니다.
 		              </div>
-	              </div>
+	              </div> -->
 	            </div>
 <!-- 	            <div class="mb-3"> -->
 <!-- 	              <label for="email">Email  -->
@@ -199,7 +199,6 @@ var contextPath = "${ pageContext.request.contextPath }";
  *  회원가입 버튼
  */
 function fnRegist(){
-
 	if($('#registFrm').parsley().validate()){
 		//유저 중복 확인 
 		$.ajax({
@@ -209,10 +208,9 @@ function fnRegist(){
 			dataType : "json",
 	        error:function(request,status,error){
 	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	         },
+	        },
 			success : function(data){
 				if(data.data.state){
-	
 					//가입
 					if(!confirm("가입 하시겠습니까?")) return;
 					var data = $("#registFrm").serialize();
@@ -223,26 +221,22 @@ function fnRegist(){
 			    		dataType : "json",
 				        error:function(request,status,error){
 				            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				         },
+				        },
 			    		success : function(data){
-			    			if(data.code=200){
+			    			if(data.code==200){
 			            		alert("회원가입이 되었습니다. 로그인 해주세요.")
 			        			location.href = contextPath+"/login" ; 
 				        	}else{
-				        		//200아닌것들
+				        		alert("가입 중 에러가 발생했습니다. code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				        	}
 			    		}
 			    	});
-					
 				}else{
 	        		alert("비밀번호를 확인해주세요.");
 				}
 			}
 		});
-
-	}
-	
+	} 
 }
-
 </script>
 </html>

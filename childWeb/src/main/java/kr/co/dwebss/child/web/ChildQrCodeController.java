@@ -53,7 +53,7 @@ public class ChildQrCodeController {
 	    	mav.addObject("pageExport", Integer.parseInt(pageExport));
 		}
 		List<ChildQrCode> resultList = null;
-		if(vo.getChildArray().size()>0) {
+		if(vo.getChildArray()!=null && vo.getChildArray().size()>0) {
 			resultList = childQrCodeService.selectQrcodeArray(vo);
 		}else {
 			resultList = childQrCodeService.selectQrcode(vo);

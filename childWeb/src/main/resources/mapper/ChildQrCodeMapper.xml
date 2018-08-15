@@ -31,7 +31,7 @@
 		<if test="childId !='' and  childId !=null">
 			AND cqc.child_id =  #{childId}
 		</if>
-		<if test="childArray.size !=0 ">
+		<if test="childArray != null and childArray.size !=0 ">
 			AND cqc.child_id in 
 			<foreach collection="childArray" item="child"   open="(" close=")" separator=",">
 			#{child}

@@ -60,7 +60,7 @@ function fnLogin(){
    var user_password = SHA256($("#user_password").val());
 	$.ajax({
 	        type : "post",
-	        url : contextPath + "/loginAction.dojson",
+	        url : contextPath + "/loginAction",
     		data : {"userLoginId" : user_login_id,
 					"userPassword" : user_password},
 	        dataType : "json",

@@ -57,7 +57,9 @@
 				CENTER_ID , 
 				TEACHER_USER_ID 
 			FROM CLASS
-			<include refid="kr.co.dwebss.child.dao.ClassMapper.WhereQuery" />
+			<if test="centerId > 0 ">
+				WHERE CENTER_ID = #{ centerId }
+			</if>
 			ORDER BY CLASS_ID
 		) A
     </select>
@@ -104,10 +106,10 @@
 	    }
 	</select>
 	
-  	<select id="insertCenterEventThisYear" parameterType="kr.co.dwebss.child.model.Class"
+  	<select id="insertCenterEventThisYear" parameterType="String"
 	    resultMap="classMap" statementType="CALLABLE">
 	    { call insertCenterEventThisYear(
-	        #{centerId, mode=IN, jdbcType=VARCHAR}
+	        #{centerClassId, mode=IN, jdbcType=VARCHAR}
 	     )
 	    }
 	</select>

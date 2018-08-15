@@ -96,10 +96,10 @@ public class LoginController {
     	if( userRes == null ){
            	//실패후 쿼리 
            	// 아이디 조회후 return 
-    		res.put("state",false);
+    		res.put("state",true);
            	
        	}else{ // 조회성공
-       		res.put("state",true);
+       		res.put("state",false);
        	}
     	return ResultGenerator.genSuccessResult(res);
     }
@@ -116,7 +116,7 @@ public class LoginController {
     	
     	centerService.insertCenter(center);
     	//센터의 어린이집 활동 이벤트 프로시저 
-    	String centerClassId = "CENTER_"+center.getCenterId();
+    	String centerClassId = ""+center.getCenterId();
 		classService.insertCenterEventThisYear(centerClassId);
     	
     	user.setCenterId(center.getCenterId());

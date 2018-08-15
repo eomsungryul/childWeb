@@ -68,7 +68,8 @@ public class teacherController {
     @RequestMapping("/director/teacher/regist")
 	public ModelAndView regist(
 			HttpServletRequest request,
-			@ModelAttribute("user") User vo
+			@ModelAttribute("user") User vo,
+			HttpSession session
 			) throws Exception {
 		ModelAndView mav = new ModelAndView("director/teacher/regist");
     	String flag= request.getParameter("flag");
@@ -87,6 +88,7 @@ public class teacherController {
 		mav.addObject("searchVO", vo);
 		mav.addObject("flag", flag);
 		mav.addObject("typeList", typeList);
+		mav.addObject("centerId", session.getAttribute("centerId"));
 		
 		return mav;
 	}

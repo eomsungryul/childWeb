@@ -3,7 +3,10 @@ import kr.co.dwebss.child.core.Result;
 import kr.co.dwebss.child.core.ResultGenerator;
 import kr.co.dwebss.child.model.Center;
 import kr.co.dwebss.child.model.Class;
+import kr.co.dwebss.child.model.User;
 import kr.co.dwebss.child.service.CenterService;
+import kr.co.dwebss.child.service.UserService;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -28,6 +31,9 @@ import java.util.List;
 public class CenterController {
     @Resource
     private CenterService centerService;
+    
+    @Resource
+    private UserService userService;
 
 	/**
 	 * 센터 관리 목록
@@ -118,6 +124,13 @@ public class CenterController {
 
 		ModelAndView mav = new ModelAndView("forward:/admin/center/list");
 		centerService.update(vo);
+		
+		// 어린이집의 승인여부와 원장의 승인여부는 항상 같게 맞춰준다. 어린이집 승인하고 원장도 따로 승인해야 하면 귀찮자나. 
+		User user = new User();
+		user.setCenterId(vo.getCenterId());
+		user = userService.selectUser(user);
+		user.setConfirmYn(vo.getConfirmYn());
+		userService.update(user);
 		
 		return mav;
 	}

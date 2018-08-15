@@ -42,39 +42,38 @@
 		<!-- aside end -->	    
 		
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-         <h2 class="mt-3">회원 정보 등록</h2>
+         <h2 class="mt-3">사용자 정보 관리</h2>
           <div class="row mt-3">
 	        <div class="col-md-8 order-md-1">
 	        
           	<form:form modelAttribute="vo" id="registFrm" name="registFrm" enctype="multipart/form-data" data-parsley-validate="">
        		<input type="hidden" name="searchCondition" id="searchCondition" value="${ searchVO.searchCondition}" />
        		<input type="hidden" name="searchKeyword" id="searchKeyword" value="${ searchVO.searchKeyword}" />
-       		<input type="hidden" name="pageIndex" id="pageIndex" value="${ searchVO.pageIndex }"/>  
+       		<input type="hidden" name="pageIndex" id="pageIndex" value="${ searchVO.pageIndex }"/>
+       		<input type="hidden" name="centerId" id="centerId" value="${ centerId }"/>  
       		<c:if test="${flag=='U'}">
 	       		<input type="hidden" name="userId" id="userId" value="${ result.userId }"/>
       		</c:if>
 				  <div class="form-group row">
-				    <label for="userLoginId" class="col-sm-2 col-form-label">사용자ID</label>
+				    <label for="userLoginId" class="col-sm-2 col-form-label">사용자 로그인 ID</label>
 				    <div class="col-sm-10">
-				      ${result.userLoginId }
+				    	<input type="text" class="form-control" id="userLoginId" name="userLoginId" placeholder="" value="${result.userLoginId }" required="" maxlength="40">
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="userNm" class="col-sm-2 col-form-label">사용자 이름</label>
 				    <div class="col-sm-10">
-<%-- 				      <input type="text" class="form-control" id="user_nm" name="user_nm" placeholder="" value="${result.user_nm }" required="" maxlength="20"> --%>
-				      ${result.userNm }
+ 				      <input type="text" class="form-control" id="userNm" name="userNm" placeholder="" value="${result.userNm }" required="" maxlength="50"> 
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="userPhone" class="col-sm-2 col-form-label">사용자 연락처</label>
+				    <label for="userPhone" class="col-sm-2 col-form-label">사용자 핸드폰 번호</label>
 				    <div class="col-sm-10">
-<%-- 				      <input type="text" class="form-control" id="user_nm" name="user_nm" placeholder="" value="${result.user_nm }" required="" maxlength="20"> --%>
-				      ${result.userPhone }
+ 				      <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="" value="${result.userPhone }" required="" maxlength="30"> 
 				    </div>
 				  </div>
 				  <div class="form-group row">
-				    <label for="userRoleCd" class="col-sm-2 col-form-label">사용자타입</label>
+				    <label for="userRoleCd" class="col-sm-2 col-form-label">사용자 타입</label>
 				    <div class="col-sm-3">
 		            	<select class="form-control" id="userRoleCd" name="userRoleCd" data-parsley-required>
 		            		<c:forEach var="type" items="${ typeList }" varStatus="status">
@@ -83,27 +82,27 @@
 					    </select>
 				    </div>
 				  </div>
-				  <div class="form-group row">
+				  <%-- <div class="form-group row">
 				    <label for="codeCategory" class="col-sm-2 col-form-label">어린이집명</label>
 				    <div class="col-sm-10">
-<%-- 				      <input type="text" class="form-control" id="centerNm" name="centerNm" placeholder="" value="${result.centerNm }" required="" maxlength="128"> --%>
+				      <input type="text" class="form-control" id="centerNm" name="centerNm" placeholder="" value="${result.centerNm }" required="" maxlength="128">
 				    	${result.centerNm }
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="codeValue" class="col-sm-2 col-form-label">어린이집주소</label>
 				    <div class="col-sm-10">
-<%-- 				      <input type="text" class="form-control" id="centerAddr" name="centerAddr" placeholder="" value="${result.centerAddr }" required="" maxlength="128"> --%>
+				      <input type="text" class="form-control" id="centerAddr" name="centerAddr" placeholder="" value="${result.centerAddr }" required="" maxlength="128">
 				    	${result.centerAddr }
 				    </div>
 				  </div>
 				  <div class="form-group row">
 				    <label for="codeDesc" class="col-sm-2 col-form-label">어린이집전화번호</label>
 				    <div class="col-sm-10">
-<%-- 				 	   <textarea class="form-control" id="centerPhone" name="centerPhone" rows="3" data-parsley-length="[0, 2000]">${result.centerPhone }</textarea> --%>
+				 	   <textarea class="form-control" id="centerPhone" name="centerPhone" rows="3" data-parsley-length="[0, 2000]">${result.centerPhone }</textarea>
 				   			${result.centerPhone }
 				    </div>
-				  </div>
+				  </div> --%>
 				  
 				  
 				  <div class="form-group row">
@@ -160,7 +159,7 @@
 	 */
 	function fnInsert(){
 		
-		if(!confirm("회원 정보를 등록하시겠습니까?")) return;
+		if(!confirm("사용자 정보를 등록하시겠습니까?")) return;
 		$('#registFrm').parsley().on('field:validated', function() {
 		})
 		.on('form:submit', function() {
