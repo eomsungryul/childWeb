@@ -69,8 +69,8 @@
 	      		<div class="row">
 	      		
 	          	<div class="col-md-12">
-	          	<div class="float-right mt-3 mb-3">
-		         <a class="btn icon-btn btn-success" href="javascript:AddAccordion();">
+	          	<div class="float-right mt-3 mb-3" id="button_add">
+		        <a class="btn icon-btn btn-success" href="javascript:AddAccordion();">
 					목적지 추가
 				</a>
 				</div>
@@ -117,7 +117,7 @@
 	          	
 	      		
 	          	<div class="col-md-12">
-	          	<div class="float-right mt-3 mb-3">
+	          	<div class="float-right mt-3 mb-3" id="button_save">
 				<button type="button" class="btn btn-primary" onclick="fnInsert();">변경 사항 저장</button>
 				</div>
 				</div>
@@ -155,7 +155,7 @@
 		);
 		$('#searchKeyword').datepicker('update', new Date());
 		accordionInit();
-		$("table tr")[0].click();
+		$("table tr")[1].click();
 	});
 	
 	function accordionInit(){
@@ -209,6 +209,12 @@
 		$("tbody > tr").removeClass("active");
         $(target).toggleClass("active");
         classVal = code;
+        
+        if(classVal.toString().indexOf("CENTER_")>-1){
+        	$("div[id^='button_']").hide();
+		}else{
+        	$("div[id^='button_']").show();
+		}
 		
     	$.ajax({
     		type : "POST",
@@ -297,7 +303,12 @@
 			var flag = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="flag"]').val();
 			var eventAlarmStartT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmStartT"]').val();
 // 			var eventAlarmEndT = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventAlarmEndT"]').val();
-			var eventCarNeedYn = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventCarNeedYn"]:checked').val();
+// 			var eventCarNeedYn = $($("#accordion").find(".group").get(i)).find('div').find('input[name^="eventCarNeedYn"]:checked').val();
+			
+			var eventCheckTypeArray=[];
+			$($("#accordion").find(".group").get(i)).find('div').find("input:checkbox[name^=eventCheckType]:checked").each(function(){
+				eventCheckTypeArray.push($(this).val());
+			});
 			
 			data = {
 					"classDailyEventId" : classDailyEventId ,
@@ -308,7 +319,7 @@
 					"flag" : flag,
 					"eventAlarmStartT" : eventAlarmStartT,
 // 					"eventAlarmEndT" : eventAlarmEndT,
-					"eventCarNeedYn" : eventCarNeedYn,
+					"eventCheckTypeArray" : eventCheckTypeArray,
 			}
 			addList.push(data);
 		}

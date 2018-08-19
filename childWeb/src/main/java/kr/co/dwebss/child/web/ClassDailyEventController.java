@@ -155,6 +155,7 @@ public class ClassDailyEventController {
 	public ModelAndView insertClassEvent(
 			HttpServletRequest request,
 			ModelMap model) throws Exception {
+    
 	ModelAndView mav = new ModelAndView("forward:/director/classEvent/list");
 	String param = request.getParameter("list");
     JSONObject objParam = (JSONObject) JSON.parse(param);
@@ -163,6 +164,7 @@ public class ClassDailyEventController {
 	JSONArray addList = (JSONArray) objParam.get("addList");
 	JSONArray delList = (JSONArray) objParam.get("delList");
 	String flag = "";
+	
 	for(int i = 0; i<addList.size(); i++) {
 	   JSONObject obj = (JSONObject) addList.get(i);
 	   vo = new ClassDailyEvent();
@@ -171,15 +173,24 @@ public class ClassDailyEventController {
 	   vo.setClassId(obj.get("classId").toString());
 	   vo.setDestinyNm(obj.get("destinyNm").toString());
 	   vo.setEventAlarmStartT(Integer.parseInt(obj.get("eventAlarmStartT").toString()));
-	   vo.setEventCarNeedYn(obj.get("eventCarNeedYn").toString());
+//	   vo.setEventCarNeedYn(obj.get("eventCarNeedYn").toString());
 	   
 	   flag = obj.get("flag").toString();
+	   
+	   
 	   if("U".equals(flag)) {
 		   vo.setClassDailyEventId(Integer.parseInt(obj.get("classDailyEventId").toString()));
-		   classDailyEventService.updateClassDailyEvent(vo);
+		   // 지운 후 
+		   classDailyEventService.deleteClassDailyEvent(vo);
 	   }else {
-		   classDailyEventService.save(vo);
+//		   classDailyEventService.save(vo);
 	   }
+		JSONArray eventCheckTypeArray = (JSONArray) obj.get("eventCheckTypeArray");
+
+		for(int j = 0; j<eventCheckTypeArray.size(); j++) {
+			vo.setEventCheckType(Integer.parseInt(eventCheckTypeArray.get(j).toString()));
+			classDailyEventService.save(vo);
+		}
 	   
 	}
 	
@@ -340,6 +351,62 @@ public class ClassDailyEventController {
 //    	
 //    	return mav;
 //    }
+    
+    
+
+//  /**
+//   * 변경 사항 수정 (클래스일경우) 백업
+//   *
+//   * @param HttpServletRequest request
+//   * @param Map<String, Object> codeMap
+//   * @param ModelMap model
+//   * @return String
+//   * @throws Exception
+//   */
+//  @Transactional(rollbackFor=Exception.class)
+//  @RequestMapping(value = "/director/classEvent/insertClassEvent")
+//  public ModelAndView insertClassEvent(
+//  		HttpServletRequest request,
+//  		ModelMap model) throws Exception {
+//  	ModelAndView mav = new ModelAndView("forward:/director/classEvent/list");
+//  	String param = request.getParameter("list");
+//  	JSONObject objParam = (JSONObject) JSON.parse(param);
+//  	
+//  	ClassDailyEvent vo = null;
+//  	JSONArray addList = (JSONArray) objParam.get("addList");
+//  	JSONArray delList = (JSONArray) objParam.get("delList");
+//  	String flag = "";
+//  	for(int i = 0; i<addList.size(); i++) {
+//  		JSONObject obj = (JSONObject) addList.get(i);
+//  		vo = new ClassDailyEvent();
+//  		vo.setEventDate(new SimpleDateFormat("yyyy/MM/dd").parse((String) obj.get("eventDate")));
+//  		vo.setEventOrder(Integer.parseInt(obj.get("eventOrder").toString()));
+//  		vo.setClassId(obj.get("classId").toString());
+//  		vo.setDestinyNm(obj.get("destinyNm").toString());
+//  		vo.setEventAlarmStartT(Integer.parseInt(obj.get("eventAlarmStartT").toString()));
+//  		vo.setEventCarNeedYn(obj.get("eventCarNeedYn").toString());
+//  		
+//  		flag = obj.get("flag").toString();
+//  		if("U".equals(flag)) {
+//  			vo.setClassDailyEventId(Integer.parseInt(obj.get("classDailyEventId").toString()));
+//  			classDailyEventService.updateClassDailyEvent(vo);
+//  		}else {
+//  			classDailyEventService.save(vo);
+//  		}
+//  		
+//  	}
+//  	
+//  	for(int i = 0; i<delList.size(); i++) {
+//  		JSONObject obj = (JSONObject) delList.get(i);
+//  		vo = new ClassDailyEvent();
+//  		vo.setClassDailyEventId(Integer.parseInt(obj.get("classDailyEventId").toString()));
+//  		vo.setEventDate(new SimpleDateFormat("yyyy/MM/dd").parse((String) obj.get("eventDate")));
+//  		vo.setClassId(obj.get("classId").toString());
+//  		classDailyEventService.deleteClassDailyEvent(vo);
+//  	}
+//  	
+//  	return mav;
+//  }
 	
 
 

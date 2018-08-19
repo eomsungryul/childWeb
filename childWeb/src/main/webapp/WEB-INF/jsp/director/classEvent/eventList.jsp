@@ -32,13 +32,24 @@
 <%-- 				    <div class="col-sm-12">도착한지 <input type="text" class="form-control ct" name="eventAlarmEndT${status.count}" value="${result.eventAlarmEndT}" placeholder="분" required="" maxlength="4" data-parsley-type="number"	 data-parsley-errors-messages-disabled> 분이 지나면 긴급알람이 옵니다. --%>
 <!-- 				    </div> -->
 <!-- 				 </div> -->
+<!-- 		    	 <div class="form-group row"> -->
+<!-- 				    <label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label> -->
+<!-- 				    <div class="col-sm-8"> -->
+<%-- 					  <input class="" type="radio" name="eventCarNeedYn${status.count}" id="eventCarNeedYn_Y${status.count}" value="Y" <c:if test="${result.eventCarNeedYn=='Y' }">checked="checked"</c:if> data-parsley-required> --%>
+<!-- 					  <label class="" for="">Y</label> -->
+<%-- 					  <input class="" type="radio" name="eventCarNeedYn${status.count}" id="eventCarNeedYn_Y${status.count}"  value="N" <c:if test="${result.eventCarNeedYn=='N' }">checked="checked"</c:if>> --%>
+<!-- 					  <label class="" for="">N</label> -->
+<!-- 				    </div> -->
+<!-- 				 </div> -->
 		    	 <div class="form-group row">
-				    <label for="" class="col-sm-4 col-form-label">차량 이용 여부 </label>
-				    <div class="col-sm-8">
-					  <input class="" type="radio" name="eventCarNeedYn${status.count}" id="eventCarNeedYn_Y${status.count}" value="Y" <c:if test="${result.eventCarNeedYn=='Y' }">checked="checked"</c:if> data-parsley-required>
-					  <label class="" for="">Y</label>
-					  <input class="" type="radio" name="eventCarNeedYn${status.count}" id="eventCarNeedYn_Y${status.count}"  value="N" <c:if test="${result.eventCarNeedYn=='N' }">checked="checked"</c:if>>
-					  <label class="" for="">N</label>
+				    <label for="" class="col-sm-4 col-form-label">이벤트 체크 범위 </label>
+				    <div class="col-sm-8 col-form-label">
+					  <input class="" type="checkbox" name="eventCheckType${status.count}" id="eventCheckType_Y${status.count}" value="300001" <c:if test="${fn:indexOf(result.eventCheckTypeArray,'300001') != -1 }">checked="checked"</c:if> data-parsley-required>
+					  <label class="" for="">출발</label>
+					  <input class="" type="checkbox" name="eventCheckType${status.count}" id="eventCheckType_Y${status.count}"  value="300002" <c:if test="${fn:indexOf(result.eventCheckTypeArray,'300002') != -1 }">checked="checked"</c:if>>
+					  <label class="" for="">도착</label>
+					  <input class="" type="checkbox" name="eventCheckType${status.count}" id="eventCheckType_Y${status.count}"  value="300003" <c:if test="${fn:indexOf(result.eventCheckTypeArray,'300003') != -1 }">checked="checked"</c:if>>
+					  <label class="" for="">인원체크</label>
 				    </div>
 				 </div>
 		    </div>			

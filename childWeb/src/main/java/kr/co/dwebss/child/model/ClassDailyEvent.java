@@ -45,6 +45,9 @@ public class ClassDailyEvent {
     @Column(name = "EVENT_CAR_NEED_YN")
     private String eventCarNeedYn;
     
+    @Column(name = "EVENT_CHECK_TYPE")
+    private Integer eventCheckType;
+    
     @Transient
     private String list;
     
@@ -56,9 +59,28 @@ public class ClassDailyEvent {
 
     @Transient
     private String addCenterId;
+
+    @Transient
+    private String eventCheckTypeArray;
     
     
-    public String getAddCenterId() {
+    public String getEventCheckTypeArray() {
+		return eventCheckTypeArray;
+	}
+
+	public void setEventCheckTypeArray(String eventCheckTypeArray) {
+		this.eventCheckTypeArray = eventCheckTypeArray;
+	}
+
+	public Integer getEventCheckType() {
+		return eventCheckType;
+	}
+
+	public void setEventCheckType(Integer eventCheckType) {
+		this.eventCheckType = eventCheckType;
+	}
+
+	public String getAddCenterId() {
 		return addCenterId;
 	}
 
